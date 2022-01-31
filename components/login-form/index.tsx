@@ -12,7 +12,7 @@ const LoginForm = () => {
       <div className={styles["signup-form"]}>
         <Form>
           <Link href={"/"} passHref>
-            <Image src={logoImage} width={"55.38px"} height={"55.38px"} />
+            <Image src={logoImage} width={"55.38px"} height={"55.38p "} />
           </Link>
           <p className={styles["title"]}>Create an account</p>
           <div className="d-flex flex-column w-100">
