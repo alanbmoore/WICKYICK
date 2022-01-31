@@ -1,0 +1,21 @@
+@import "../public/static/scss/variables";
+
+.hero-section {
+  height: 58vh;
+  max-height: 58vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(../public/static/images/hero.png);
+  .heading-text{
+    font-size:64px;
+    font-weight: 700;
+    color: $black;
+  }
+  .subtext{
+    color: $black-tone-1;
+    opacity: 0.8;
+    font-size: 24px;
+    font-weight: 400 !important;
+  }
+}

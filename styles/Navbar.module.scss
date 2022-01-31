@@ -1,0 +1,37 @@
+@import "../public/static/scss/variables";
+
+.nav-bar{
+  padding: 0.75% 2.5%;
+  a{
+    &:hover{
+      color: $purple !important;
+    }
+  }
+  .title{
+    color: $black;
+    font-weight: 600;
+  }
+  .nav-links{
+    color: $black !important;
+    font-size: 15px !important;
+    font-weight: 400;
+    &.last-child{
+      margin-right: 2%;
+    }
+  }
+  .signup-btn{
+    background: $purple;
+    font-size: 14px;
+    color: $white;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    &:focus{
+      box-shadow: none;
+    }
+    &:hover{
+      background: $tapestryapprox;
+    }
+  }
+}
