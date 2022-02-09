@@ -10,7 +10,7 @@ const Search = () => {
             <Form.Control
               className={styles["search-input"] + " py-3"}
               type="text"
-              placeholder="Address, City, State, Neighborhood, Zip Code, Agent Name, Brokerage, Tags"
+              placeholder="Address, City, State, Neighborhood, Zip Code, Agent Name, Brokerage,#"
             />
 
             <Button

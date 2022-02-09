@@ -8,10 +8,27 @@ body {
 }
 
 a {
-  color: unset !important;
-  text-decoration: none !important;
+  /*color: unset !important;*/
+  /*text-decoration: none !important;*/
 }
 
 * {
   box-sizing: border-box;
+}
+
+
+.resize-none{
+  resize: none !important;
+}
+
+.completed{
+  color: #2D8C48 !important;
+}
+
+.container{
+  max-width: 1366px !important;
+}
+
+.container-fluid{
+  padding: 0 !important;
 }

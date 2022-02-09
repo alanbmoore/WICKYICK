@@ -125,9 +125,14 @@
     }
   }
 
+  .footer-columns{
+    --bs-gutter-x: none !important;
+  }
+
   .subscribe-form {
     position: relative;
     overflow: hidden;
+    width: 75%;
     input {
       width: 100%;
       padding: 16px 28px;
@@ -174,5 +179,25 @@
 @media only screen and (max-width: 768px) {
   .custom-container{
     max-width: 90% !important;
+  }
+  .footer-widget{
+    padding-right: 0 !important;
+    width: 100%;
+    ul {
+      li {
+        width: 100% !important;
+      }
+    }
+    .footer-widget-heading {
+      h3 {
+        font-size: 17px;
+      }
+    }
+  }
+  .subscribe-form {
+    width: 100% !important;
+    .subscribe-btn {
+      padding: 5px 3% !important;
+    }
   }
 }

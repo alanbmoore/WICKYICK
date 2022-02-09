@@ -1,7 +1,7 @@
 @import "../public/static/scss/variables";
 
 .nav-bar{
-  padding: 0.75% 2.5%;
+  //padding: 0.75% 2.5%;
   a{
     &:hover{
       color: $purple !important;
@@ -10,6 +10,14 @@
   .title{
     color: $black;
     font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    p{
+      margin: 0;
+      &:hover{
+        color: $purple !important;
+      }
+    }
   }
   .nav-links{
     color: $black !important;
@@ -17,6 +25,13 @@
     font-weight: 400;
     &.last-child{
       margin-right: 2%;
+    }
+    a{
+      color: $black;
+      text-decoration: none !important;
+      &:hover{
+        color: $purple !important;
+      }
     }
   }
   .signup-btn{

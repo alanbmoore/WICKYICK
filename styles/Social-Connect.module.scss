@@ -1,0 +1,49 @@
+@import "../public/static/scss/variables";
+
+.social-card{
+  border: 1px solid $oslo-gray;
+  box-sizing: border-box;
+  border-radius: 8px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 16px 0px 20px 0;
+  padding: 15px 0 0 0;
+
+  .social-icon{
+    background: $athens-gray;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vertical-line{
+    margin-top: 20px;
+    background:  $oslo-gray;
+    height: 1.5px;
+    width: 100%;
+  }
+
+  .connect-btn{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    color: $purple !important;
+    &:hover{
+      text-decoration: underline !important;
+    }
+  }
+
+  .social-description{
+    padding-right: 34px !important;
+    margin: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: $black-tone-1;
+  }
+}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import logoImage from "../../public/static/images/logo.png";
 import googleLogo from "../../public/static/images/google-logo.png";
 import linkedInLogo from "../../public/static/images/linkedin-logo.png";
+import facebookLogo from "../../public/static/images/facebook.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 
@@ -12,17 +13,41 @@ const LoginForm = () => {
       <div className={styles["signup-form"]}>
         <Form>
           <Link href={"/"} passHref>
-            <Image src={logoImage} width={"55.38px"} height={"55.38p "} />
+            <Image
+              src={logoImage}
+              width={"55.38px"}
+              height={"55.38p "}
+              alt={"logo image"}
+            />
           </Link>
-          <p className={styles["title"]}>Create an account</p>
+          <p className={styles["title"]}>Log In</p>
           <div className="d-flex flex-column w-100">
             <Button className={styles["social-btn"] + " mb-2"}>
-              <Image src={googleLogo} width={"35px"} height={"35px"} />
-              <p> Sign Up with Google</p>
+              <Image
+                src={googleLogo}
+                width={"35px"}
+                height={"35px"}
+                alt={"google image"}
+              />
+              <p> Login with Google</p>
             </Button>
             <Button className={styles["social-btn"] + " mb-2"}>
-              <Image src={linkedInLogo} width={"30px"} height={"30px"} />
-              <p> Sign Up with LinkedIn</p>
+              <Image
+                src={linkedInLogo}
+                width={"30px"}
+                height={"30px"}
+                alt={"linkedin image"}
+              />
+              <p> Login with LinkedIn</p>
+            </Button>
+            <Button className={styles["social-btn"] + " mb-2"}>
+              <Image
+                src={facebookLogo}
+                width={"30px"}
+                height={"30px"}
+                alt={"fb image"}
+              />
+              <p> Login with Facebook</p>
             </Button>
           </div>
           <div className={styles["or-seperator"]}>or</div>
@@ -45,7 +70,7 @@ const LoginForm = () => {
             </Col>
           </Row>
 
-          <p className={styles["forgot-password-text"]}>Forgot password</p>
+          <p className={styles["forgot-password-text"]}>Forgot Password?</p>
 
           <Button className={styles["submit-btn"]} type="submit">
             Login
@@ -54,7 +79,7 @@ const LoginForm = () => {
         <div className={styles["hint-text"]}>Don’t have an account?</div>
 
         <Link href={"/signup"} passHref>
-          <p className={styles["do-link"]}>Sign up</p>
+          <p className={styles["do-link"]}>Sign Up</p>
         </Link>
       </div>
     </>

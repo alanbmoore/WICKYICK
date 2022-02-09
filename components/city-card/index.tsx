@@ -18,8 +18,8 @@ const CityCard = ({ image, title, description, width, height }: ICard) => {
             height={height}
           />
           <Card.Body className={styles["card-body"] + " " + styles["city-box"]}>
-            <Card.Title className={styles["agent-name"]}>{title}</Card.Title>
-            <Card.Text className={styles["agent-followers"] + " mb-0"}>
+            <Card.Title className={styles["city-name"]}>{title}</Card.Title>
+            <Card.Text className={styles["city-info"] + " mb-0"}>
               {description}
             </Card.Text>
           </Card.Body>

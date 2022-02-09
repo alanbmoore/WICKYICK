@@ -1,0 +1,32 @@
+@import "../public/static/scss/variables";
+
+.checkbox{
+  span{
+    padding: 0;
+    z-index: 1;
+    background: $white !important;
+  }
+  .form-check-input{
+    background-size: 20px;
+    border: 0;
+    margin: 0;
+    background-color: $white;
+    width: 24px;
+    height: 24px;
+    &:checked{
+      background-image: url(../public/static/images/check-icon.svg) !important;
+    }
+    &:focus{
+      box-shadow: none !important;
+    }
+  }
+}
+
+//span{
+//  padding: 0;
+//  left: 2%;
+//  top: 8px;
+//  z-index: 1;
+//  position: absolute;
+//  background: $white !important;
+//}

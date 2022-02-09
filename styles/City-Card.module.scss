@@ -2,7 +2,11 @@
 
 .city-card{
   margin: auto;
+  img{
+    border-radius: 20px !important;
+  }
   .card-body{
+
     &.city-box{
       position: absolute;
       background: white;
@@ -10,20 +14,17 @@
       width: 94%;
       bottom: 4%;
       border-radius: 8px;
+      padding: 0.5rem !important;
     }
-    .agent-name{
+    .city-name{
       color: $black;
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 700;
     }
-    .agent-followers{
+    .agent-info{
       color: $black;
-      font-size: 18px;
-      font-weight: 400;
-    }
-    .agent-location{
-      color: $oslo-gray;
       font-size: 16px;
+      font-weight: 400;
     }
   }
 }

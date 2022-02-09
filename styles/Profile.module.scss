@@ -1,0 +1,73 @@
+@import "../public/static/scss/variables";
+
+.profile-top-section{
+  display: flex;
+  align-items: center;
+  .user-info{
+    margin-left: 3%;
+    .user-name {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color:$black;
+    }
+    .user-email{
+      margin: 0;
+      padding-top: 3px;
+      font-size: 14px;
+      font-weight: 400;
+      color:$black;
+    }
+  }
+}
+
+
+.profile{
+  padding-bottom: 7%;
+  .profile-input{
+    border: 1px solid $oslo-gray;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: #2F2F2F;
+    opacity: 0.85;
+  }
+  .profile-input-label{
+    color:$black-tone-1;
+    font-weight: 400;
+    font-size: 17px;
+    opacity: 0.85;
+  }
+  .submit-btn{
+    margin-top: 1%;
+    margin-bottom: 1.5%;
+    padding: 8px 11.75%;
+    background: $purple;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    border-color: $purple;
+    &:focus{
+      box-shadow: none;
+    }
+    &:hover{
+      background: $tapestryapprox;
+    }
+  }
+}
+
+.helper-text{
+  margin-top: 2%;
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 4%;
+  border-bottom: 1px solid $oslo-gray;
+  color:$black-tone-1;
+  span,label{
+    color: $purple;
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}

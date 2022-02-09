@@ -1,0 +1,32 @@
+@import "../public/static/scss/variables";
+
+.selectable-card{
+  margin: auto;
+  .image-checkbox{
+    span{
+      left: 2%;
+      top: 8px;
+      z-index: 1;
+      position: absolute;
+    }
+  }
+  .card-body{
+    padding-left: 0 !important;
+    .agent-name{
+      color: $black;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .agent-followers{
+      color: $black;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .agent-location{
+      color: $oslo-gray;
+      font-size: 16px;
+    }
+  }
+}
+
+

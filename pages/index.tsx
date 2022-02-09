@@ -13,10 +13,9 @@ import City4 from "../public/static/images/city4.png";
 import City5 from "../public/static/images/city5.png";
 import { ICard } from "../interfaces/card";
 import styles from "../styles/Home.module.css";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import CityCard from "../components/city-card";
 import AppFooter from "../components/footer";
-import Head from "next/head";
 import AppNavbar from "../components/navbar";
 
 const agents: Array<ICard> = [
@@ -123,187 +122,205 @@ const cities: Array<ICard> = [
 const Home = () => {
   return (
     <>
-      <AppNavbar />
-
+      <Container>
+        <AppNavbar />
+      </Container>
       <HeroSection />
+      <Container>
+        {/* Trending Agents Section */}
 
-      {/* Trending Agents Section */}
-
-      <div
-        className={
-          styles["heading-title"] +
-          " d-flex justify-content-between align-items-center pt-5 mt-3"
-        }
-      >
-        <h1 className={styles["heading"]}>Trending Agents</h1>
-        <a className={styles["link"]}>View all 187 {">"} </a>
-      </div>
-
-      <Row className="my-5" style={{ maxWidth: "95%", margin: "auto" }}>
-        {agents.map((item: ICard, index: number) => {
-          return (
-            <Col xs={12} md={2} key={index}>
-              <CustomCard
-                image={item.image}
-                title={item.title}
-                subDescription={item.subDescription}
-                description={item.description}
-                width={320}
-                height={251}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-
-      {/* Top Agents Section */}
-
-      <div
-        className={
-          styles["heading-title"] +
-          " d-flex justify-content-between align-items-center"
-        }
-      >
-        <h1 className={styles["heading"]}>Top Agents</h1>
-        <a className={styles["link"]}>View all 187 {">"} </a>
-      </div>
-
-      <Row className="my-5" style={{ maxWidth: "95%", margin: "auto" }}>
-        {agents.map((item: ICard, index: number) => {
-          return (
-            <Col xs={12} md={2} key={index}>
-              <CustomCard
-                image={item.image}
-                title={item.title}
-                subDescription={item.subDescription}
-                description={item.description}
-                width={320}
-                height={251}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-
-      {/* Trending Properties Section */}
-
-      <div
-        className={
-          styles["heading-title"] +
-          " d-flex justify-content-between align-items-center"
-        }
-      >
-        <h1 className={styles["heading"]}>Trending Properties</h1>
-        <a className={styles["link"]}>View all 1,000+ {">"} </a>
-      </div>
-
-      <Row className="my-5" style={{ maxWidth: "95%", margin: "auto" }}>
-        {properties.map((item: ICard, index: number) => {
-          return (
-            <Col xs={12} md={2} key={index}>
-              <CustomCard
-                image={item.image}
-                title={item.title}
-                subDescription={item.subDescription}
-                description={item.description}
-                width={350}
-                height={309}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-
-      {/* Top Properties Section */}
-
-      <div
-        className={
-          styles["heading-title"] +
-          " d-flex justify-content-between align-items-center"
-        }
-      >
-        <h1 className={styles["heading"]}>Top Properties</h1>
-        <a className={styles["link"]}>View all 1,000+ {">"} </a>
-      </div>
-
-      <Row className="my-5" style={{ maxWidth: "95%", margin: "auto" }}>
-        {properties.map((item: ICard, index: number) => {
-          return (
-            <Col xs={12} md={2} key={index}>
-              <CustomCard
-                image={item.image}
-                title={item.title}
-                subDescription={item.subDescription}
-                description={item.description}
-                width={350}
-                height={309}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-
-      {/* Cities Section */}
-
-      <div
-        className={
-          styles["heading-title"] +
-          " d-flex justify-content-between align-items-center"
-        }
-      >
-        <h1 className={styles["heading"]}>Top Cities</h1>
-        <a className={styles["link"]}>View all {">"} </a>
-      </div>
-
-      <div
-        className="my-5 d-flex justify-content-between flex-column flex-md-row flex-lg-row flex-xl-row"
-        style={{ maxWidth: "95%", margin: "auto" }}
-      >
-        <div style={{ maxWidth: "100%" }}>
-          <CityCard
-            image={City1}
-            title={"Atlanta"}
-            description={"134 homes · 12 agents"}
-            width={550}
-            height={545}
-          />
+        <div
+          className={
+            styles["heading-title"] +
+            " d-flex justify-content-between align-items-center pt-2 mt-3"
+          }
+        >
+          <h1 className={styles["heading"]}>Trending Agents</h1>
+          <a className={styles["link"]}>View all 187 {">"} </a>
         </div>
 
-        <div>
-          <Row style={{ maxWidth: "100%", margin: "auto" }}>
-            {cities.map((item: ICard, index: number) => {
-              return (
-                <Col xs={12} md={3} key={index}>
-                  <CityCard
-                    image={item.image}
-                    title={item.title}
-                    description={item.description}
-                    width={299}
-                    height={242}
-                  />
-                </Col>
-              );
-            })}
-          </Row>
-          <Row className="my-5" style={{ maxWidth: "100%", margin: "auto" }}>
-            {cities.map((item: ICard, index: number) => {
-              return (
-                <Col xs={12} md={3} key={index}>
-                  <CityCard
-                    key={index}
-                    image={item.image}
-                    title={item.title}
-                    description={item.description}
-                    width={299}
-                    height={242}
-                  />
-                </Col>
-              );
-            })}
+        <Row className="my-3">
+          {agents.map((item: ICard, index: number) => {
+            return (
+              <Col xs={12} md={4} lg={2} key={index}>
+                <CustomCard
+                  image={item.image}
+                  title={item.title}
+                  subDescription={item.subDescription}
+                  description={item.description}
+                  width={320}
+                  height={251}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+
+        {/* Top Agents Section */}
+
+        <div
+          className={
+            styles["heading-title"] +
+            " d-flex justify-content-between align-items-center"
+          }
+        >
+          <h1 className={styles["heading"]}>Top Agents</h1>
+          <a className={styles["link"]}>View all 187 {">"} </a>
+        </div>
+
+        <Row className="my-3">
+          {agents.map((item: ICard, index: number) => {
+            return (
+              <Col xs={12} md={4} lg={2} key={index}>
+                <CustomCard
+                  image={item.image}
+                  title={item.title}
+                  subDescription={item.subDescription}
+                  description={item.description}
+                  width={320}
+                  height={251}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+
+        {/*  Featured Agents */}
+
+        <div
+          className={
+            styles["heading-title"] +
+            " d-flex justify-content-between align-items-center"
+          }
+        >
+          <h1 className={styles["heading"]}>Featured Agents</h1>
+          <a className={styles["link"]}>View all 187 {">"} </a>
+        </div>
+
+        <Row className="my-3">
+          {agents.map((item: ICard, index: number) => {
+            return (
+              <Col xs={12} md={4} lg={2} key={index}>
+                <CustomCard
+                  image={item.image}
+                  title={item.title}
+                  subDescription={item.subDescription}
+                  description={item.description}
+                  width={320}
+                  height={251}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+
+        {/* Trending Properties Section */}
+
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    styles["heading-title"] +*/}
+        {/*    " d-flex justify-content-between align-items-center"*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  <h1 className={styles["heading"]}>Trending Properties</h1>*/}
+        {/*  <a className={styles["link"]}>View all 1,000+ {">"} </a>*/}
+        {/*</div>*/}
+
+        {/*<Row className="my-3"  >*/}
+        {/*  {properties.map((item: ICard, index: number) => {*/}
+        {/*    return (*/}
+        {/*      <Col xs={12} md={2} key={index}>*/}
+        {/*        <CustomCard*/}
+        {/*          image={item.image}*/}
+        {/*          title={item.title}*/}
+        {/*          subDescription={item.subDescription}*/}
+        {/*          description={item.description}*/}
+        {/*          width={350}*/}
+        {/*          height={309}*/}
+        {/*        />*/}
+        {/*      </Col>*/}
+        {/*    );*/}
+        {/*  })}*/}
+        {/*</Row>*/}
+
+        {/* Top Properties Section */}
+
+        <div
+          className={
+            styles["heading-title"] +
+            " d-flex justify-content-between align-items-center"
+          }
+        >
+          <h1 className={styles["heading"]}>Top Properties</h1>
+          <a className={styles["link"]}>View all 1,000+ {">"} </a>
+        </div>
+
+        <Row className="my-3">
+          {properties.map((item: ICard, index: number) => {
+            return (
+              <Col xs={12} md={4} lg={2} key={index}>
+                <CustomCard
+                  image={item.image}
+                  title={item.title}
+                  subDescription={item.subDescription}
+                  description={item.description}
+                  width={350}
+                  height={309}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+
+        {/* Cities Section */}
+
+        <div
+          className={
+            styles["heading-title"] +
+            " d-flex justify-content-between align-items-center"
+          }
+        >
+          <h1 className={styles["heading"]}>Top Cities</h1>
+          <a className={styles["link"]}>View all {">"} </a>
+        </div>
+
+        <div className="my-3">
+          <Row className="mx-0" style={{ maxWidth: "100%" }}>
+            <Col xs={12} md={12} lg={5} className={"px-0 px-md-2"}>
+              <CityCard
+                image={City1}
+                title={"Atlanta"}
+                description={"134 homes · 12 agents"}
+                width={550}
+                height={515}
+              />
+            </Col>
+            <Col xs={12} md={12} lg={7} className={"px-0 px-md-2"}>
+              <Row style={{ maxWidth: "100%", margin: "auto" }}>
+                {cities.map((item: ICard, index: number) => {
+                  return (
+                    <Col
+                      className={"px-0 mb-3 px-md-2 mt-3 mt-lg-0"}
+                      xs={12}
+                      md={6}
+                      lg={6}
+                      key={index}
+                    >
+                      <CityCard
+                        image={item.image}
+                        title={item.title}
+                        description={item.description}
+                        width={350}
+                        height={242}
+                      />
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Col>
           </Row>
         </div>
-      </div>
-
+      </Container>
       <AppFooter />
     </>
   );

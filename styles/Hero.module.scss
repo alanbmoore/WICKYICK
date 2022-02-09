@@ -1,8 +1,8 @@
 @import "../public/static/scss/variables";
 
 .hero-section {
-  height: 58vh;
-  max-height: 58vh;
+  height: 48vh;
+  max-height: 48vh;
   width: 100%;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -17,5 +17,16 @@
     opacity: 0.8;
     font-size: 24px;
     font-weight: 400 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading-text {
+   font-size: 24px !important;
+    padding-top: 25% !important;
+  }
+  .subtext{
+    font-size: 20px !important;
+    padding: 0 10px;
   }
 }
