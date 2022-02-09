@@ -6,8 +6,11 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import facebookLogo from "../../public/static/images/facebook.png";
 import styles from "../../styles/SignUp.module.scss";
+import { useRouter } from "next/router";
 
 const SignUpForm = () => {
+  const router = useRouter();
+
   return (
     <>
       <div className={styles["signup-form"]}>
@@ -92,7 +95,14 @@ const SignUpForm = () => {
               </div>
             </Col>
           </Row>
-          <Button className={styles["submit-btn"]} type="submit">
+          <Button
+            onClick={(e: any) => {
+              e.preventDefault();
+              router.push("/settings");
+            }}
+            className={styles["submit-btn"]}
+            type="submit"
+          >
             Sign Up For Free
           </Button>
           <p className={styles["agreement-text"]}>
