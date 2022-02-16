@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 
 const navLinks = [
   {
-    name: "License And Listings",
+    name: "License Verification",
     link: "/license",
   },
   {
-    name: "Your Profile",
+    name: "Create Profile",
     link: "/profile",
   },
   {
-    name: "Social preferences",
+    name: "Connect Social Media",
     link: "/social",
   },
 ];

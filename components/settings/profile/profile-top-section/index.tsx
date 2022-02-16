@@ -54,7 +54,7 @@ const ProfileTopSection = ({ changeLicense, stepNo }: IProfileTopSection) => {
         ) : (
           <div>
             <p className={styles["helper-text"]}>
-              <label htmlFor="uploadImage">Change Photo</label>
+              <label htmlFor="uploadImage">Upload Photo</label>
               <input
                 accept="image/png, image/jpeg"
                 type="file"

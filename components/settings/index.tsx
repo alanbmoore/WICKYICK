@@ -6,28 +6,28 @@ import ProfileTopSection from "./profile/profile-top-section";
 import Profile from "./profile";
 import { useState } from "react";
 import SocialConnect from "./social";
-import Instagram from "../../public/static/images/instagram.svg";
+import Tiktok from "../../public/static/images/tik-tok.png";
 import Facebook from "../../public/static/images/facebook.svg";
 import LinkedIn from "../../public/static/images/linkedIn.svg";
 
 const socialData = [
   {
-    name: "Instagram",
-    image: Instagram,
-    description:
-      "By connecting your account with your Twitter account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your Twitter account information may be used by WickYick. If you no longer want to share this information, please disconnect your Twitter account.",
-  },
-  {
-    name: "Facebook",
+    name: "Facebook/Instagram",
     image: Facebook,
     description:
-      "By connecting your account with your Twitter account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your Twitter account information may be used by WickYick. If you no longer want to share this information, please disconnect your Twitter account.",
+      "By connecting your account with your Facebook/Instagram account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your Facebook/Instagram account information may be used by WickYick. If you no longer want to share this information, please disconnect your Facebook/Instagram account.",
+  },
+  {
+    name: "Tiktok",
+    image: Tiktok,
+    description:
+      "By connecting your account with your Tiktok account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your Tiktok account information may be used by WickYick. If you no longer want to share this information, please disconnect your Tiktok account.",
   },
   {
     name: "LinkedIn",
     image: LinkedIn,
     description:
-      "By connecting your account with your Twitter account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your Twitter account information may be used by WickYick. If you no longer want to share this information, please disconnect your Twitter account.",
+      "By connecting your account with your LinkedIn account, you acknowledge and agree that information you choose to share will be uploaded to WickYick and may be viewed by WickYick and other WickYick’s users. Also, your LinkedIn account information may be used by WickYick. If you no longer want to share this information, please disconnect your LinkedIn account.",
   },
 ];
 

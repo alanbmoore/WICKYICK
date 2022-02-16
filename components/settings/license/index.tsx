@@ -53,19 +53,11 @@ const LicenseForm = ({ goToNextStep }: any) => {
         <div className={styles["license-form"] + " px-3"}>
           <h1 className={styles["heading"]}>Enter your license number</h1>
           <p className={styles["description"]}>
-            Enter your license number to create your profile and add listings
-            you have in your listings services.
+            Enter your license number to create your profile
           </p>
-          <div className={styles["helper-text"]}>
-            <Image src={QuestionMark} alt={"question mark"} />
-            <p>How we manage license number</p>
-          </div>
           <Row className="mt-4">
             <Col xs={12} md={11}>
               <Form>
-                <Form.Label className={styles["license-input-label"]}>
-                  Enter your license number
-                </Form.Label>
                 <Form.Control className={styles["license-input"]} type="text" />
                 <Button
                   className={styles["submit-btn"] + " mb-4"}
@@ -74,7 +66,7 @@ const LicenseForm = ({ goToNextStep }: any) => {
                     setSearchData([{}]);
                   }}
                 >
-                  Extract data
+                  Submit
                 </Button>
               </Form>
             </Col>

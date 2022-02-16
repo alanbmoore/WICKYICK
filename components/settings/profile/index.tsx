@@ -19,7 +19,34 @@ const Profile = ({ goToNextStep }: any) => {
         </Form.Select>
 
         <Form.Label className={styles["profile-input-label"] + " mt-4"}>
-          Bio
+          Phone#
+        </Form.Label>
+        <Form.Control
+          className={styles["profile-input"]}
+          type="text"
+          placeholder="Phone number"
+        />
+
+        <Form.Label className={styles["profile-input-label"] + " mt-4"}>
+          Company
+        </Form.Label>
+        <Form.Control
+          className={styles["profile-input"]}
+          type="text"
+          placeholder="Company"
+        />
+
+        <Form.Label className={styles["profile-input-label"] + " mt-4"}>
+          Job Title (Optional)
+        </Form.Label>
+        <Form.Control
+          className={styles["profile-input"]}
+          type="text"
+          placeholder="Job title"
+        />
+
+        <Form.Label className={styles["profile-input-label"] + " mt-4"}>
+          Bio (Optional)
         </Form.Label>
         <Form.Control
           as="textarea"
@@ -30,7 +57,7 @@ const Profile = ({ goToNextStep }: any) => {
         />
 
         <Form.Label className={styles["profile-input-label"] + " mt-4"}>
-          Username
+          Username (Optional)
         </Form.Label>
         <Form.Control
           className={styles["profile-input"]}
@@ -39,8 +66,8 @@ const Profile = ({ goToNextStep }: any) => {
         />
 
         <p className={styles["helper-text"] + " border-0 p-0"}>
-          This is how you will be found in the platform. You’ll be found by your
-          full name and email as well.
+          This is how you can be found in the platform. You’ll be found by your
+          name and email as well.
         </p>
 
         <Button
