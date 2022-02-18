@@ -6,20 +6,21 @@ import linkedInLogo from "../../public/static/images/linkedin-logo.png";
 import facebookLogo from "../../public/static/images/facebook.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
+import router from "next/router";
 
 const LoginForm = () => {
   return (
     <>
       <div className={styles["signup-form"]}>
         <Form>
-          <Link href={"/"} passHref>
-            <Image
-              src={logoImage}
-              width={"55.38px"}
-              height={"55.38p "}
-              alt={"logo image"}
-            />
-          </Link>
+          <Image
+            className={"logo"}
+            onClick={() => router.push("/")}
+            src={logoImage}
+            width={"55.38px"}
+            height={"55.38p "}
+            alt={"logo image"}
+          />
           <p className={styles["title"]}>Log In</p>
           <div className="d-flex flex-column w-100">
             <Button className={styles["social-btn"] + " mb-2"}>

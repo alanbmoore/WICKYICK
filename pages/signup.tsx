@@ -1,4 +1,5 @@
 import SignUpForm from "../components/sign-up-form";
+import withoutAuth from "../utils/withoutAuth";
 
 const SignUp = () => {
   return (
@@ -22,4 +23,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withoutAuth(SignUp);

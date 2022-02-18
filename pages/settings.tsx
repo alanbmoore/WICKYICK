@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "../styles/Settings.module.scss";
 import SettingForm from "../components/settings";
 import Link from "next/link";
+import withAuth from "../utils/withAuth";
 
 const Settings = () => {
   return (
@@ -36,4 +37,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default withAuth(Settings);

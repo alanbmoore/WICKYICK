@@ -25,10 +25,12 @@
     font-weight: 400;
     &.last-child{
       margin-right: 2%;
+      padding: 0.5rem 1rem;
     }
     a{
       color: $black;
       text-decoration: none !important;
+      cursor: pointer;
       &:hover{
         color: $purple !important;
       }

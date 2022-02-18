@@ -1,4 +1,5 @@
 import LoginForm from "../components/login-form";
+import withoutAuth from "../utils/withoutAuth";
 
 const Login = () => {
   return (
@@ -22,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withoutAuth(Login);

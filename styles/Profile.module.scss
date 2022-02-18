@@ -3,6 +3,9 @@
 .profile-top-section{
   display: flex;
   align-items: center;
+  .profile-pic{
+    border-radius: 50%;
+  }
   .user-info{
     margin-left: 3%;
     .user-name {

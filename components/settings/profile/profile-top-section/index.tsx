@@ -9,7 +9,6 @@ interface IProfileTopSection {
 }
 
 const ProfileTopSection = ({ changeLicense, stepNo }: IProfileTopSection) => {
-  // const [picture, setPicture] = useState(null);
   const [imgData, setImgData] = useState(Person);
 
   const onChangePicture = (e: any) => {
@@ -40,31 +39,31 @@ const ProfileTopSection = ({ changeLicense, stepNo }: IProfileTopSection) => {
         </div>
       </div>
       <div>
-        {stepNo === 0 ? (
+        {/*{stepNo === 0 ? (*/}
+        {/*  <p className={styles["helper-text"]}>*/}
+        {/*    Not you?{" "}*/}
+        {/*    <span*/}
+        {/*      onClick={() => {*/}
+        {/*        changeLicense && changeLicense();*/}
+        {/*      }}*/}
+        {/*    >*/}
+        {/*      Change license number*/}
+        {/*    </span>*/}
+        {/*  </p>*/}
+        {/*) : (*/}
+        <div>
           <p className={styles["helper-text"]}>
-            Not you?{" "}
-            <span
-              onClick={() => {
-                changeLicense && changeLicense();
-              }}
-            >
-              Change license number
-            </span>
+            <label htmlFor="uploadImage">Upload Photo</label>
+            <input
+              accept="image/png, image/jpeg"
+              type="file"
+              className="form-control-file d-none"
+              id="uploadImage"
+              onChange={onChangePicture}
+            />
           </p>
-        ) : (
-          <div>
-            <p className={styles["helper-text"]}>
-              <label htmlFor="uploadImage">Upload Photo</label>
-              <input
-                accept="image/png, image/jpeg"
-                type="file"
-                className="form-control-file d-none"
-                id="uploadImage"
-                onChange={onChangePicture}
-              />
-            </p>
-          </div>
-        )}
+        </div>
+        {/*)}*/}
       </div>
     </>
   );

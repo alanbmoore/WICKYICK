@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import logoImage from "../../public/static/images/logo.png";
+import { isLogin, logout } from "../../services/isLoggedIn";
 
 const AppNavbar = () => {
   const router = useRouter();
@@ -37,20 +38,32 @@ const AppNavbar = () => {
               >
                 Help
               </Nav.Link>
-              <Nav.Link
-                className={styles["nav-links"] + " " + styles["last-child"]}
-                href="#"
-              >
-                <Link href={"/login"} passHref>
-                  Login
-                </Link>
-              </Nav.Link>
-              <Button
-                onClick={() => router.push("/signup")}
-                className={styles["signup-btn"]}
-              >
-                Sign Up
-              </Button>
+              {!isLogin() ? (
+                <>
+                  <div
+                    className={styles["nav-links"] + " " + styles["last-child"]}
+                  >
+                    <Link href={"/login"} passHref>
+                      Login
+                    </Link>
+                  </div>
+
+                  <Button
+                    onClick={() => router.push("/signup")}
+                    className={styles["signup-btn"]}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              ) : (
+                <div
+                  className={styles["nav-links"] + " " + styles["last-child"]}
+                >
+                  <a className={"m-0"} onClick={logout}>
+                    logout
+                  </a>
+                </div>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -56,7 +56,6 @@ const SettingForm = () => {
                 <div>
                   <Row>
                     <Col xs={12} md={11}>
-                      <ProfileTopSection stepNo={currentStep} />
                       <Profile
                         goToNextStep={(stepNo: number) =>
                           setCurrentStep(stepNo)
