@@ -16,6 +16,7 @@ var _react = _interopRequireWildcard(__webpack_require__(6689));
 var _head = _interopRequireDefault(__webpack_require__(4957));
 var _imageConfig = __webpack_require__(8028);
 var _useIntersection = __webpack_require__(7190);
+var _imageConfigContext = __webpack_require__(744);
 function _defineProperty(obj, key, value) {
     if (key in obj) {
         Object.defineProperty(obj, key, {
@@ -97,6 +98,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
     }
     return target;
 }
+const configEnv = {"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default"};
 const loadedImageURLs = new Set();
 const allImgs = new Map();
 let perfObserver;
@@ -147,17 +149,7 @@ function isStaticImageData(src) {
 function isStaticImport(src) {
     return typeof src === 'object' && (isStaticRequire(src) || isStaticImageData(src));
 }
-const { deviceSizes: configDeviceSizes , imageSizes: configImageSizes , loader: configLoader , path: configPath , domains: configDomains ,  } = {"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default"} || _imageConfig.imageConfigDefault;
-// sort smallest to largest
-const allSizes = [
-    ...configDeviceSizes,
-    ...configImageSizes
-];
-configDeviceSizes.sort((a, b)=>a - b
-);
-allSizes.sort((a, b)=>a - b
-);
-function getWidths(width, layout, sizes) {
+function getWidths({ deviceSizes , allSizes  }, width, layout, sizes) {
     if (sizes && (layout === 'fill' || layout === 'responsive')) {
         // Find all the "vw" percent sizes used in the sizes prop
         const viewportWidthRe = /(^|\s)(1?\d?\d)vw/g;
@@ -168,7 +160,7 @@ function getWidths(width, layout, sizes) {
         if (percentSizes.length) {
             const smallestRatio = Math.min(...percentSizes) * 0.01;
             return {
-                widths: allSizes.filter((s)=>s >= configDeviceSizes[0] * smallestRatio
+                widths: allSizes.filter((s)=>s >= deviceSizes[0] * smallestRatio
                 ),
                 kind: 'w'
             };
@@ -180,7 +172,7 @@ function getWidths(width, layout, sizes) {
     }
     if (typeof width !== 'number' || layout === 'fill' || layout === 'responsive') {
         return {
-            widths: configDeviceSizes,
+            widths: deviceSizes,
             kind: 'w'
         };
     }
@@ -204,7 +196,7 @@ function getWidths(width, layout, sizes) {
         kind: 'x'
     };
 }
-function generateImgAttrs({ src , unoptimized , layout , width , quality , sizes , loader  }) {
+function generateImgAttrs({ config , src , unoptimized , layout , width , quality , sizes , loader  }) {
     if (unoptimized) {
         return {
             src,
@@ -212,11 +204,12 @@ function generateImgAttrs({ src , unoptimized , layout , width , quality , sizes
             sizes: undefined
         };
     }
-    const { widths , kind  } = getWidths(width, layout, sizes);
+    const { widths , kind  } = getWidths(config, width, layout, sizes);
     const last = widths.length - 1;
     return {
         sizes: !sizes && kind === 'w' ? '100vw' : sizes,
         srcSet: widths.map((w, i)=>`${loader({
+                config,
                 src,
                 quality,
                 width: w
@@ -229,6 +222,7 @@ function generateImgAttrs({ src , unoptimized , layout , width , quality , sizes
         // and `sizes` are defined.
         // This bug cannot be reproduced in Chrome or Firefox.
         src: loader({
+            config,
             src,
             quality,
             width: widths[last]
@@ -245,13 +239,13 @@ function getInt(x) {
     return undefined;
 }
 function defaultImageLoader(loaderProps) {
-    const load = loaders.get(configLoader);
+    var ref;
+    const loaderKey = ((ref = loaderProps.config) === null || ref === void 0 ? void 0 : ref.loader) || 'default';
+    const load = loaders.get(loaderKey);
     if (load) {
-        return load(_objectSpread({
-            root: configPath
-        }, loaderProps));
+        return load(loaderProps);
     }
-    throw new Error(`Unknown "loader" found in "next.config.js". Expected: ${_imageConfig.VALID_LOADERS.join(', ')}. Received: ${configLoader}`);
+    throw new Error(`Unknown "loader" found in "next.config.js". Expected: ${_imageConfig.VALID_LOADERS.join(', ')}. Received: ${loaderKey}`);
 }
 // See https://stackoverflow.com/q/39777833/266535 for why we use this ref
 // handler instead of the img's onLoad attribute.
@@ -319,6 +313,23 @@ function Image(_param) {
         "blurDataURL"
     ]);
     const imgRef = (0, _react).useRef(null);
+    const configContext = (0, _react).useContext(_imageConfigContext.ImageConfigContext);
+    const config = (0, _react).useMemo(()=>{
+        const c = configEnv || configContext || _imageConfig.imageConfigDefault;
+        const allSizes = [
+            ...c.deviceSizes,
+            ...c.imageSizes
+        ].sort((a, b)=>a - b
+        );
+        const deviceSizes = c.deviceSizes.sort((a, b)=>a - b
+        );
+        return _objectSpread({}, c, {
+            allSizes,
+            deviceSizes
+        });
+    }, [
+        configContext
+    ]);
     let rest = all;
     let layout = sizes ? 'responsive' : 'intrinsic';
     if ('layout' in rest) {
@@ -456,6 +467,7 @@ function Image(_param) {
     };
     if (isVisible) {
         imgAttributes = generateImgAttrs({
+            config,
             src,
             unoptimized,
             layout,
@@ -521,6 +533,7 @@ function Image(_param) {
         ref: imgRef,
         style: _objectSpread({}, imgStyle, blurStyle)
     })), isLazy && /*#__PURE__*/ _react.default.createElement("noscript", null, /*#__PURE__*/ _react.default.createElement("img", Object.assign({}, rest, generateImgAttrs({
+        config,
         src,
         unoptimized,
         layout,
@@ -549,9 +562,9 @@ function Image(_param) {
 function normalizeSrc(src) {
     return src[0] === '/' ? src.slice(1) : src;
 }
-function imgixLoader({ root , src , width , quality  }) {
+function imgixLoader({ config , src , width , quality  }) {
     // Demo: https://static.imgix.net/daisy.png?auto=format&fit=max&w=300
-    const url = new URL(`${root}${normalizeSrc(src)}`);
+    const url = new URL(`${config.path}${normalizeSrc(src)}`);
     const params = url.searchParams;
     params.set('auto', params.get('auto') || 'format');
     params.set('fit', params.get('fit') || 'max');
@@ -561,10 +574,10 @@ function imgixLoader({ root , src , width , quality  }) {
     }
     return url.href;
 }
-function akamaiLoader({ root , src , width  }) {
-    return `${root}${normalizeSrc(src)}?imwidth=${width}`;
+function akamaiLoader({ config , src , width  }) {
+    return `${config.path}${normalizeSrc(src)}?imwidth=${width}`;
 }
-function cloudinaryLoader({ root , src , width , quality  }) {
+function cloudinaryLoader({ config , src , width , quality  }) {
     // Demo: https://res.cloudinary.com/demo/image/upload/w_300,c_limit,q_auto/turtles.jpg
     const params = [
         'f_auto',
@@ -573,14 +586,19 @@ function cloudinaryLoader({ root , src , width , quality  }) {
         'q_' + (quality || 'auto')
     ];
     const paramsString = params.join(',') + '/';
-    return `${root}${paramsString}${normalizeSrc(src)}`;
+    return `${config.path}${paramsString}${normalizeSrc(src)}`;
 }
 function customLoader({ src  }) {
     throw new Error(`Image with src "${src}" is missing "loader" prop.` + `\nRead more: https://nextjs.org/docs/messages/next-image-missing-loader`);
 }
-function defaultLoader({ root , src , width , quality  }) {
+function defaultLoader({ config , src , width , quality  }) {
     if (false) {}
-    return `${root}?url=${encodeURIComponent(src)}&w=${width}&q=${quality || 75}`;
+    if (src.endsWith('.svg') && !config.dangerouslyAllowSVG) {
+        // Special case to make svg serve as-is to avoid proxying
+        // through the built-in Image Optimization API.
+        return src;
+    }
+    return `${config.path}?url=${encodeURIComponent(src)}&w=${width}&q=${quality || 75}`;
 } //# sourceMappingURL=image.js.map
 
 
@@ -684,13 +702,30 @@ function observe(element, callback, options) {
         if (elements.size === 0) {
             observer.disconnect();
             observers.delete(id);
+            let index = idList.findIndex((obj)=>obj.root === id.root && obj.margin === id.margin
+            );
+            if (index > -1) {
+                idList.splice(index, 1);
+            }
         }
     };
 }
 const observers = new Map();
+const idList = [];
 function createObserver(options) {
-    const id = options.rootMargin || '';
-    let instance = observers.get(id);
+    const id = {
+        root: options.root || null,
+        margin: options.rootMargin || ''
+    };
+    let existing = idList.find((obj)=>obj.root === id.root && obj.margin === id.margin
+    );
+    let instance;
+    if (existing) {
+        instance = observers.get(existing);
+    } else {
+        instance = observers.get(id);
+        idList.push(id);
+    }
     if (instance) {
         return instance;
     }

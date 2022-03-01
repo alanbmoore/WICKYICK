@@ -18,7 +18,8 @@ const UserService = {
             const response = await (0,_Axios__WEBPACK_IMPORTED_MODULE_0__/* .makeRequest */ .$)(url, "put", {}, data);
             return response.data;
         } catch (error) {
-            throw error?.response?.data;
+            var ref;
+            throw error === null || error === void 0 ? void 0 : (ref = error.response) === null || ref === void 0 ? void 0 : ref.data;
         }
     },
     getUserList: async (params)=>{
@@ -27,7 +28,8 @@ const UserService = {
             const response = await (0,_Axios__WEBPACK_IMPORTED_MODULE_0__/* .makeRequest */ .$)(url, "get", {}, {}, params);
             return response.data;
         } catch (error) {
-            throw error?.response?.data;
+            var ref;
+            throw error === null || error === void 0 ? void 0 : (ref = error.response) === null || ref === void 0 ? void 0 : ref.data;
         }
     },
     getInstagramData: async (id)=>{
@@ -36,7 +38,8 @@ const UserService = {
             const response = await (0,_Axios__WEBPACK_IMPORTED_MODULE_0__/* .makeRequest */ .$)(url, "get", {}, {});
             return response.data;
         } catch (error) {
-            throw error?.response?.data;
+            var ref;
+            throw error === null || error === void 0 ? void 0 : (ref = error.response) === null || ref === void 0 ? void 0 : ref.data;
         }
     },
     sendInstagramCode: async (data)=>{
@@ -45,7 +48,8 @@ const UserService = {
             const response = await (0,_Axios__WEBPACK_IMPORTED_MODULE_0__/* .makeRequest */ .$)(url, "post", {}, data);
             return response.data;
         } catch (error) {
-            throw error?.response?.data;
+            var ref;
+            throw error === null || error === void 0 ? void 0 : (ref = error.response) === null || ref === void 0 ? void 0 : ref.data;
         }
     }
 };
