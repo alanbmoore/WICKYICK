@@ -15,7 +15,13 @@ class SocialButton extends React.Component {
         onClick={triggerLogin}
         {...props}
       >
-        <Image src={icon} width={"33px"} height={"33px"} alt={"social icon"} />
+        <Image
+          unoptimized={true}
+          src={icon}
+          width={"33px"}
+          height={"33px"}
+          alt={"social icon"}
+        />
         <p> {children}</p>
       </Button>
     );

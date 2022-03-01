@@ -201,6 +201,7 @@ const AgentProfileBanner = () => {
                               </video>
                             ) : (
                               <Image
+                                // unoptimized={true}
                                 className={"instagram-pic"}
                                 width="300px"
                                 height="300px"

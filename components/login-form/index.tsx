@@ -7,8 +7,24 @@ import facebookLogo from "../../public/static/images/facebook.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import router from "next/router";
+import SocialButton from "../sign-up-form/SocialButton";
+import { hideLoading, showLoading } from "../../store/loadingSlice";
+import { AuthServices } from "../../services/auth";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
+  const onSuccess = (data: any) => {
+    localStorage.setItem("id_token", data.token.key);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    toast.success("You have successfully registered", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    router.push("/settings");
+  };
+
   return (
     <>
       <div className={styles["signup-form"]}>
@@ -22,16 +38,39 @@ const LoginForm = () => {
             alt={"logo image"}
           />
           <p className={styles["title"]}>Log In</p>
+
           <div className="d-flex flex-column w-100">
-            <Button className={styles["social-btn"] + " mb-2"}>
-              <Image
-                src={googleLogo}
-                width={"35px"}
-                height={"35px"}
-                alt={"google image"}
-              />
-              <p> Login with Google</p>
-            </Button>
+            <SocialButton
+              provider="google"
+              appId={process.env.REACT_APP_GG_APP_ID || ""}
+              onLoginSuccess={async (user: any) => {
+                let obj = {
+                  access_token: user?.token?.accessToken,
+                  provider: "google",
+                };
+                dispatch(showLoading());
+                AuthServices.submitSocialLogin(
+                  obj,
+                  "api/user/social-login/google/"
+                )
+                  .then((response: any) => {
+                    onSuccess(response);
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                  })
+                  .catch((error: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                  });
+              }}
+              onLoginFailure={(err: any) => {}}
+              icon={googleLogo}
+            >
+              Login with Google
+            </SocialButton>
+
             <Button className={styles["social-btn"] + " mb-2"}>
               <Image
                 src={linkedInLogo}
@@ -41,16 +80,39 @@ const LoginForm = () => {
               />
               <p> Login with LinkedIn</p>
             </Button>
-            <Button className={styles["social-btn"] + " mb-2"}>
-              <Image
-                src={facebookLogo}
-                width={"30px"}
-                height={"30px"}
-                alt={"fb image"}
-              />
-              <p> Login with Facebook</p>
-            </Button>
+
+            <SocialButton
+              provider="facebook"
+              appId={process.env.REACT_APP_FACEBOOK_ID || ""}
+              onLoginSuccess={async (user: any) => {
+                let obj = {
+                  access_token: user?.token?.accessToken,
+                  provider: "facebook",
+                };
+                dispatch(showLoading());
+                AuthServices.submitSocialLogin(
+                  obj,
+                  "api/user/social-login/facebook/"
+                )
+                  .then((response: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                    onSuccess(response);
+                  })
+                  .catch((error: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                  });
+              }}
+              onLoginFailure={(err: any) => {}}
+              icon={facebookLogo}
+            >
+              Login with Facebook
+            </SocialButton>
           </div>
+
           <div className={styles["or-seperator"]}>or</div>
 
           <Row>

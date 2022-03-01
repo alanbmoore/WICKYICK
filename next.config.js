@@ -19,6 +19,7 @@ module.exports = {
       "wickyick-profile-images.s3.amazonaws.com",
       "scontent.cdninstagram.com",
       "video.cdninstagram.com",
+      "scontent-lga3-2.cdninstagram.com",
     ],
   },
 };
