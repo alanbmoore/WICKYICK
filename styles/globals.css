@@ -156,7 +156,7 @@ body {
   border: 1px solid #7E3076 !important;
   color: #fff;
   height: 40px;
-  background-color: #7E3076
+  background-color: #7e307687;
 }
 
 .buttons button:nth-child(1) {

@@ -61,7 +61,7 @@ const SettingForm = () => {
           }, 1000);
         });
     }
-  }, [code]);
+  }, [dispatch, code]);
 
   return (
     <>

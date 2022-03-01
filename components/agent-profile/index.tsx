@@ -38,7 +38,7 @@ const AgentProfileBanner = () => {
           }, 1000);
         });
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <>
@@ -57,6 +57,7 @@ const AgentProfileBanner = () => {
                     height={"130px"}
                     width={"130px"}
                     className="rounded-circle"
+                    alt="user-pic"
                   />
                 </div>
                 <div className="px-4">
@@ -71,7 +72,12 @@ const AgentProfileBanner = () => {
                   </div>
                   <div className="social-list mt-3">
                     {userData?.instagram_connected && (
-                      <Image width="30px" height="30px" src={Instagram} />
+                      <Image
+                        width="30px"
+                        height="30px"
+                        src={Instagram}
+                        alt="instagram-icon"
+                      />
                     )}
                   </div>
                 </div>
@@ -80,7 +86,7 @@ const AgentProfileBanner = () => {
                 <div>
                   <button className="btn btn-primary px-4 ms-3">
                     <div className="d-flex align-items-center">
-                      <Image src={FollowIcon} />
+                      <Image src={FollowIcon} alt="follow-icon" />
                       <span
                         className="mx-2 font-bold"
                         style={{ fontSize: "16px" }}
@@ -91,7 +97,7 @@ const AgentProfileBanner = () => {
                   </button>
                   <button className="btn btn-outline-primary px-4 mx-2">
                     <div className="d-flex align-items-center">
-                      <Image src={MessageIcon} />
+                      <Image src={MessageIcon} alt="message-icon" />
                       <span
                         className="mx-2 font-bold"
                         style={{ fontSize: "16px" }}
@@ -103,13 +109,23 @@ const AgentProfileBanner = () => {
                 </div>
                 <div className="d-flex align-items-center">
                   <div className="follow-icon d-flex align-items-center mx-3">
-                    <Image src={FollowBlack} width="25px" height="25px" />
+                    <Image
+                      src={FollowBlack}
+                      width="25px"
+                      height="25px"
+                      alt="follow-back-icon"
+                    />
                     <span className="mx-1"> 1.2K</span>
                   </div>
                   <AiOutlineHeart className="mx-3" size="23px" />
                   <RiShareFill className="mx-3" size="23px" />
                   <div className="social-list align-items-center d-flex mx-4">
-                    <Image width="25px" height="25px" src={CautionIcon} />
+                    <Image
+                      width="25px"
+                      height="25px"
+                      src={CautionIcon}
+                      alt="caution-icon"
+                    />
                   </div>
                 </div>
               </div>
@@ -201,6 +217,7 @@ const AgentProfileBanner = () => {
                               </video>
                             ) : (
                               <Image
+                                alt={"user-pic"}
                                 unoptimized={true}
                                 className={"instagram-pic"}
                                 width="300px"
@@ -211,6 +228,7 @@ const AgentProfileBanner = () => {
 
                             <div className="post-type">
                               <Image
+                                alt={"post-type-pic"}
                                 width="30px"
                                 height="30px"
                                 src={Instagram}
