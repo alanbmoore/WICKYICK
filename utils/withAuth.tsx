@@ -5,10 +5,7 @@ const withAuth = (WrappedComponent: any) => {
     // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const Router = useRouter();
-      debugger;
-
       const accessToken = localStorage.getItem("id_token");
-
       // If there is no access token we redirect to "/" page.
       if (!accessToken) {
         Router.replace("/");

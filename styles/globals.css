@@ -21,6 +21,14 @@ a {
   resize: none !important;
 }
 
+.font-bold{
+  font-weight: 700;
+}
+
+.pr-0{
+  padding-right: 0 !important;
+}
+
 .completed{
   color: #2D8C48 !important;
 }
@@ -35,4 +43,186 @@ a {
 
 .logo{
   cursor: pointer;
+}
+ .loader {
+   position: fixed;
+   font-family: Arial, Helvetica, sans-serif;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background: rgba(0, 0, 0, 0.75);
+   z-index: 99999;
+   -webkit-transition: opacity 400ms ease-in;
+   -moz-transition: opacity 400ms ease-in;
+   transition: opacity 400ms ease-in;
+   opacity: 1;
+   pointer-events: auto;
+   /* pointer-events: none; */
+ }
+
+
+.spinner-border {
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+  color: #7E3076;
+  border-width: 3.5px;
+}
+
+/*agent-card*/
+
+
+body {
+}
+
+.agent-card {
+  border-radius: 16px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer
+}
+
+.agent-card:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #E1BEE7;
+  transform: scaleY(1);
+  transition: all 0.5s;
+  transform-origin: bottom
+}
+
+.agent-card:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #7E3076;
+  transform: scaleY(0);
+  transition: all 0.5s;
+  transform-origin: bottom
+}
+
+.agent-card:hover::after {
+  transform: scaleY(1)
+}
+
+.fonts {
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 0;
+}
+
+.social-list {
+  list-style: none;
+  padding: 0
+}
+
+.social-list svg {
+  color: #EEF0F3;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  margin: 10px 5px;
+}
+
+.img-section{
+  min-width: 130px;
+}
+
+.img-section img{
+  width: 130px !important;
+  object-fit: cover;
+  height: 130px !important;
+}
+
+.social-list svg path{
+  fill: #2F2F2F;
+}
+.buttons button:nth-child(2) {
+  border: 1px solid #7E3076 !important;
+  color: #7E3076;
+  height: 40px
+}
+
+.buttons button:nth-child(2):hover {
+  border: 1px solid #7E3076 !important;
+  color: #fff;
+  height: 40px;
+  background-color: #7E3076
+}
+
+.buttons button:nth-child(1) {
+  border: 1px solid #7E3076 !important;
+  background-color: #7E3076;
+  color: #fff;
+  height: 40px
+}
+
+.feed-section {
+  padding: 20px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+}
+
+.feed-section .title{
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E3E3E3;
+}
+
+.feed-section .notification-title{
+  color: #2F2F2F;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.feed-section .time{
+  opacity: 0.5;
+}
+
+.feed-section .feed-card{
+  background: rgba(238, 240, 243, 0.82);
+  border-radius: 8px;
+}
+
+.post-section {
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+}
+
+.post-section .tabs{
+  cursor: pointer;
+  padding: 12px 20px;
+  border: 1px solid #EBEBEB;
+  box-sizing: border-box;
+  border-radius: 24px;
+}
+
+.post-section .active{
+  background: #2F2F2F;
+  color: white !important;
+}
+
+.post-section .posts{
+  padding: 20px 15px;
+}
+
+.post-section .post-type{
+  top: 7px;
+  position: absolute;
+  left: 15px;
+}
+
+.post-section .instagram-pic{
+  object-fit: cover;
 }

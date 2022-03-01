@@ -16,4 +16,50 @@ export const UserService = {
       throw error?.response?.data;
     }
   },
+
+  getUserList: async (params: any) => {
+    try {
+      const url = "api/user/users/";
+      const response = (await makeRequest(
+        url,
+        "get",
+        {},
+        {},
+        params
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
+
+  getInstagramData: async (id: any) => {
+    try {
+      const url = `api/user/get-instagram-media/${id}/`;
+      const response = (await makeRequest(
+        url,
+        "get",
+        {},
+        {}
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
+
+  sendInstagramCode: async (data: any) => {
+    try {
+      const url = "api/user/get-instagram-token/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
 };

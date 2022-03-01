@@ -34,8 +34,15 @@
     line-height: 20px;
     cursor: pointer;
     color: $purple !important;
+    text-decoration: none !important;
     &:hover{
       text-decoration: underline !important;
+    }
+    &.connected{
+      cursor: unset !important;
+      &:hover{
+        text-decoration: none !important;
+      }
     }
   }
 

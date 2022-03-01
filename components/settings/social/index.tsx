@@ -1,7 +1,28 @@
 import Image from "next/image";
 import styles from "../../../styles/Social-Connect.module.scss";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const SocialConnect = ({ name, image, description }: any) => {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "");
+    setUser(user);
+  }, [user]);
+
+  const connect = (name: string) => {
+    if (name === "Facebook/Instagram") {
+      window.location.href =
+        process.env.REACT_APP_INSTAGRAM_URL +
+        "?client_id=" +
+        process.env.REACT_APP_INSTAGRAM_CLIENT_ID +
+        "&redirect_uri=" +
+        process.env.REACT_APP_INSTAGRAM_REDIRECT_URI +
+        "&scope=user_profile,user_media&response_type=code";
+    }
+  };
+
   return (
     <>
       <div className={styles["social-card"]}>
@@ -21,7 +42,18 @@ const SocialConnect = ({ name, image, description }: any) => {
               <b>{name}</b>
             </h5>
           </div>
-          <a className={styles["connect-btn"]}>Connect</a>
+          {/*{user?.instagram_data && name === "Facebook/Instagram" ? (*/}
+          {/*  <a*/}
+          {/*    onClick={() => {}}*/}
+          {/*    className={styles["connect-btn"] + " " + styles["connected"]}*/}
+          {/*  >*/}
+          {/*    Connected*/}
+          {/*  </a>*/}
+          {/*) : (*/}
+          <a onClick={() => connect(name)} className={styles["connect-btn"]}>
+            Connect
+          </a>
+          {/*)}*/}
         </div>
         <div className={styles["vertical-line"]}></div>
 

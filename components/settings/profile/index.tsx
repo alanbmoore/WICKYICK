@@ -8,8 +8,11 @@ import Image from "next/image";
 import Person from "../../../public/static/images/person.svg";
 import { UserService } from "../../../services/user";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../../store/loadingSlice";
 
 const Profile = ({ goToNextStep }: any) => {
+  const dispatch = useDispatch();
   const [cityList, setCityList] = useState([]);
   const [img, setImage] = useState(Person);
   const [selectedFile, setSelectedFile] = useState();
@@ -178,34 +181,24 @@ const Profile = ({ goToNextStep }: any) => {
       formData.append("bio", bio.value);
       formData.append("job_title", jobTitle.value);
       formData.append("site_username", username.value);
-
+      dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
           localStorage.setItem("user", JSON.stringify(data));
-          toast.success(data.message, {
+          toast.success("Profile updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });
-          goToNextStep(1);
+          goToNextStep(2);
         })
-        .catch((error: any) => {});
-      // goToNextStep(2);
+        .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        });
     }
-
-    //   fetch(
-    //       'https://freeimage.host/api/1/upload?key=<YOUR_API_KEY>',
-    //       {
-    //         method: 'POST',
-    //         body: formData,
-    //       }
-    //   )
-    //       .then((response) => response.json())
-    //       .then((result) => {
-    //         console.log('Success:', result);
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error:', error);
-    //       });
-    // };
   };
 
   return (
@@ -274,8 +267,8 @@ const Profile = ({ goToNextStep }: any) => {
           onChange={(opt: any) =>
             setLocation({
               isInvalid: false,
-              value: opt.value,
-              label: opt.value,
+              value: opt?.value,
+              label: opt?.value,
               err: "",
             })
           }

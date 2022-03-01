@@ -1,7 +1,12 @@
 @import "../public/static/scss/variables";
 
 .client-card{
+  cursor: pointer;
   margin: auto;
+  .profile-pic{
+    object-fit: cover;
+    border-radius: 16px;
+  }
   .card-body{
     padding-left: 0 !important;
     .agent-name{

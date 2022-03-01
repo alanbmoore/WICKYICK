@@ -17,6 +17,11 @@ import { Col, Container, Row } from "react-bootstrap";
 import CityCard from "../components/city-card";
 import AppFooter from "../components/footer";
 import AppNavbar from "../components/navbar";
+import { useEffect, useState } from "react";
+import { UserService } from "../services/user";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../store/loadingSlice";
+import router from "next/router";
 
 const agents: Array<ICard> = [
   {
@@ -120,6 +125,29 @@ const cities: Array<ICard> = [
 ];
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const [userList, setUserList] = useState([]);
+  const [count, setCount] = useState([]);
+
+  useEffect(() => {
+    if (userList.length === 0) {
+      dispatch(showLoading());
+      UserService.getUserList({ offset: 0, limit: 6 })
+        .then((response: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+          setUserList(response.results);
+          setCount(response.count);
+        })
+        .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        });
+    }
+  }, [userList]);
+
   return (
     <>
       <Container>
@@ -128,7 +156,6 @@ const Home = () => {
       <HeroSection />
       <Container>
         {/* Trending Agents Section */}
-
         <div
           className={
             styles["heading-title"] +
@@ -136,21 +163,29 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Trending Agents</h1>
-          <a className={styles["link"]}>View all 187 {">"} </a>
+          <a className={styles["link"]}>
+            View all {count} {">"}{" "}
+          </a>
         </div>
 
         <Row className="my-3">
-          {agents.map((item: ICard, index: number) => {
+          {userList.map((item: any, index: number) => {
             return (
               <Col xs={12} md={4} lg={2} key={index}>
-                <CustomCard
-                  image={item.image}
-                  title={item.title}
-                  subDescription={item.subDescription}
-                  description={item.description}
-                  width={320}
-                  height={251}
-                />
+                <div
+                  onClick={() => {
+                    router.push("/agent-profile/" + item.pk);
+                  }}
+                >
+                  <CustomCard
+                    image={item.picture}
+                    title={item.first_name + " " + item.last_name}
+                    subDescription={item.location}
+                    description={item.bio}
+                    width={"100%"}
+                    height={"160px"}
+                  />
+                </div>
               </Col>
             );
           })}
@@ -165,20 +200,22 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Top Agents</h1>
-          <a className={styles["link"]}>View all 187 {">"} </a>
+          <a className={styles["link"]}>
+            View all {count} {">"}{" "}
+          </a>
         </div>
 
         <Row className="my-3">
-          {agents.map((item: ICard, index: number) => {
+          {userList.map((item: any, index: number) => {
             return (
               <Col xs={12} md={4} lg={2} key={index}>
                 <CustomCard
-                  image={item.image}
-                  title={item.title}
-                  subDescription={item.subDescription}
-                  description={item.description}
-                  width={320}
-                  height={251}
+                  image={item.picture}
+                  title={item.first_name + " " + item.last_name}
+                  subDescription={item.location}
+                  description={item.bio}
+                  width={"100%"}
+                  height={"160px"}
                 />
               </Col>
             );
@@ -194,20 +231,22 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Featured Agents</h1>
-          <a className={styles["link"]}>View all 187 {">"} </a>
+          <a className={styles["link"]}>
+            View all {count} {">"}{" "}
+          </a>
         </div>
 
         <Row className="my-3">
-          {agents.map((item: ICard, index: number) => {
+          {userList.map((item: any, index: number) => {
             return (
               <Col xs={12} md={4} lg={2} key={index}>
                 <CustomCard
-                  image={item.image}
-                  title={item.title}
-                  subDescription={item.subDescription}
-                  description={item.description}
-                  width={320}
-                  height={251}
+                  image={item.picture}
+                  title={item.first_name + " " + item.last_name}
+                  subDescription={item.location}
+                  description={item.bio}
+                  width={"100%"}
+                  height={"160px"}
                 />
               </Col>
             );

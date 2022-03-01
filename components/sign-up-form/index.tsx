@@ -6,14 +6,17 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import facebookLogo from "../../public/static/images/facebook.png";
 import styles from "../../styles/SignUp.module.scss";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { AuthServices } from "../../services/auth";
 import { isValid } from "../../utils/helper";
 import { toast } from "react-toastify";
 import SocialButton from "./SocialButton";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../store/loadingSlice";
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [email, setEmail] = useState({ isInvalid: false, value: "", err: "" });
   const [firstName, setFirstName] = useState({
@@ -98,15 +101,21 @@ const SignUpForm = () => {
         first_name: firstName.value,
         last_name: lastName.value,
         email: email.value,
-        // password: password.value,
         password1: password.value,
         password2: password.value,
       };
+      dispatch(showLoading());
       AuthServices.signup(obj)
         .then((data: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
           onSuccess(data);
         })
         .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
           if (error?.email) {
             toast.error(error?.email[0], {
               position: toast.POSITION.TOP_RIGHT,
@@ -157,14 +166,22 @@ const SignUpForm = () => {
                   access_token: user?.token?.accessToken,
                   provider: "google",
                 };
+                dispatch(showLoading());
                 AuthServices.submitSocialLogin(
                   obj,
                   "api/user/social-login/google/"
                 )
                   .then((response: any) => {
                     onSuccess(response);
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
                   })
-                  .catch((error: any) => {});
+                  .catch((error: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                  });
               }}
               onLoginFailure={(err: any) => {}}
               icon={googleLogo}
@@ -186,19 +203,26 @@ const SignUpForm = () => {
               provider="facebook"
               appId={process.env.REACT_APP_FACEBOOK_ID || ""}
               onLoginSuccess={async (user: any) => {
-                debugger;
                 let obj = {
                   access_token: user?.token?.accessToken,
                   provider: "facebook",
                 };
+                dispatch(showLoading());
                 AuthServices.submitSocialLogin(
                   obj,
                   "api/user/social-login/facebook/"
                 )
                   .then((response: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
                     onSuccess(response);
                   })
-                  .catch((error: any) => {});
+                  .catch((error: any) => {
+                    setTimeout(() => {
+                      dispatch(hideLoading());
+                    }, 1000);
+                  });
               }}
               onLoginFailure={(err: any) => {}}
               icon={facebookLogo}

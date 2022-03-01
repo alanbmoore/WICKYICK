@@ -7,13 +7,15 @@ import { ICard } from "../../../interfaces/card";
 import Property1 from "../../../public/static/images/property1.png";
 import Property2 from "../../../public/static/images/property2.png";
 import Property3 from "../../../public/static/images/property3.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileTopSection from "../profile/profile-top-section";
 import Checkbox from "../../checkbox";
 import { isValid } from "../../../utils/helper";
 import { AuthServices } from "../../../services/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { UserService } from "../../../services/user";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../../store/loadingSlice";
 
 // const properties: Array<ICard> = [
 //   {
@@ -44,6 +46,16 @@ import { UserService } from "../../../services/user";
 
 const LicenseForm = ({ goToNextStep }: any) => {
   // const [searchData, setSearchData] = useState<any>([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "");
+    setLicenseNumber({
+      isInvalid: false,
+      value: user?.license_number,
+      err: "",
+    });
+  }, []);
 
   const [licenseNumber, setLicenseNumber] = useState({
     isInvalid: false,
@@ -69,15 +81,23 @@ const LicenseForm = ({ goToNextStep }: any) => {
       let obj = {
         license_number: licenseNumber.value,
       };
+      dispatch(showLoading());
       UserService.updateProfile(obj)
         .then((data: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
           localStorage.setItem("user", JSON.stringify(data));
-          toast.success(data.message, {
+          toast.success("License Number added successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });
           goToNextStep(1);
         })
-        .catch((error: any) => {});
+        .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        });
     } else {
       let err = "License Number is required !";
       setLicenseNumber({

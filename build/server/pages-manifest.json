@@ -1,6 +1,8 @@
 {
   "/_app": "pages/_app.js",
+  "/agent-profile/[id]": "pages/agent-profile/[id].html",
   "/api/hello": "pages/api/hello.js",
+  "/app": "pages/app.html",
   "/": "pages/index.html",
   "/login": "pages/login.html",
   "/settings": "pages/settings.html",

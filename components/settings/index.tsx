@@ -2,13 +2,16 @@ import styles from "../../styles/Settings.module.scss";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import SideNav from "./settings-side-nav";
 import LicenseForm from "./license";
-import ProfileTopSection from "./profile/profile-top-section";
 import Profile from "./profile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SocialConnect from "./social";
 import Tiktok from "../../public/static/images/tik-tok.png";
 import Facebook from "../../public/static/images/facebook.svg";
 import LinkedIn from "../../public/static/images/linkedIn.svg";
+import { useRouter } from "next/router";
+import { UserService } from "../../services/user";
+import { hideLoading, showLoading } from "../../store/loadingSlice";
+import { useDispatch } from "react-redux";
 
 const socialData = [
   {
@@ -33,6 +36,32 @@ const socialData = [
 
 const SettingForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const router = useRouter();
+  const { code } = router.query;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (code && code?.length > 0) {
+      setCurrentStep(2);
+      let obj = {
+        code: code,
+      };
+
+      dispatch(showLoading());
+      UserService.sendInstagramCode(obj)
+        .then((data: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        })
+        .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        });
+    }
+  }, [code]);
 
   return (
     <>

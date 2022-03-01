@@ -1,8 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import router from "next/router";
-// import history from "./utils/history";
 
-const BASE_URL: string = process.env.REACT_APP_BASE_URL || "https://hipchefs-api.herokuapp.com/";
+const BASE_URL: string = process.env.REACT_APP_BASE_URL || "";
 export const axiosObj = axios.create();
 
 export const makeRequest = (
@@ -15,12 +14,11 @@ export const makeRequest = (
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("id_token");
     let updatedHeaders: any = { ...headers };
-    if (localStorage.getItem("slug")) {
-      updatedHeaders['Chef-Host'] = localStorage.getItem("slug");
-      updatedHeaders['Role'] = "EATER";
-    }
-
-    if (token) updatedHeaders = { ...updatedHeaders, Authorization: "Bearer " + token  };
+    if (token)
+      updatedHeaders = {
+        ...updatedHeaders,
+        Authorization: "Token " + token,
+      };
     axiosObj({
       url: BASE_URL + url,
       method: method,

@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import Image from "next/image";
 import { ICard } from "../../interfaces/card";
 import styles from "../../styles/Client-Card.module.scss";
+import Agent from "../../public/static/images/agent1.png";
 
 const CustomCard = ({
   image,
@@ -19,7 +20,8 @@ const CustomCard = ({
           className="border-0"
         >
           <Image
-            src={image}
+            className={styles["profile-pic"]}
+            src={image ? image : Agent}
             alt="Picture of the agent"
             width={width}
             height={height}

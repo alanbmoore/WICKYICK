@@ -3,6 +3,6 @@ export interface ICard {
   title: string;
   description: string;
   subDescription?: string;
-  width?: number;
-  height?: number;
+  width?: any;
+  height?: any;
 }
