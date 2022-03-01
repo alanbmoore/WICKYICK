@@ -54,7 +54,7 @@ var app = __webpack_require__(8163);
 
 function MyApp({ Component , pageProps  }) {
     return(/*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
-        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_redux_.Provider, {
+        /*#__PURE__*/ children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_redux_.Provider, {
             store: store,
             children: [
                 /*#__PURE__*/ jsx_runtime_.jsx(app["default"], {}),
