@@ -146,7 +146,7 @@ const Home = () => {
           }, 1000);
         });
     }
-  }, [userList]);
+  }, [dispatch, userList]);
 
   return (
     <>

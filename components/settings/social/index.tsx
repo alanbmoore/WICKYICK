@@ -20,6 +20,9 @@ const SocialConnect = ({ name, image, description }: any) => {
         "&redirect_uri=" +
         process.env.REACT_APP_INSTAGRAM_REDIRECT_URI +
         "&scope=user_profile,user_media&response_type=code";
+    } else if (name == "Tiktok") {
+      const csrfState = Math.random().toString(36).substring(2);
+      window.location.href = `https://open-api.tiktok.com/platform/oauth/connect/?client_key=awnsq0gmo2w3yjed&scope=user.info.basic,video.list&response_type=code&redirect_uri=www.wickyick.com/&state=${csrfState}`;
     }
   };
 
@@ -42,18 +45,18 @@ const SocialConnect = ({ name, image, description }: any) => {
               <b>{name}</b>
             </h5>
           </div>
-          {/*{user?.instagram_data && name === "Facebook/Instagram" ? (*/}
-          {/*  <a*/}
-          {/*    onClick={() => {}}*/}
-          {/*    className={styles["connect-btn"] + " " + styles["connected"]}*/}
-          {/*  >*/}
-          {/*    Connected*/}
-          {/*  </a>*/}
-          {/*) : (*/}
-          <a onClick={() => connect(name)} className={styles["connect-btn"]}>
-            Connect
-          </a>
-          {/*)}*/}
+          {user?.instagram_data && name === "Facebook/Instagram" ? (
+            <a
+              onClick={() => {}}
+              className={styles["connect-btn"] + " " + styles["connected"]}
+            >
+              Connected
+            </a>
+          ) : (
+            <a onClick={() => connect(name)} className={styles["connect-btn"]}>
+              Connect
+            </a>
+          )}
         </div>
         <div className={styles["vertical-line"]}></div>
 

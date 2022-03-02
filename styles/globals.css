@@ -223,6 +223,8 @@ body {
   left: 15px;
 }
 
-.post-section .instagram-pic{
+.post-section .user-instagram-pic{
   object-fit: cover;
+  width:300px;
+  height:225px;
 }

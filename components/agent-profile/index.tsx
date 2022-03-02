@@ -13,6 +13,8 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { UserService } from "../../services/user";
+// @ts-ignore
+import ModalImage from "react-modal-image";
 
 const AgentProfileBanner = () => {
   const router = useRouter();
@@ -210,19 +212,17 @@ const AgentProfileBanner = () => {
                               <video
                                 style={{ objectFit: "cover" }}
                                 width="220.13px"
-                                height="220.13px"
+                                height="225px"
                                 controls
                               >
                                 <source src={item.media_url} type="video/mp4" />
                               </video>
                             ) : (
-                              <Image
+                              <ModalImage
+                                className="user-instagram-pic"
+                                small={item.media_url}
+                                large={item.media_url}
                                 alt={"user-pic"}
-                                unoptimized={true}
-                                className={"instagram-pic"}
-                                width="300px"
-                                height="300px"
-                                src={item.media_url}
                               />
                             )}
 
