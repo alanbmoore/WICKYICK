@@ -16,7 +16,7 @@ exports.modules = {
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const BASE_URL = "https://staging-api.wickyick.com/" || 0;
+const BASE_URL = "http://127.0.0.1:8000/" || 0;
 const axiosObj = axios__WEBPACK_IMPORTED_MODULE_0___default().create();
 const makeRequest = (url, method, headers, body, params)=>{
     return new Promise((resolve, reject)=>{
