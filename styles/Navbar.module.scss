@@ -1,7 +1,8 @@
 @import "../public/static/scss/variables";
 
 .nav-bar{
-  //padding: 0.75% 2.5%;
+  padding: .5rem 10%;
+  border-bottom: 1px solid rgb(0 0 0 / 16%);
   a{
     &:hover{
       color: $purple !important;
@@ -12,6 +13,7 @@
     font-weight: 600;
     display: flex;
     align-items: baseline;
+    cursor: pointer;
     p{
       margin: 0;
       &:hover{
@@ -20,11 +22,11 @@
     }
   }
   .nav-links{
+    align-self: center;
     color: $black !important;
     font-size: 15px !important;
     font-weight: 400;
     &.last-child{
-      margin-right: 2%;
       padding: 0.5rem 1rem;
     }
     a{
@@ -50,5 +52,19 @@
     &:hover{
       background: $tapestryapprox;
     }
+  }
+  .user-avatar{
+    cursor: pointer;
+    border:2px solid #7E3076 !important;
+    border-radius: 50%;
+    background: #F7F9FA;
+    color: #fff;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 800px) {
+  .user-profile{
+    display: none;
   }
 }

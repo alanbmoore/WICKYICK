@@ -12,11 +12,13 @@ import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { AuthServices } from "../../services/auth";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { setUser } from "../../store/userSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
 
   const onSuccess = (data: any) => {
+    dispatch(setUser(data.user));
     localStorage.setItem("id_token", data.token.key);
     localStorage.setItem("user", JSON.stringify(data.user));
     toast.success("You have successfully registered", {

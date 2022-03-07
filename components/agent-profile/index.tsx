@@ -202,41 +202,45 @@ const AgentProfileBanner = () => {
                 {userData?.instagram_connected ? (
                   <div className="posts">
                     <div className="row">
-                      {media.map((item: any, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className="col-md-3 col-12 position-relative mb-3"
-                          >
-                            {item.media_url.includes("video") ? (
-                              <video
-                                style={{ objectFit: "cover" }}
-                                width="220.13px"
-                                height="225px"
-                                controls
-                              >
-                                <source src={item.media_url} type="video/mp4" />
-                              </video>
-                            ) : (
-                              <ModalImage
-                                className="user-instagram-pic"
-                                small={item.media_url}
-                                large={item.media_url}
-                                alt={"user-pic"}
-                              />
-                            )}
+                      {media &&
+                        media.map((item: any, index: number) => {
+                          return (
+                            <div
+                              key={index}
+                              className="col-md-3 col-12 position-relative mb-3"
+                            >
+                              {item.media_url.includes("video") ? (
+                                <video
+                                  style={{ objectFit: "cover" }}
+                                  width="220.13px"
+                                  height="225px"
+                                  controls
+                                >
+                                  <source
+                                    src={item.media_url}
+                                    type="video/mp4"
+                                  />
+                                </video>
+                              ) : (
+                                <ModalImage
+                                  className="user-instagram-pic"
+                                  small={item.media_url}
+                                  large={item.media_url}
+                                  alt={"user-pic"}
+                                />
+                              )}
 
-                            <div className="post-type">
-                              <Image
-                                alt={"post-type-pic"}
-                                width="30px"
-                                height="30px"
-                                src={Instagram}
-                              />
+                              <div className="post-type">
+                                <Image
+                                  alt={"post-type-pic"}
+                                  width="30px"
+                                  height="30px"
+                                  src={Instagram}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
                     </div>
                   </div>
                 ) : (

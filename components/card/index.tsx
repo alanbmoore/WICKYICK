@@ -15,10 +15,7 @@ const CustomCard = ({
   return (
     <>
       <div className={styles["client-card"]}>
-        <Card
-          style={{ width: "100%", marginRight: "20px" }}
-          className="border-0"
-        >
+        <Card style={{ width: "100%", borderRadius: "18px", border: 0 }}>
           <Image
             className={styles["profile-pic"]}
             src={image ? image : Agent}

@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import SocialButton from "./SocialButton";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
+import { setUser } from "../../store/userSlice";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -126,6 +127,7 @@ const SignUpForm = () => {
   };
 
   const onSuccess = (data: any) => {
+    dispatch(setUser(data.user));
     localStorage.setItem("id_token", data.token.key);
     localStorage.setItem("user", JSON.stringify(data.user));
     toast.success("You have successfully registered", {
@@ -142,8 +144,7 @@ const SignUpForm = () => {
     <>
       <div className={styles["signup-form"]}>
         <p className={styles["form-heading"]}>
-          WickYick is an invite-only platform and profiles are only available to
-          agents
+          WickYick is an Invite-Only Platform for Real Estate Professionals
         </p>
         <Form>
           <Image
@@ -320,9 +321,7 @@ const SignUpForm = () => {
           </Button>
           <p className={styles["agreement-text"]}>
             By creating an account you agree with our{" "}
-            <span className={styles["sub-agreement-text"]}>
-              Terms of Service
-            </span>
+            <span className={styles["sub-agreement-text"]}>Terms of Use</span>
           </p>
         </Form>
         <div className={styles["hint-text"]}>Already have an account?</div>

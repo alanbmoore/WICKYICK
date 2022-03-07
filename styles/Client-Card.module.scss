@@ -1,14 +1,15 @@
 @import "../public/static/scss/variables";
 
 .client-card{
+  border-radius: 18px;
   cursor: pointer;
   margin: auto;
   .profile-pic{
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 18px;
   }
   .card-body{
-    padding-left: 0 !important;
+    padding-left: 12px !important;
     .agent-name{
       color: $black;
       font-size: 15px;

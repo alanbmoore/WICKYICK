@@ -150,9 +150,6 @@ const Home = () => {
 
   return (
     <>
-      <Container>
-        <AppNavbar />
-      </Container>
       <HeroSection />
       <Container>
         {/* Trending Agents Section */}

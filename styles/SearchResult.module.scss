@@ -1,0 +1,46 @@
+@import "../public/static/scss/variables";
+
+.search-result{
+  max-width: 41.2%;
+  //background: #FFFFFF;
+  //border: 1px solid #888C94;
+  //box-sizing: border-box;
+  //border-radius: 50px;
+
+  .search-input{
+    padding: 0 165px 0 2%;
+    background: $white;
+    border: 1px solid $gallery;
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    ::placeholder {
+      text-overflow: ellipsis !important;
+    }
+  }
+  .search-btn{
+    background: $purple;
+    top: 50%;
+    transform: translate(2%, -50%);
+    right: 20px;
+    border-color: $purple;
+    padding: 5px 5%;
+    &:focus{
+      box-shadow: none;
+    }
+    &:hover{
+      background: $tapestryapprox;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .search-result{
+    max-width: 95% !important;
+    .search-input{
+      padding: 0 35% 0 2%;
+    }
+  }
+}

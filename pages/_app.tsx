@@ -6,20 +6,23 @@ import store from "../store";
 import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import Head from "next/head";
-import Loader from "./app";
+import Loader from "./loader";
+import { Container } from "react-bootstrap";
+import AppNavbar from "../components/navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider store={store}>
-        <Loader />
         <ToastContainer hideProgressBar={true} />
         <Head>
           <title>WickYick</title>
           <meta name="description" content="WickYick" />
           <link rel="icon" href="/logo.png" />
         </Head>
-        <Component {...pageProps} />;
+        <AppNavbar />
+        <Component {...pageProps} />
+        {/*<AppFooter />*/}
       </Provider>
     </>
   );

@@ -22,7 +22,7 @@ const SocialConnect = ({ name, image, description }: any) => {
         "&scope=user_profile,user_media&response_type=code";
     } else if (name == "Tiktok") {
       const csrfState = Math.random().toString(36).substring(2);
-      window.location.href = `https://open-api.tiktok.com/platform/oauth/connect/?client_key=awnsq0gmo2w3yjed&scope=user.info.basic,video.list&response_type=code&redirect_uri=www.wickyick.com/&state=${csrfState}`;
+      window.location.href = `https://open-api.tiktok.com/platform/oauth/connect/?client_key=awnsq0gmo2w3yjed&scope=user.info.basic,video.list&response_type=code&redirect_uri=www.staging.wickyick.com&state=${csrfState}`;
     }
   };
 

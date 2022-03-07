@@ -10,13 +10,14 @@ import { UserService } from "../../../services/user";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../../store/loadingSlice";
+import { setUser } from "../../../store/userSlice";
 
 const Profile = ({ goToNextStep }: any) => {
   const dispatch = useDispatch();
   const [cityList, setCityList] = useState([]);
   const [img, setImage] = useState(Person);
   const [selectedFile, setSelectedFile] = useState();
-  const [user, setUser] = useState<any>(null);
+  const [userInfo, setUserInfo] = useState<any>(null);
   const [phone, setPhone] = useState({
     isInvalid: false,
     value: "",
@@ -57,10 +58,10 @@ const Profile = ({ goToNextStep }: any) => {
   useEffect(() => {
     if (cityList.length === 0) {
       let arr: any = [];
-      USACities.forEach((item: any) => {
+      USACities.forEach((name: any) => {
         arr.push({
-          label: item.name,
-          value: item.name,
+          label: name,
+          value: name,
         });
       });
       setCityList(arr);
@@ -70,7 +71,7 @@ const Profile = ({ goToNextStep }: any) => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "");
     setUserData(user);
-    setUser(user);
+    setUserInfo(user);
   }, []);
 
   const setUserData = (user: any) => {
@@ -104,7 +105,11 @@ const Profile = ({ goToNextStep }: any) => {
   };
 
   const handlePhone = (e: React.FormEvent<any>) => {
-    setPhone({ isInvalid: false, value: e.currentTarget.value, err: "" });
+    setPhone({
+      isInvalid: false,
+      value: e.currentTarget.value,
+      err: "",
+    });
   };
 
   const handleCompany = (e: React.FormEvent<any>) => {
@@ -125,8 +130,7 @@ const Profile = ({ goToNextStep }: any) => {
 
   const validate = () => {
     let isValidFlag = true;
-
-    if (location.value === "") {
+    if (!location.value) {
       let err = "Location is required !";
       setLocation({
         isInvalid: true,
@@ -137,14 +141,19 @@ const Profile = ({ goToNextStep }: any) => {
       isValidFlag = false;
     }
 
-    if (company.value === "") {
+    if (!company.value) {
       let err = "Company title is required !";
       setCompany({ isInvalid: true, value: company.value, err: err });
       isValidFlag = false;
     }
+    let re = /^([0-9]{3}-|[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
 
-    if (phone.value === "") {
-      let err = "Phone number title is required !";
+    if (!phone.value) {
+      let err = "Phone number is required !";
+      setPhone({ isInvalid: true, value: phone.value, err: err });
+      isValidFlag = false;
+    } else if (!re.test(phone.value)) {
+      let err = "Wrong Phone Format (e.g. 123-123-1234)";
       setPhone({ isInvalid: true, value: phone.value, err: err });
       isValidFlag = false;
     }
@@ -187,6 +196,8 @@ const Profile = ({ goToNextStep }: any) => {
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
+          debugger;
+          dispatch(setUser(data));
           localStorage.setItem("user", JSON.stringify(data));
           toast.success("Profile updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -213,9 +224,10 @@ const Profile = ({ goToNextStep }: any) => {
         />
         <div className={styles["user-info"]}>
           <p className={styles["user-name"]}>
-            {user?.first_name} {user?.last_name} · {user?.license_number}
+            {userInfo?.first_name} {userInfo?.last_name} ·{" "}
+            {userInfo?.license_number}
           </p>
-          <p className={styles["user-email"]}>{user?.email}</p>
+          <p className={styles["user-email"]}>{userInfo?.email}</p>
         </div>
       </div>
       <div>
@@ -287,8 +299,8 @@ const Profile = ({ goToNextStep }: any) => {
           value={phone.value}
           onChange={handlePhone}
           className={styles["profile-input"]}
-          type="text"
-          placeholder="Phone number"
+          type="tel"
+          placeholder="Phone number 123-123-1234"
         />
         {phone.isInvalid && (
           <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>

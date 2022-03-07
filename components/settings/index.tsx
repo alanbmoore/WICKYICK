@@ -11,7 +11,8 @@ import LinkedIn from "../../public/static/images/linkedIn.svg";
 import { useRouter } from "next/router";
 import { UserService } from "../../services/user";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/isLoggedIn";
 
 const socialData = [
   {
@@ -38,7 +39,9 @@ const SettingForm = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const router = useRouter();
   const { code } = router.query;
+  const history = useRouter();
   const dispatch = useDispatch();
+  const user = getUser();
 
   useEffect(() => {
     if (code && code?.length > 0) {
@@ -109,6 +112,7 @@ const SettingForm = () => {
                     className={styles["continue-btn"] + " mt-3"}
                     onClick={(e) => {
                       e.preventDefault();
+                      history.push(`agent-profile/${user.pk}`);
                     }}
                   >
                     Finish

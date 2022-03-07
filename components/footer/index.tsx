@@ -78,7 +78,7 @@ const AppFooter = () => {
                       <div className={styles["footer-widget"]}>
                         <div className={styles["footer-widget-heading"]}>
                           <h3 className=" mt-md-0 mt-4 mx-md-0 px-md-0 mx-2 px-1">
-                            No a real estate agent, but have a story to tell?
+                            Not a real estate agent, but have a story to tell?
                           </h3>
                         </div>
                         <div className={styles["subscribe-form"]}>
@@ -109,7 +109,7 @@ const AppFooter = () => {
                     </p>
                   </div>
                   <div className={styles["copyright-text"]}>
-                    <p>Terms and conditions · Privacy policy</p>
+                    <p>Terms of Use</p>
                   </div>
                 </div>
               </div>

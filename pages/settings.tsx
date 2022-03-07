@@ -24,14 +24,15 @@ const Settings = () => {
         <div
           className={styles["header-wick-yick"] + " d-flex align-items-center"}
         >
-          <Link href={"/"} passHref>
-            <div className="d-flex">
-              <Image src="/logo.png" alt="Footer Logo" width={35} height={35} />
-              <p className={styles["logo-text"]}>WickYick</p>
-            </div>
-          </Link>
+          <SettingForm />
+
+          {/*  <Link href={"/"} passHref>*/}
+          {/*  <div className="d-flex">*/}
+          {/*    <Image src="/logo.png" alt="Footer Logo" width={35} height={35} />*/}
+          {/*    <p className={styles["logo-text"]}>WickYick</p>*/}
+          {/*  </div>*/}
+          {/*</Link>*/}
         </div>
-        <SettingForm />
       </div>
     </>
   );
