@@ -105,6 +105,7 @@ const AppNavbar = () => {
                             aria-expanded="false"
                           >
                             <Image
+                              unoptimized={true}
                               className={styles["user-avatar"]}
                               width="40px"
                               height="40px"

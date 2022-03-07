@@ -205,6 +205,7 @@ const AppNavbar = ()=>{
                                                         "aria-haspopup": "true",
                                                         "aria-expanded": "false",
                                                         children: /*#__PURE__*/ jsx_runtime_.jsx(next_image["default"], {
+                                                            unoptimized: true,
                                                             className: (Navbar_module_default())["user-avatar"],
                                                             width: "40px",
                                                             height: "40px",
