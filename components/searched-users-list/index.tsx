@@ -17,6 +17,7 @@ const SearchedUsersList = ({ keyword }: any) => {
   useEffect(() => {
     if (Object.keys(keyword).length > 0 && userList.length === 0) {
       getUsers(keyword.keyword);
+      setSearchedText(keyword.keyword);
     }
   }, [keyword]);
 
