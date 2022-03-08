@@ -11,10 +11,18 @@ const Search = () => {
   return (
     <>
       <div className={styles["search"]}>
-        <Form>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            searchText && router.push(`/search-results?keyword=${searchText}`);
+          }}
+        >
           <div className="position-relative">
             <Form.Control
-              onChange={(e) => setSearchText(e.target.value)}
+              onChange={(e) => {
+                e.preventDefault();
+                setSearchText(e.target.value);
+              }}
               className={styles["search-input"] + " py-3"}
               value={searchText}
               type="text"
@@ -22,11 +30,8 @@ const Search = () => {
             />
 
             <Button
+              type="submit"
               className={styles["search-btn"] + " position-absolute"}
-              onClick={() => {
-                searchText &&
-                  router.push(`/search-results?keyword=${searchText}`);
-              }}
             >
               Search
             </Button>
