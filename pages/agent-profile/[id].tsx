@@ -7,7 +7,7 @@ const AgentProfile = () => {
         style={{
           background: "#EEF0F3",
           minHeight: "110vh",
-          height: "100vh",
+          height: "100%",
           width: "100%",
           display: "flex",
         }}

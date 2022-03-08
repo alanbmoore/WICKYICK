@@ -6,6 +6,7 @@ import MapContainer from "../Maps/index";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { UserService } from "../../services/user";
 import CustomCard from "../card";
+import router from "next/router";
 
 const SearchedUsersList = ({ keyword }: any) => {
   const dispatch = useDispatch();
@@ -68,7 +69,15 @@ const SearchedUsersList = ({ keyword }: any) => {
             <Row>
               {userList.map((item: any, index: number) => {
                 return (
-                  <Col xs={12} md={5} lg={5} key={index}>
+                  <Col
+                    xs={12}
+                    md={5}
+                    lg={5}
+                    key={index}
+                    onClick={() => {
+                      router.push("/agent-profile/" + item.pk);
+                    }}
+                  >
                     <CustomCard
                       image={item.picture}
                       title={item.first_name + " " + item.last_name}

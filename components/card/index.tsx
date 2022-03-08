@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import Image from "next/image";
 import { ICard } from "../../interfaces/card";
 import styles from "../../styles/Client-Card.module.scss";
-import Agent from "../../public/static/images/agent1.png";
+import Agent from "../../public/static/images/userIcon.jpeg";
 
 const CustomCard = ({
   image,
@@ -17,7 +17,11 @@ const CustomCard = ({
       <div className={styles["client-card"]}>
         <Card style={{ width: "100%", borderRadius: "18px", border: 0 }}>
           <Image
-            className={styles["profile-pic"]}
+            className={
+              !image
+                ? styles["profile-pic"] + " " + styles["user-icon"]
+                : styles["profile-pic"]
+            }
             src={image ? image : Agent}
             alt="Picture of the agent"
             width={width}

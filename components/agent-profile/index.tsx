@@ -47,7 +47,7 @@ const AgentProfileBanner = () => {
       <div className="container mt-5">
         <div className="row d-flex justify-content-center">
           <div className="col-12">
-            <div className="bg-white agent-card p-3 py-4">
+            <div className="bg-white agent-card p-3 py-4 mx-2 mx-md-0">
               <div className="agent-card-main d-flex">
                 <div className="img-section">
                   <Image
@@ -192,7 +192,8 @@ const AgentProfileBanner = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-9 col-12 pr-0">
+
+            <div className="col-md-9 col-12 px-2 pr-0 my-md-0 my-4">
               <div className="bg-white post-section">
                 <div className="tabs-section p-3 d-flex">
                   <p className="tabs active m-0">Posts</p>

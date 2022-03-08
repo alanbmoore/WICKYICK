@@ -9,6 +9,7 @@ exports.modules = {
 module.exports = {
 	"client-card": "Client-Card_client-card__2Rl9c",
 	"profile-pic": "Client-Card_profile-pic__ySaOW",
+	"user-icon": "Client-Card_user-icon__J2MlH",
 	"card-body": "Client-Card_card-body__I76EE",
 	"agent-name": "Client-Card_agent-name__2fnbx",
 	"agent-followers": "Client-Card_agent-followers__sF_vq",
@@ -18,14 +19,14 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7578:
+/***/ 4617:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/agent1.a8a838dd.png","height":251,"width":350,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAAwklEQVR42g3IPUtCUQCA4fd8GNot7IsMjIiGoLmlfkWE7f0xFxcncXVzclNBnHRQcVBEr4g63HPvPedcfcZHzCad9Pn1W7eadcpmznDQJf/5x2+lQmQiK7US2hhDtl8hvOPpscRhOSWKYwRCy6sgIMsyXu6v0UlCMad5K92SWoc/v4wTw2VQIHf3gPYSJS4ov3+glMI7h0xdQq/XZzYeoW4KHJUgzRfRQmKtRzaabfv1849ZT/B2xzZcUK3W2IQhDuwJwpJQ2N29vbwAAAAASUVORK5CYII="});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/userIcon.6e694112.jpeg","height":965,"width":965,"blurDataURL":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoKCgoKCgsMDAsPEA4QDxYUExMUFiIYGhgaGCIzICUgICUgMy03LCksNy1RQDg4QFFeT0pPXnFlZXGPiI+7u/sBCgoKCgoKCwwMCw8QDhAPFhQTExQWIhgaGBoYIjMgJSAgJSAzLTcsKSw3LVFAODhAUV5PSk9ecWVlcY+Ij7u7+//CABEIAAgACAMBIgACEQEDEQH/xAAnAAEBAAAAAAAAAAAAAAAAAAAABwEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAAApIP/xAAbEAACAQUAAAAAAAAAAAAAAAABAxIABBMUI//aAAgBAQABPwA3yd4O6Y4Rr//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQIBAT8Af//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQMBAT8Af//Z"});
 
 /***/ }),
 
@@ -43,7 +44,7 @@ module.exports = {
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5675);
 /* harmony import */ var _styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9810);
 /* harmony import */ var _styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _public_static_images_agent1_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7578);
+/* harmony import */ var _public_static_images_userIcon_jpeg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4617);
 
 
 
@@ -61,8 +62,8 @@ const CustomCard = ({ image , title , description , subDescription , width , hei
                 },
                 children: [
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                        className: (_styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4___default()["profile-pic"]),
-                        src: image ? image : _public_static_images_agent1_png__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z,
+                        className: !image ? (_styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4___default()["profile-pic"]) + " " + (_styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4___default()["user-icon"]) : (_styles_Client_Card_module_scss__WEBPACK_IMPORTED_MODULE_4___default()["profile-pic"]),
+                        src: image ? image : _public_static_images_userIcon_jpeg__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z,
                         alt: "Picture of the agent",
                         width: width,
                         height: height

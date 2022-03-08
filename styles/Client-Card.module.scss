@@ -7,6 +7,9 @@
   .profile-pic{
     object-fit: cover;
     border-radius: 18px;
+    &.user-icon{
+      object-fit: contain !important;
+    }
   }
   .card-body{
     padding-left: 12px !important;

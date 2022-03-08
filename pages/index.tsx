@@ -1,8 +1,5 @@
 import HeroSection from "../components/hero-section";
 import CustomCard from "../components/card";
-import Agent1 from "../public/static/images/agent1.png";
-import Agent2 from "../public/static/images/agent2.png";
-import Agent3 from "../public/static/images/agent3.png";
 import Property1 from "../public/static/images/property1.png";
 import Property2 from "../public/static/images/property2.png";
 import Property3 from "../public/static/images/property3.png";
@@ -16,51 +13,11 @@ import styles from "../styles/Home.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 import CityCard from "../components/city-card";
 import AppFooter from "../components/footer";
-import AppNavbar from "../components/navbar";
 import { useEffect, useState } from "react";
 import { UserService } from "../services/user";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../store/loadingSlice";
 import router from "next/router";
-
-const agents: Array<ICard> = [
-  {
-    title: "Amanda Cassel Subatis",
-    image: Agent1,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-  {
-    title: "Virginia Sosa",
-    image: Agent2,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-  {
-    title: "Kerry Ann Sullivan",
-    image: Agent3,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-  {
-    title: "Amanda Cassel Subatis",
-    image: Agent1,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-  {
-    title: "Virginia Sosa",
-    image: Agent2,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-  {
-    title: "Kerry Ann Sullivan",
-    image: Agent3,
-    description: "1.2k followers · 764 listings",
-    subDescription: "Los Angeles, CA",
-  },
-];
 
 const properties: Array<ICard> = [
   {
@@ -205,7 +162,15 @@ const Home = () => {
         <Row className="my-3">
           {userList.map((item: any, index: number) => {
             return (
-              <Col xs={12} md={4} lg={2} key={index}>
+              <Col
+                xs={12}
+                md={4}
+                lg={2}
+                key={index}
+                onClick={() => {
+                  router.push("/agent-profile/" + item.pk);
+                }}
+              >
                 <CustomCard
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
@@ -236,7 +201,15 @@ const Home = () => {
         <Row className="my-3">
           {userList.map((item: any, index: number) => {
             return (
-              <Col xs={12} md={4} lg={2} key={index}>
+              <Col
+                xs={12}
+                md={4}
+                lg={2}
+                key={index}
+                onClick={() => {
+                  router.push("/agent-profile/" + item.pk);
+                }}
+              >
                 <CustomCard
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
