@@ -11,7 +11,7 @@ const HeroSection = () => {
             Every Home Has A Story
           </p>
           <p className={styles["subtext"] + " text-center pt-2 mb-4"}>
-            Engage In Our Community Of Real Estate Experts
+            Engage With Our Community Of Real Estate Experts
           </p>
           <div>
             <Search />

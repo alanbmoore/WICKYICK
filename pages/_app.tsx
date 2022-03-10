@@ -7,13 +7,13 @@ import "../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import Head from "next/head";
 import Loader from "./loader";
-import { Container } from "react-bootstrap";
 import AppNavbar from "../components/navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider store={store}>
+        <Loader />
         <ToastContainer hideProgressBar={true} />
         <Head>
           <title>WickYick</title>
@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Head>
         <AppNavbar />
         <Component {...pageProps} />
+
         {/*<AppFooter />*/}
       </Provider>
     </>

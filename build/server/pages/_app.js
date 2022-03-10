@@ -1,7 +1,7 @@
 (() => {
 var exports = {};
 exports.id = 888;
-exports.ids = [888];
+exports.ids = [888,644];
 exports.modules = {
 
 /***/ 4031:
@@ -56,14 +56,18 @@ var toolkit_ = __webpack_require__(5184);
 var loadingSlice = __webpack_require__(6487);
 // EXTERNAL MODULE: ./store/userSlice.ts
 var userSlice = __webpack_require__(5072);
+// EXTERNAL MODULE: ./store/modalSlice.ts
+var modalSlice = __webpack_require__(2507);
 ;// CONCATENATED MODULE: ./store/index.ts
+
 
 
 
 /* harmony default export */ const store = ((0,toolkit_.configureStore)({
     reducer: {
         loading: loadingSlice/* default */.ZP,
-        user: userSlice/* default */.ZP
+        user: userSlice/* default */.ZP,
+        modal: modalSlice/* default */.ZP
     }
 }));
 
@@ -72,6 +76,8 @@ var external_react_toastify_ = __webpack_require__(1187);
 ;// CONCATENATED MODULE: external "next/head"
 const head_namespaceObject = require("next/head");
 var head_default = /*#__PURE__*/__webpack_require__.n(head_namespaceObject);
+// EXTERNAL MODULE: ./pages/loader.tsx + 1 modules
+var loader = __webpack_require__(9865);
 // EXTERNAL MODULE: external "react-bootstrap"
 var external_react_bootstrap_ = __webpack_require__(358);
 // EXTERNAL MODULE: ./styles/Navbar.module.scss
@@ -111,21 +117,25 @@ const md_namespaceObject = require("react-icons/md");
 
 const AppNavbar = ()=>{
     const router = (0,router_.useRouter)();
-    const { 0: sidebarOpen , 1: setSidebarOpen  } = (0,external_react_.useState)(false);
+    // const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const { user  } = (0,external_react_redux_.useSelector)((state)=>state.user
     );
     const { 0: userData , 1: setUserData  } = (0,external_react_.useState)(null);
     (0,external_react_.useEffect)(()=>{
         !userData && setUserData((0,isLoggedIn/* getUser */.PR)());
-    });
+    }, [
+        userData,
+        setUserData
+    ]);
     (0,external_react_.useEffect)(()=>{
         user && setUserData(user);
     }, [
+        setUserData,
         user
     ]);
-    const onSetSidebarOpen = (open)=>{
-        setSidebarOpen(open);
-    };
+    // const onSetSidebarOpen = (open: boolean) => {
+    //   setSidebarOpen(open);
+    // };
     return(/*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_bootstrap_.Navbar, {
             className: (Navbar_module_default())["nav-bar"],
@@ -230,6 +240,7 @@ const AppNavbar = ()=>{
                                                         }),
                                                         /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
                                                             children: /*#__PURE__*/ jsx_runtime_.jsx(next_link["default"], {
+                                                                passHref: true,
                                                                 href: "/settings",
                                                                 children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                                                                     className: "dropdown-item",
@@ -285,11 +296,13 @@ const AppNavbar = ()=>{
 
 
 
+
 function MyApp({ Component , pageProps  }) {
     return(/*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
-        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_redux_.Provider, {
+        /*#__PURE__*/ children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_redux_.Provider, {
             store: store,
             children: [
+                /*#__PURE__*/ jsx_runtime_.jsx(loader["default"], {}),
                 /*#__PURE__*/ jsx_runtime_.jsx(external_react_toastify_.ToastContainer, {
                     hideProgressBar: true
                 }),
@@ -381,13 +394,6 @@ const loadingSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlic
 });
 const { showLoading , hideLoading  } = loadingSlice.actions;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loadingSlice.reducer);
-
-
-/***/ }),
-
-/***/ 8819:
-/***/ (() => {
-
 
 
 /***/ }),
@@ -591,7 +597,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,882], () => (__webpack_exec__(7134)));
+var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,882,865], () => (__webpack_exec__(7134)));
 module.exports = __webpack_exports__;
 
 })();

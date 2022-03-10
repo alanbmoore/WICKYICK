@@ -9,29 +9,27 @@ import UserIcon from "../../public/static/images/userIcon.jpeg";
 // @ts-ignore
 import Sidebar from "react-sidebar";
 import { useEffect, useState } from "react";
-import { FaUserAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdOutlineLogout } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { setUser } from "../../store/userSlice";
 
 const AppNavbar = () => {
   const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  // const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const { user } = useSelector((state: any) => state.user);
   const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
     !userData && setUserData(getUser());
-  });
+  }, [userData, setUserData]);
 
   useEffect(() => {
     user && setUserData(user);
-  }, [user]);
+  }, [setUserData, user]);
 
-  const onSetSidebarOpen = (open: boolean) => {
-    setSidebarOpen(open);
-  };
+  // const onSetSidebarOpen = (open: boolean) => {
+  //   setSidebarOpen(open);
+  // };
 
   return (
     <>
@@ -136,7 +134,7 @@ const AppNavbar = () => {
                           {/*  </a>*/}
                           {/*</Dropdown.Item>*/}
                           <Dropdown.Item>
-                            <Link href="/settings">
+                            <Link passHref href="/settings">
                               <div className="dropdown-item">
                                 <IoIosSettings fontSize="20px" />
                                 <span className="px-2">Setting</span>

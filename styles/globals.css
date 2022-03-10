@@ -70,6 +70,22 @@ a {
   border-width: 3.5px;
 }
 
+.close-btn{
+  padding: 8px 13.75%;
+  background: #800080FF;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  border-color: #800080FF;
+}
+.close-btn :focus{
+    box-shadow: none;
+}
+
+.close-btn:hover{
+   background: #800080FF;
+}
+
 /*agent-card*/
 
 

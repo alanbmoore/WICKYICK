@@ -15,6 +15,7 @@ import SocialButton from "./SocialButton";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { setUser } from "../../store/userSlice";
+import { showModal } from "../../store/modalSlice";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -321,7 +322,12 @@ const SignUpForm = () => {
           </Button>
           <p className={styles["agreement-text"]}>
             By creating an account you agree with our{" "}
-            <span className={styles["sub-agreement-text"]}>Terms of Use</span>
+            <span
+              onClick={() => dispatch(showModal())}
+              className={styles["sub-agreement-text"]}
+            >
+              Terms of Use
+            </span>
           </p>
         </Form>
         <div className={styles["hint-text"]}>Already have an account?</div>

@@ -1,8 +1,12 @@
 import styles from "../../styles/Footer.module.scss";
 import Image from "next/image";
 import { Button, Container, Form } from "react-bootstrap";
+import { showModal } from "../../store/modalSlice";
+import { useDispatch } from "react-redux";
 
 const AppFooter = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Container fluid>
@@ -109,7 +113,7 @@ const AppFooter = () => {
                     </p>
                   </div>
                   <div className={styles["copyright-text"]}>
-                    <p>Terms of Use</p>
+                    <p onClick={() => dispatch(showModal())}>Terms of Use</p>
                   </div>
                 </div>
               </div>

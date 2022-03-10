@@ -26,7 +26,7 @@ const Search = () => {
               className={styles["search-input"] + " py-3"}
               value={searchText}
               type="text"
-              placeholder="City, State, Agent Name, Brokerage, #"
+              placeholder="City, State, Agent Name, Company, #"
             />
 
             <Button

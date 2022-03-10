@@ -1,6 +1,6 @@
 import styles from "../../styles/SearchResult.module.scss";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import MapContainer from "../Maps/index";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
@@ -13,32 +13,48 @@ const SearchedUsersList = ({ keyword }: any) => {
   const [userList, setUserList] = useState([]);
   const [searchedText, setSearchedText] = useState<string>("");
   const [count, setCount] = useState([]);
+  const [marker, setMarkers] = useState([]);
+
+  const getUsers = useCallback(
+    (text: any) => {
+      if (text && text.length > 0) {
+        dispatch(showLoading());
+        UserService.getUserList({ keyword: text })
+          .then((response: any) => {
+            setTimeout(() => {
+              dispatch(hideLoading());
+            }, 1000);
+            setUserList(response.results);
+            setCount(response.count);
+            let arr = response.results.map((item: any, index: number) => {
+              if (item.address) {
+                return {
+                  id: 1,
+                  latitude: item.address.latitude,
+                  longitude: item.address.longitude,
+                  shelter: "marker " + index,
+                };
+              }
+            });
+            debugger;
+            setMarkers(arr);
+          })
+          .catch((error: any) => {
+            setTimeout(() => {
+              dispatch(hideLoading());
+            }, 1000);
+          });
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (Object.keys(keyword).length > 0 && userList.length === 0) {
       getUsers(keyword.keyword);
       setSearchedText(keyword.keyword);
     }
-  }, [keyword]);
-
-  const getUsers = (text: any) => {
-    if (text && text.length > 0) {
-      dispatch(showLoading());
-      UserService.getUserList({ keyword: text })
-        .then((response: any) => {
-          setTimeout(() => {
-            dispatch(hideLoading());
-          }, 1000);
-          setUserList(response.results);
-          setCount(response.count);
-        })
-        .catch((error: any) => {
-          setTimeout(() => {
-            dispatch(hideLoading());
-          }, 1000);
-        });
-    }
-  };
+  }, [getUsers, keyword, userList.length]);
 
   return (
     <>
@@ -93,7 +109,7 @@ const SearchedUsersList = ({ keyword }: any) => {
             </Row>
           </Col>
           <Col xs={12} md={6} lg={6}>
-            <MapContainer />
+            <MapContainer marker={marker} />
           </Col>
         </Row>
       </Container>

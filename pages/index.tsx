@@ -134,8 +134,8 @@ const Home = () => {
                   <CustomCard
                     image={item.picture}
                     title={item.first_name + " " + item.last_name}
-                    subDescription={item.location}
-                    description={item.bio}
+                    subDescription={item?.location}
+                    description={item.company}
                     width={"100%"}
                     height={"160px"}
                   />
@@ -174,8 +174,8 @@ const Home = () => {
                 <CustomCard
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
-                  subDescription={item.location}
-                  description={item.bio}
+                  subDescription={item?.location}
+                  description={item.company}
                   width={"100%"}
                   height={"160px"}
                 />
@@ -214,7 +214,7 @@ const Home = () => {
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
                   subDescription={item.location}
-                  description={item.bio}
+                  description={item.company}
                   width={"100%"}
                   height={"160px"}
                 />

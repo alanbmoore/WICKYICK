@@ -1,6 +1,5 @@
 import styles from "../../../styles/Profile.module.scss";
 import { Button, Form } from "react-bootstrap";
-import Creatable from "react-select/creatable";
 import { useEffect, useState } from "react";
 import { USACities } from "../../../utils/usCities";
 import { createFilter } from "react-select";
@@ -11,6 +10,21 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../../store/loadingSlice";
 import { setUser } from "../../../store/userSlice";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+
+const themeStyle = (theme: any) => ({
+  ...theme,
+  borderRadius: 7,
+  opacity: "0.25%",
+  spacing: {
+    ...theme.spacing,
+    controlHeight: 44,
+  },
+  colors: {
+    ...theme.colors,
+    primary: "#0d6efd40",
+  },
+});
 
 const Profile = ({ goToNextStep }: any) => {
   const dispatch = useDispatch();
@@ -212,6 +226,15 @@ const Profile = ({ goToNextStep }: any) => {
     }
   };
 
+  const locationChangeHandler = (opt: any) => {
+    setLocation({
+      isInvalid: false,
+      value: opt?.value.description,
+      label: opt?.value,
+      err: "",
+    });
+  };
+
   return (
     <>
       <div className={styles["profile-top-section"] + " px-3"}>
@@ -249,41 +272,31 @@ const Profile = ({ goToNextStep }: any) => {
           Location
         </Form.Label>
 
-        <Creatable
-          placeholder={"Select your location"}
-          theme={(theme) => ({
-            ...theme,
-            borderRadius: 7,
-            opacity: "0.25%",
-            spacing: {
-              ...theme.spacing,
-              controlHeight: 44,
+        <GooglePlacesAutocomplete
+          selectProps={{
+            isClearable: true,
+            placeholder: "Select your location",
+            styles: {
+              control: (provided: any, state: any) => ({
+                ...provided,
+                border: "1px solid #888C94",
+              }),
             },
-            colors: {
-              ...theme.colors,
-              primary: "#0d6efd40",
+            filterOption: createFilter({ ignoreCase: true }),
+            theme: themeStyle,
+            value: location.value && {
+              value: location.value,
+              label: location.value,
             },
-          })}
-          styles={{
-            control: (provided: any, state: any) => ({
-              ...provided,
-              border: "1px solid #888C94",
-            }),
+            onChange: locationChangeHandler,
           }}
-          value={
-            location.value && { value: location.value, label: location.value }
-          }
-          options={cityList}
-          isClearable={true}
-          filterOption={createFilter({ ignoreCase: true })}
-          onChange={(opt: any) =>
-            setLocation({
-              isInvalid: false,
-              value: opt?.value,
-              label: opt?.value,
-              err: "",
-            })
-          }
+          autocompletionRequest={{
+            componentRestrictions: {
+              country: ["us"],
+            },
+          }}
+          debounce={300}
+          apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}
         />
 
         {location.isInvalid && (
