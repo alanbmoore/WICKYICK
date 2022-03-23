@@ -11,6 +11,9 @@ import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../../store/loadingSlice";
 import { setUser } from "../../../store/userSlice";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+// @ts-ignore
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
 
 const themeStyle = (theme: any) => ({
   ...theme,
@@ -32,6 +35,7 @@ const Profile = ({ goToNextStep }: any) => {
   const [img, setImage] = useState(Person);
   const [selectedFile, setSelectedFile] = useState();
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [tags, setTags] = useState<any>([]);
   const [phone, setPhone] = useState({
     isInvalid: false,
     value: "",
@@ -97,6 +101,7 @@ const Profile = ({ goToNextStep }: any) => {
       err: "",
     });
     setImage(user?.picture ? user.picture : Person);
+    setTags(user?.tags && user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
     user?.job_title != "null" &&
       setJobTitle({ isInvalid: false, value: user?.job_title, err: "" });
@@ -191,7 +196,6 @@ const Profile = ({ goToNextStep }: any) => {
       isValidFlag = false;
     }
     let re = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
-    debugger;
     if (!phone.value) {
       let err = "Phone number is required !";
       setPhone({ isInvalid: true, value: phone.value, err: err });
@@ -234,6 +238,7 @@ const Profile = ({ goToNextStep }: any) => {
       formData.append("bio", bio.value);
       formData.append("job_title", jobTitle.value);
       formData.append("site_username", username.value);
+      formData.append("tags", tags.join(","));
       dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
@@ -263,6 +268,10 @@ const Profile = ({ goToNextStep }: any) => {
       label: opt?.value,
       err: "",
     });
+  };
+
+  const handleChange = (tag: any) => {
+    setTags(tag);
   };
 
   return (
@@ -298,6 +307,19 @@ const Profile = ({ goToNextStep }: any) => {
         </div>
       </div>
       <Form className={styles["profile"]}>
+        <Form.Label
+          style={{ fontSize: "16px" }}
+          className={styles["profile-input-label"] + " mt-2"}
+        >
+          Personalize Your Profile With Tags (ex: #veteran #ALC #CRS #tulanealum
+          #gardendistrict)
+        </Form.Label>
+        <TagsInput
+          className={styles["profile-input-label"] + " form-control"}
+          value={tags}
+          onChange={handleChange}
+        />
+
         <Form.Label className={styles["profile-input-label"] + " mt-2"}>
           Location
         </Form.Label>
@@ -324,6 +346,7 @@ const Profile = ({ goToNextStep }: any) => {
             componentRestrictions: {
               country: ["us"],
             },
+            types: ["(regions)"],
           }}
           debounce={300}
           apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}

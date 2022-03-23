@@ -1,51 +1,12 @@
-import Image from "next/image";
 import styles from "../../../styles/License.module.scss";
-import QuestionMark from "../../../public/static/images/question-mark.svg";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import SelectableCustomCard from "../../selectable-card";
-import { ICard } from "../../../interfaces/card";
-import Property1 from "../../../public/static/images/property1.png";
-import Property2 from "../../../public/static/images/property2.png";
-import Property3 from "../../../public/static/images/property3.png";
 import { useEffect, useState } from "react";
-import ProfileTopSection from "../profile/profile-top-section";
-import Checkbox from "../../checkbox";
-import { isValid } from "../../../utils/helper";
-import { AuthServices } from "../../../services/auth";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { UserService } from "../../../services/user";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../../store/loadingSlice";
 
-// const properties: Array<ICard> = [
-//   {
-//     title: "$600,000",
-//     image: Property1,
-//     description: "2 Beds · 2 baths · 772 sqf",
-//     subDescription: "4004 Colcord Ave, Waco, TX 76707",
-//   },
-//   {
-//     title: "$600,000",
-//     image: Property2,
-//     description: "2 Beds · 2 baths · 772 sqf",
-//     subDescription: "4004 Colcord Ave, Waco, TX 76707",
-//   },
-//   {
-//     title: "$600,000",
-//     image: Property3,
-//     description: "2 Beds · 2 baths · 772 sqf",
-//     subDescription: "4004 Colcord Ave, Waco, TX 76707",
-//   },
-//   {
-//     title: "$600,000",
-//     image: Property1,
-//     description: "2 Beds · 2 baths · 772 sqf",
-//     subDescription: "4004 Colcord Ave, Waco, TX 76707",
-//   },
-// ];
-
 const LicenseForm = ({ goToNextStep }: any) => {
-  // const [searchData, setSearchData] = useState<any>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,7 +25,8 @@ const LicenseForm = ({ goToNextStep }: any) => {
   });
 
   const handleLicenseNumber = (e: React.FormEvent<any>) => {
-    const re = /^[0-9\b]+$/;
+    // const re = /^[0-9\b]+$/;
+    const re = /^[a-zA-Z0-9 ]+$/;
 
     if (e.currentTarget.value === "" || re.test(e.currentTarget.value)) {
       setLicenseNumber({

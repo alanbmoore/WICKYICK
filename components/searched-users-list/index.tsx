@@ -60,7 +60,12 @@ const SearchedUsersList = ({ keyword }: any) => {
     <>
       <Container className="mt-5">
         <div className={styles["search-result"]}>
-          <Form>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              searchedText && getUsers(searchedText);
+            }}
+          >
             <div className="position-relative">
               <Form.Control
                 onChange={(e) => setSearchedText(e.target.value)}
@@ -71,9 +76,7 @@ const SearchedUsersList = ({ keyword }: any) => {
               />
 
               <Button
-                onClick={() => {
-                  getUsers(searchedText);
-                }}
+                type="submit"
                 className={styles["search-btn"] + " position-absolute"}
               >
                 Search

@@ -1,6 +1,13 @@
-import { Button, Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Dropdown,
+  Form,
+  Nav,
+  Navbar,
+} from "react-bootstrap";
 import styles from "../../styles/Navbar.module.scss";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import logoImage from "../../public/static/images/logo.png";
@@ -8,12 +15,20 @@ import { getUser, isLogin, logout } from "../../services/isLoggedIn";
 import UserIcon from "../../public/static/images/userIcon.jpeg";
 // @ts-ignore
 import Sidebar from "react-sidebar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
+import { BiSearch } from "react-icons/bi";
 import { MdOutlineLogout } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UserService } from "../../services/user";
+// @ts-ignore
+import _ from "lodash";
+import { hideLoading, showLoading } from "../../store/loadingSlice";
 
 const AppNavbar = () => {
+  const dispatch = useDispatch();
+  const [userList, setUserList] = useState([]);
+  const [searchedText, setSearchedText] = useState<string>("");
   const router = useRouter();
   // const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const { user } = useSelector((state: any) => state.user);
@@ -30,6 +45,26 @@ const AppNavbar = () => {
   // const onSetSidebarOpen = (open: boolean) => {
   //   setSidebarOpen(open);
   // };
+
+  const getUsers = useCallback(
+    _.debounce((text: any) => {
+      if (text && text.length > 0) {
+        dispatch(showLoading());
+        UserService.getUserList({ keyword: text })
+          .then((response: any) => {
+            setUserList(response.results);
+            dispatch(hideLoading());
+          })
+          .catch((error: any) => {
+            dispatch(hideLoading());
+            setTimeout(() => {}, 1000);
+          });
+      } else {
+        setUserList([]);
+      }
+    }, 400),
+    [dispatch]
+  );
 
   return (
     <>
@@ -54,6 +89,48 @@ const AppNavbar = () => {
             alt={"logo image"}
           />
           <p className={"px-2"}>WickYick</p>
+          <div className="position-relative">
+            {/*<Button*/}
+            {/*  type="submit"*/}
+            {/*  className={styles["search-btn"] + " position-absolute"}*/}
+            {/*>*/}
+            {/*  Search*/}
+            {/*</Button>*/}
+            <BiSearch
+              className={styles["search-icon"] + " position-absolute"}
+            />
+            <Form.Control
+              onChange={(e) => {
+                setSearchedText(e.target.value);
+                getUsers(e.target.value);
+              }}
+              value={searchedText}
+              className={styles["search-input"] + " py-3"}
+              type="text"
+              placeholder="Search..."
+            />
+            {userList.length > 0 && (
+              <div className={styles["search-result"]}>
+                {userList.map((item: any, index: number) => {
+                  return (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        router.push("/agent-profile/" + item.pk);
+                        setUserList([]);
+                        setSearchedText("");
+                      }}
+                      className={styles["search-obj"]}
+                      key={index}
+                    >
+                      {item.first_name} {item.last_name}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">

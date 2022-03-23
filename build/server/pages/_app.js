@@ -10,6 +10,10 @@ exports.modules = {
 // Exports
 module.exports = {
 	"nav-bar": "Navbar_nav-bar__F_J5I",
+	"search-input": "Navbar_search-input__jw8l6",
+	"search-icon": "Navbar_search-icon__Il4nE",
+	"search-result": "Navbar_search-result__Y__wW",
+	"search-obj": "Navbar_search-obj__NipUm",
 	"title": "Navbar_title__J_BSP",
 	"nav-links": "Navbar_nav-links__KCcqo",
 	"last-child": "Navbar_last-child__exvpy",
@@ -32,7 +36,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7134:
+/***/ 5058:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -99,8 +103,15 @@ var userIcon = __webpack_require__(4617);
 var external_react_ = __webpack_require__(6689);
 ;// CONCATENATED MODULE: external "react-icons/io"
 const io_namespaceObject = require("react-icons/io");
+;// CONCATENATED MODULE: external "react-icons/bi"
+const bi_namespaceObject = require("react-icons/bi");
 ;// CONCATENATED MODULE: external "react-icons/md"
 const md_namespaceObject = require("react-icons/md");
+// EXTERNAL MODULE: ./services/user.ts
+var services_user = __webpack_require__(3707);
+;// CONCATENATED MODULE: external "lodash"
+const external_lodash_namespaceObject = require("lodash");
+var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_namespaceObject);
 ;// CONCATENATED MODULE: ./components/navbar/index.tsx
 
 
@@ -115,7 +126,15 @@ const md_namespaceObject = require("react-icons/md");
 
 
 
+
+
+// @ts-ignore
+
+
 const AppNavbar = ()=>{
+    const dispatch = (0,external_react_redux_.useDispatch)();
+    const { 0: userList , 1: setUserList  } = (0,external_react_.useState)([]);
+    const { 0: searchedText , 1: setSearchedText  } = (0,external_react_.useState)("");
     const router = (0,router_.useRouter)();
     // const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const { user  } = (0,external_react_redux_.useSelector)((state)=>state.user
@@ -136,6 +155,24 @@ const AppNavbar = ()=>{
     // const onSetSidebarOpen = (open: boolean) => {
     //   setSidebarOpen(open);
     // };
+    const getUsers = (0,external_react_.useCallback)(external_lodash_default().debounce((text)=>{
+        if (text && text.length > 0) {
+            dispatch((0,loadingSlice/* showLoading */.QP)());
+            services_user/* UserService.getUserList */.K.getUserList({
+                keyword: text
+            }).then((response)=>{
+                setUserList(response.results);
+                dispatch((0,loadingSlice/* hideLoading */.Zk)());
+            }).catch((error)=>{
+                dispatch((0,loadingSlice/* hideLoading */.Zk)());
+                setTimeout(()=>{}, 1000);
+            });
+        } else {
+            setUserList([]);
+        }
+    }, 400), [
+        dispatch
+    ]);
     return(/*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(external_react_bootstrap_.Navbar, {
             className: (Navbar_module_default())["nav-bar"],
@@ -156,6 +193,44 @@ const AppNavbar = ()=>{
                         /*#__PURE__*/ jsx_runtime_.jsx("p", {
                             className: "px-2",
                             children: "WickYick"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "position-relative",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx(bi_namespaceObject.BiSearch, {
+                                    className: (Navbar_module_default())["search-icon"] + " position-absolute"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Form.Control, {
+                                    onChange: (e)=>{
+                                        setSearchedText(e.target.value);
+                                        getUsers(e.target.value);
+                                    },
+                                    value: searchedText,
+                                    className: (Navbar_module_default())["search-input"] + " py-3",
+                                    type: "text",
+                                    placeholder: "Search..."
+                                }),
+                                userList.length > 0 && /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                    className: (Navbar_module_default())["search-result"],
+                                    children: userList.map((item, index)=>{
+                                        return(/*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                            onClick: (e)=>{
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                router.push("/agent-profile/" + item.pk);
+                                                setUserList([]);
+                                                setSearchedText("");
+                                            },
+                                            className: (Navbar_module_default())["search-obj"],
+                                            children: [
+                                                item.first_name,
+                                                " ",
+                                                item.last_name
+                                            ]
+                                        }, index));
+                                    })
+                                })
+                            ]
                         })
                     ]
                 }),
@@ -364,45 +439,19 @@ const getUser = ()=>{
 
 /***/ }),
 
-/***/ 6487:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "QP": () => (/* binding */ showLoading),
-/* harmony export */   "Zk": () => (/* binding */ hideLoading),
-/* harmony export */   "ZP": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* unused harmony export loadingSlice */
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5184);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
-
-const initialState = {
-    loading: false
-};
-const loadingSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
-    name: "loading",
-    initialState,
-    reducers: {
-        showLoading: (state)=>{
-            state.loading = true;
-        },
-        hideLoading: (state)=>{
-            state.loading = false;
-        }
-    }
-});
-const { showLoading , hideLoading  } = loadingSlice.actions;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loadingSlice.reducer);
-
-
-/***/ }),
-
 /***/ 5184:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("@reduxjs/toolkit");
+
+/***/ }),
+
+/***/ 2167:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("axios");
 
 /***/ }),
 
@@ -597,7 +646,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,882,865], () => (__webpack_exec__(7134)));
+var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,64,707,882,865], () => (__webpack_exec__(5058)));
 module.exports = __webpack_exports__;
 
 })();

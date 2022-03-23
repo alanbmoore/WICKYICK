@@ -3,6 +3,42 @@
 .nav-bar{
   padding: .5rem 10%;
   border-bottom: 1px solid rgb(0 0 0 / 16%);
+  .search-input{
+    padding: 9px 165px 9px 13% !important;
+    background: $white;
+    border: 1px solid $gallery;
+    box-sizing: border-box;
+    border-radius: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    ::placeholder {
+      text-overflow: ellipsis !important;
+    }
+  }
+  .search-icon{
+    top: 49%;
+    transform: translate(2%, -49%);
+    left: 20px;
+  }
+  .search-result{
+    border-radius: 10px;
+    position: absolute;
+    background: $white;
+    width: 100%;
+    margin-top: 2%;
+    border: 1px solid #EBEBEB;
+    z-index: 99;
+    max-height: 50vh;
+    overflow: scroll;
+    .search-obj{
+      padding:10px;
+      border-bottom: 1px solid black;
+      &:last-child{
+        border-bottom:none;
+      }
+    }
+  }
   a{
     &:hover{
       color: $purple !important;
