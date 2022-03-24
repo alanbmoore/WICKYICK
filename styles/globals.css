@@ -293,8 +293,8 @@ body {
 }
 
 .dropdown-menu{
-  padding: 0;
-  border-radius: 12px;
+  padding: 0 !important;
+  border-radius: 12px !important;
 }
 
 .nav-user-dropdown .dropdown-item {
