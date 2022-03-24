@@ -269,18 +269,21 @@ body {
 .nav-user-dropdown {
   padding: 0px;
   min-width: 230px;
-  margin: 0px
+  margin: 0px;
+  border-radius: 12px;
 }
 
 .nav-user-name {}
 
 .nav-user-info {
+  border-radius: 12px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
   background-color: #7E3076FF !important;
   line-height: 1.4;
-  padding: 12px;
+  padding: 13px 14px !important;
   color: #fff;
   font-size: 13px;
-  border-radius: 2px 2px 0 0
 }
 
 .nav-user-info .status {
@@ -289,8 +292,6 @@ body {
   left: 0px
 }
 
-.nav-user-dropdown {}
-
 .nav-user-dropdown .dropdown-item {
   display: flex;
   align-items: center;
@@ -298,7 +299,6 @@ body {
   padding: 11px 9px;
   clear: both;
   font-weight: 400;
-  color: #686972;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -331,8 +331,8 @@ body {
 }
 
 .google-map{
-  width: 45% !important;
-  height: 75% !important;
+  width: 120% !important;
+  height: 120% !important;
 }
 
 
@@ -363,4 +363,29 @@ body {
   border-radius: 7px;
   border-style: solid;
   border-width: 1px;
+}
+
+
+.map-filter-btn__control{
+  background: #FFFFFF !important;
+  border: 1px solid #EBEBEB !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 0px 4px rgb(0 0 0 / 16%) !important;
+  border-radius: 24px  !important;
+  margin: 0px 8px !important;
+  z-index: 9;
+  height: 43px;
+  width: 140px;
+}
+
+.map-sort-by-btn__control{
+  background: #FFFFFF !important;
+  border: 1px solid #EBEBEB !important;
+  box-sizing: border-box !important;
+  border-radius: 24px  !important;
+  box-shadow: none !important;
+  margin: 0px 8px !important;
+  z-index: 9;
+  height: 43px;
+  width: 140px;
 }

@@ -25,6 +25,17 @@ module.exports = {
 
 /***/ }),
 
+/***/ 6119:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/logo.558a2afb.png","height":56,"width":56,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAApklEQVR42mOo0y9lYgCCSv1Cxlr90pNAvJ0BCmr1y5igjFI1ID4OVNwOxBOA7P1ALAWWrNYvYQZyXgLxbYTO0vdAfJUBSeASEE+G8YGmrADyDyArmAIU9Ks1KLWvNSgzALITgewWsCSQoQXElkDMC1Q4HYgbgWxRIDYGYm0GoEAVkkk3gSYcQ+LXMNQZlG4D22tQpgAU+AE0/g2QLdRmWM1Ua1C6DQCEKkf11DqdsgAAAABJRU5ErkJggg=="});
+
+/***/ }),
+
 /***/ 4617:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -36,7 +47,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 5058:
+/***/ 5252:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -103,8 +114,12 @@ var userIcon = __webpack_require__(4617);
 var external_react_ = __webpack_require__(6689);
 ;// CONCATENATED MODULE: external "react-icons/io"
 const io_namespaceObject = require("react-icons/io");
-;// CONCATENATED MODULE: external "react-icons/bi"
-const bi_namespaceObject = require("react-icons/bi");
+// EXTERNAL MODULE: external "react-icons/bi"
+var bi_ = __webpack_require__(6652);
+;// CONCATENATED MODULE: external "react-icons/go"
+const go_namespaceObject = require("react-icons/go");
+;// CONCATENATED MODULE: external "react-icons/fa"
+const fa_namespaceObject = require("react-icons/fa");
 ;// CONCATENATED MODULE: external "react-icons/md"
 const md_namespaceObject = require("react-icons/md");
 // EXTERNAL MODULE: ./services/user.ts
@@ -113,6 +128,9 @@ var services_user = __webpack_require__(3707);
 const external_lodash_namespaceObject = require("lodash");
 var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_namespaceObject);
 ;// CONCATENATED MODULE: ./components/navbar/index.tsx
+
+
+
 
 
 
@@ -197,7 +215,7 @@ const AppNavbar = ()=>{
                         /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                             className: "position-relative",
                             children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx(bi_namespaceObject.BiSearch, {
+                                /*#__PURE__*/ jsx_runtime_.jsx(bi_.BiSearch, {
                                     className: (Navbar_module_default())["search-icon"] + " position-absolute"
                                 }),
                                 /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Form.Control, {
@@ -314,6 +332,22 @@ const AppNavbar = ()=>{
                                                             })
                                                         }),
                                                         /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
+                                                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("a", {
+                                                                href: "javascript:void(0)",
+                                                                onClick: ()=>{
+                                                                    router.push("/agent-profile/" + userData.pk);
+                                                                },
+                                                                className: "dropdown-item",
+                                                                children: [
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(fa_namespaceObject.FaUser, {}),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                                        className: "px-2",
+                                                                        children: "My Profile"
+                                                                    })
+                                                                ]
+                                                            })
+                                                        }),
+                                                        /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
                                                             children: /*#__PURE__*/ jsx_runtime_.jsx(next_link["default"], {
                                                                 passHref: true,
                                                                 href: "/settings",
@@ -325,10 +359,40 @@ const AppNavbar = ()=>{
                                                                         }),
                                                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
                                                                             className: "px-2",
-                                                                            children: "Setting"
+                                                                            children: "Manage Profile"
                                                                         })
                                                                     ]
                                                                 })
+                                                            })
+                                                        }),
+                                                        /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
+                                                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("a", {
+                                                                href: "javascript:void(0)",
+                                                                className: "dropdown-item",
+                                                                children: [
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(go_namespaceObject.GoSettings, {
+                                                                        fontSize: "20px"
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                                        className: "px-2",
+                                                                        children: "Account Settings"
+                                                                    })
+                                                                ]
+                                                            })
+                                                        }),
+                                                        /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
+                                                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("a", {
+                                                                href: "javascript:void(0)",
+                                                                className: "dropdown-item",
+                                                                children: [
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(md_namespaceObject.MdHelp, {
+                                                                        fontSize: "20px"
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                                        className: "px-2",
+                                                                        children: "Help & Support"
+                                                                    })
+                                                                ]
                                                             })
                                                         }),
                                                         /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
@@ -435,6 +499,36 @@ const getUser = ()=>{
     if (false) {}
     return false;
 };
+
+
+/***/ }),
+
+/***/ 5072:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "av": () => (/* binding */ setUser),
+/* harmony export */   "ZP": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony export userSlice */
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5184);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
+
+const initialState = {
+    user: null
+};
+const userSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+    name: "user",
+    initialState,
+    reducers: {
+        setUser: (state, action)=>{
+            state.user = action.payload;
+        }
+    }
+});
+const { setUser  } = userSlice.actions;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userSlice.reducer);
 
 
 /***/ }),
@@ -615,6 +709,14 @@ module.exports = require("react-bootstrap");
 
 /***/ }),
 
+/***/ 6652:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("react-icons/bi");
+
+/***/ }),
+
 /***/ 6022:
 /***/ ((module) => {
 
@@ -646,7 +748,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,64,707,882,865], () => (__webpack_exec__(5058)));
+var __webpack_exports__ = __webpack_require__.X(0, [675,676,664,64,707,865], () => (__webpack_exec__(5252)));
 module.exports = __webpack_exports__;
 
 })();

@@ -14,6 +14,8 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 // @ts-ignore
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 const themeStyle = (theme: any) => ({
   ...theme,
@@ -101,7 +103,7 @@ const Profile = ({ goToNextStep }: any) => {
       err: "",
     });
     setImage(user?.picture ? user.picture : Person);
-    setTags(user?.tags && user.tags.split(","));
+    user?.tags && setTags(user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
     user?.job_title != "null" &&
       setJobTitle({ isInvalid: false, value: user?.job_title, err: "" });

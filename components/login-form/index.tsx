@@ -6,7 +6,7 @@ import linkedInLogo from "../../public/static/images/linkedin-logo.png";
 import facebookLogo from "../../public/static/images/facebook.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import SocialButton from "../sign-up-form/SocialButton";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { AuthServices } from "../../services/auth";
@@ -16,6 +16,7 @@ import { setUser } from "../../store/userSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const history = useRouter();
 
   const onSuccess = (data: any) => {
     dispatch(setUser(data.user));
@@ -135,7 +136,14 @@ const LoginForm = () => {
             </Col>
           </Row>
 
-          <p className={styles["forgot-password-text"]}>Forgot Password?</p>
+          <p
+            onClick={() => {
+              history.push("/password-reset");
+            }}
+            className={styles["forgot-password-text"]}
+          >
+            Forgot Password?
+          </p>
 
           <Button className={styles["submit-btn"]} type="submit">
             Login

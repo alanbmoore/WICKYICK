@@ -1,18 +1,26 @@
 @import "../public/static/scss/variables";
 
 .search-result{
-  max-width: 41.2%;
+  max-width: 49%;
   //background: #FFFFFF;
   //border: 1px solid #888C94;
   //box-sizing: border-box;
   //border-radius: 50px;
 
+  .search-icon{
+    top: 51%;
+    transform: translate(2%, -51%);
+    left: 20px;
+    font-size: 23px;
+  }
+
   .search-input{
-    padding: 0 165px 0 2%;
+    font-size: 19px;
+    padding: 0 165px 0 10%;
     background: $white;
     border: 1px solid $gallery;
     box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 30px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -34,6 +42,30 @@
       background: $tapestryapprox;
     }
   }
+}
+
+.total-search{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #4A4A4A;
+  margin-top: 1rem;
+}
+
+.map-btn-1{
+  left: 29%;
+  top: 1.75%;
+}
+
+.map-btn-2{
+  left: 53%;
+  top: 1.75%;
+}
+
+.map-btn-3{
+  left: 75%;
+  top: 1.75%;
 }
 
 @media (max-width: 768px) {

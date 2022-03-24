@@ -18,6 +18,9 @@ import Sidebar from "react-sidebar";
 import { useCallback, useEffect, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
 import { BiSearch } from "react-icons/bi";
+import { GoSettings } from "react-icons/go";
+import { FaUser } from "react-icons/fa";
+import { MdHelp } from "react-icons/md";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { UserService } from "../../services/user";
@@ -211,12 +214,42 @@ const AppNavbar = () => {
                           {/*  </a>*/}
                           {/*</Dropdown.Item>*/}
                           <Dropdown.Item>
+                            <a
+                              href="javascript:void(0)"
+                              onClick={() => {
+                                router.push("/agent-profile/" + userData.pk);
+                              }}
+                              className="dropdown-item"
+                            >
+                              <FaUser />
+                              <span className="px-2">My Profile</span>
+                            </a>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
                             <Link passHref href="/settings">
                               <div className="dropdown-item">
                                 <IoIosSettings fontSize="20px" />
-                                <span className="px-2">Setting</span>
+                                <span className="px-2">Manage Profile</span>
                               </div>
                             </Link>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <a
+                              href="javascript:void(0)"
+                              className="dropdown-item"
+                            >
+                              <GoSettings fontSize="20px" />
+                              <span className="px-2">Account Settings</span>
+                            </a>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <a
+                              href="javascript:void(0)"
+                              className="dropdown-item"
+                            >
+                              <MdHelp fontSize="20px" />
+                              <span className="px-2">Help & Support</span>
+                            </a>
                           </Dropdown.Item>
                           <Dropdown.Item>
                             <a
