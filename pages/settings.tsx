@@ -3,6 +3,7 @@ import styles from "../styles/Settings.module.scss";
 import SettingForm from "../components/settings";
 import Link from "next/link";
 import withAuth from "../utils/withAuth";
+import AppFooter from "../components/footer";
 
 const Settings = () => {
   return (
@@ -34,6 +35,7 @@ const Settings = () => {
           {/*</Link>*/}
         </div>
       </div>
+      <AppFooter />
     </>
   );
 };

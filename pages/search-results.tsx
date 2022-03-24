@@ -1,5 +1,6 @@
 import SearchedUsersList from "../components/searched-users-list";
 import { useRouter } from "next/router";
+import AppFooter from "../components/footer";
 
 const SearchResults = () => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const SearchResults = () => {
       >
         <SearchedUsersList keyword={keyword} />
       </div>
+      <AppFooter />
     </>
   );
 };

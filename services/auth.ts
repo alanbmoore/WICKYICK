@@ -30,6 +30,20 @@ export const AuthServices = {
       throw error?.response?.data;
     }
   },
+  login: async (data: any) => {
+    try {
+      const url = "api/rest-auth/login/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
   signup: async (data: any) => {
     try {
       const url = "api/user/signup/";

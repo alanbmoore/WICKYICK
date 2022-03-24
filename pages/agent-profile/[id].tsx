@@ -1,4 +1,5 @@
 import AgentProfileBanner from "../../components/agent-profile";
+import AppFooter from "../../components/footer";
 
 const AgentProfile = () => {
   return (
@@ -14,6 +15,7 @@ const AgentProfile = () => {
       >
         <AgentProfileBanner />
       </div>
+      <AppFooter />
     </>
   );
 };
