@@ -23,7 +23,7 @@ const experienceOptions = [
   { value: "< 5 Years", label: "< 5 Years" },
 ];
 
-const verifiesOptions = [{ value: "verified", label: "verified" }];
+const verifiesOptions = [{ value: "Verified", label: "Verified" }];
 const langOptions = [{ value: "English", label: "English" }];
 const sortByOptions = [
   { value: "first_name", label: "A to Z" },
