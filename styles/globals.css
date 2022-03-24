@@ -292,6 +292,11 @@ body {
   left: 0px
 }
 
+.dropdown-menu{
+  padding: 0;
+  border-radius: 12px;
+}
+
 .nav-user-dropdown .dropdown-item {
   display: flex;
   align-items: center;
