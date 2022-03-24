@@ -1,13 +1,5 @@
 import styles from "../../styles/SearchResult.module.scss";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  Container,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Form, Row, Col, Container } from "react-bootstrap";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import MapContainer from "../Maps/index";
@@ -107,7 +99,7 @@ const SearchedUsersList = ({ keyword }: any) => {
                 value={searchedText}
                 className={styles["search-input"] + " py-3"}
                 type="text"
-                placeholder="City, State, Agent Name, Brokerage, #"
+                placeholder="City, State, Agent Name, Company, #"
               />
 
               {/*<Button*/}
