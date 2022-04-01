@@ -3,8 +3,10 @@ import Image from "next/image";
 import { ICard } from "../../interfaces/card";
 import styles from "../../styles/Client-Card.module.scss";
 import Agent from "../../public/static/images/userIcon.jpeg";
+import { FcApproval } from "react-icons/fc";
 
 const CustomCard = ({
+  isVerified,
   image,
   title,
   description,
@@ -28,7 +30,10 @@ const CustomCard = ({
             height={height}
           />
           <Card.Body className={styles["card-body"]}>
-            <Card.Title className={styles["agent-name"]}>{title}</Card.Title>
+            <Card.Title className={styles["agent-name"]}>
+              {title}
+              {isVerified && <FcApproval className="approve-icon mx-2" />}
+            </Card.Title>
             <Card.Text className={styles["agent-followers"] + " mb-0"}>
               {description}
             </Card.Text>

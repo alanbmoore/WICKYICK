@@ -1,6 +1,7 @@
 import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { RiShareFill } from "react-icons/ri";
+import { FcApproval } from "react-icons/fc";
 import { AiOutlineHeart } from "react-icons/ai";
 import FeedImage from "../../public/static/images/feed-img.png";
 import Instagram from "../../public/static/images/instgram-post.svg";
@@ -15,6 +16,7 @@ import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { UserService } from "../../services/user";
 // @ts-ignore
 import ModalImage from "react-modal-image";
+import { toast } from "react-toastify";
 
 const AgentProfileBanner = () => {
   const router = useRouter();
@@ -56,21 +58,30 @@ const AgentProfileBanner = () => {
                         ? userData.picture
                         : UserIcon
                     }
-                    height={"130px"}
-                    width={"130px"}
+                    height={"150px"}
+                    width={"150px"}
                     className="rounded-circle"
                     alt="user-pic"
                   />
                 </div>
                 <div className="px-4">
                   <div className="title-name d-flex align-items-center">
-                    <h5 className=" mb-0">
+                    <h5 className="d-flex align-items-center mb-0">
                       {userData?.first_name} {userData?.last_name}
+                      {userData.is_verified && (
+                        <FcApproval className="approve-icon mx-2" />
+                      )}
                     </h5>
                     <span className="mx-2">. {userData?.license_number}</span>
                   </div>
                   <div className=" mt-1">
-                    <p className="fonts">{userData?.job_title}</p>
+                    <p className="fonts">Email: {userData?.email}</p>
+                    <p className="fonts mt-2">Company: {userData?.company}</p>
+                    <p className="fonts mt-2">Tags: {userData?.tags}</p>
+                    <p className="fonts mt-2">
+                      Phone No: {userData?.phone_number}
+                    </p>
+                    <p className="fonts mt-2">Location: {userData?.location}</p>
                   </div>
                   <div className="social-list mt-3">
                     {userData?.instagram_connected && (
@@ -97,7 +108,12 @@ const AgentProfileBanner = () => {
                       </span>
                     </div>
                   </button>
-                  <button className="btn btn-outline-primary px-4 mx-2">
+                  <button
+                    onClick={() => {
+                      document.location = `mailto:${userData.email}?subject=Message: `;
+                    }}
+                    className="btn btn-outline-primary px-4 mx-2"
+                  >
                     <div className="d-flex align-items-center">
                       <Image src={MessageIcon} alt="message-icon" />
                       <span
@@ -120,9 +136,22 @@ const AgentProfileBanner = () => {
                     <span className="mx-1"> 1.2K</span>
                   </div>
                   <AiOutlineHeart className="mx-3" size="23px" />
-                  <RiShareFill className="mx-3" size="23px" />
+                  <RiShareFill
+                    title="share"
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.toString());
+                      toast.success("Copied to clipboard", {
+                        position: toast.POSITION.TOP_RIGHT,
+                      });
+                    }}
+                    className="mx-3"
+                    size="23px"
+                  />
                   <div className="social-list align-items-center d-flex mx-4">
                     <Image
+                      onClick={() => {
+                        document.location = `mailto:alanbmoore@wickyick.com?subject=Reported User&body=${window.location.toString()}`;
+                      }}
                       width="25px"
                       height="25px"
                       src={CautionIcon}
@@ -231,14 +260,14 @@ const AgentProfileBanner = () => {
                                 />
                               )}
 
-                              <div className="post-type">
-                                <Image
-                                  alt={"post-type-pic"}
-                                  width="30px"
-                                  height="30px"
-                                  src={Instagram}
-                                />
-                              </div>
+                              {/*<div className="post-type">*/}
+                              {/*  <Image*/}
+                              {/*    alt={"post-type-pic"}*/}
+                              {/*    width="30px"*/}
+                              {/*    height="30px"*/}
+                              {/*    src={Instagram}*/}
+                              {/*  />*/}
+                              {/*</div>*/}
                             </div>
                           );
                         })}

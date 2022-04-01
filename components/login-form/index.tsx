@@ -41,7 +41,9 @@ const LoginForm = () => {
     toast.success("You have successfully registered", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    router.push("/settings");
+    data.user.is_on_boarding_completed
+      ? router.push(`/agent-profile/${data.user.pk}`)
+      : router.push("/settings");
   };
 
   const validate = () => {

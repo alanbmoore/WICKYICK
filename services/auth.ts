@@ -2,9 +2,51 @@ import { makeRequest } from "../Axios";
 import { AxiosResponse } from "axios";
 
 export const AuthServices = {
+  requestAccess: async (data: any) => {
+    try {
+      const url = "api/user/request-access/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
   resetPassword: async (data: any) => {
     try {
       const url = "api/user/send-password-reset-email/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
+  changePassword: async (data: any) => {
+    try {
+      const url = "api/user/change-password/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
+  changeEmail: async (data: any) => {
+    try {
+      const url = "api/user/change-email/";
       const response = (await makeRequest(
         url,
         "post",

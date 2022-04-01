@@ -13,6 +13,8 @@ import { UserService } from "../../services/user";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../services/isLoggedIn";
+import { setUser } from "../../store/userSlice";
+import { toast } from "react-toastify";
 
 const socialData = [
   {
@@ -66,6 +68,29 @@ const SettingForm = () => {
     }
   }, [dispatch, code]);
 
+  const handleSubmission = () => {
+    const formData: any = new FormData();
+    formData.append("is_on_boarding_completed", "True");
+    dispatch(showLoading());
+    UserService.updateProfile(formData)
+      .then((data: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+        dispatch(setUser(data));
+        localStorage.setItem("user", JSON.stringify(data));
+        toast.success("Profile completed successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        history.push(`agent-profile/${user.pk}`);
+      })
+      .catch((error: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+      });
+  };
+
   return (
     <>
       <div className={styles["setting-form"]}>
@@ -112,7 +137,7 @@ const SettingForm = () => {
                     className={styles["continue-btn"] + " mt-3"}
                     onClick={(e) => {
                       e.preventDefault();
-                      history.push(`agent-profile/${user.pk}`);
+                      handleSubmission();
                     }}
                   >
                     Finish

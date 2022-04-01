@@ -10,6 +10,7 @@ exports.modules = {
 // Exports
 module.exports = {
 	"nav-bar": "Navbar_nav-bar__F_J5I",
+	"user-pic": "Navbar_user-pic__wro2K",
 	"search-input": "Navbar_search-input__jw8l6",
 	"search-icon": "Navbar_search-icon__Il4nE",
 	"search-result": "Navbar_search-result__Y__wW",
@@ -146,6 +147,7 @@ var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash
 
 
 
+
 // @ts-ignore
 
 
@@ -223,6 +225,16 @@ const AppNavbar = ()=>{
                                         setSearchedText(e.target.value);
                                         getUsers(e.target.value);
                                     },
+                                    onClick: (e)=>{
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    },
+                                    onKeyDown: (e)=>{
+                                        if (e.key == "Enter") {
+                                            setUserList([]);
+                                            searchedText && router.push(`/search-results?keyword=${searchedText}`);
+                                        }
+                                    },
                                     value: searchedText,
                                     className: (Navbar_module_default())["search-input"] + " py-3",
                                     type: "text",
@@ -239,11 +251,22 @@ const AppNavbar = ()=>{
                                                 setUserList([]);
                                                 setSearchedText("");
                                             },
-                                            className: (Navbar_module_default())["search-obj"],
+                                            className: (Navbar_module_default())["search-obj"] + " d-flex align-items-center",
                                             children: [
-                                                item.first_name,
-                                                " ",
-                                                item.last_name
+                                                /*#__PURE__*/ jsx_runtime_.jsx(next_image["default"], {
+                                                    className: (Navbar_module_default())["user-pic"],
+                                                    src: item.picture ? item.picture : userIcon/* default */.Z,
+                                                    width: "30px",
+                                                    height: "30px"
+                                                }),
+                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("span", {
+                                                    className: "mx-3",
+                                                    children: [
+                                                        item.first_name,
+                                                        " ",
+                                                        item.last_name
+                                                    ]
+                                                })
                                             ]
                                         }, index));
                                     })
@@ -332,12 +355,12 @@ const AppNavbar = ()=>{
                                                             })
                                                         }),
                                                         /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
+                                                            onClick: ()=>{
+                                                                router.push("/agent-profile/" + userData.pk);
+                                                            },
                                                             children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("a", {
-                                                                href: "javascript:void(0)",
-                                                                onClick: ()=>{
-                                                                    router.push("/agent-profile/" + userData.pk);
-                                                                },
                                                                 className: "dropdown-item",
+                                                                href: "javascript:void(0)",
                                                                 children: [
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(fa_namespaceObject.FaUser, {}),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -347,10 +370,10 @@ const AppNavbar = ()=>{
                                                                 ]
                                                             })
                                                         }),
-                                                        /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
-                                                            children: /*#__PURE__*/ jsx_runtime_.jsx(next_link["default"], {
-                                                                passHref: true,
-                                                                href: "/settings",
+                                                        /*#__PURE__*/ jsx_runtime_.jsx(next_link["default"], {
+                                                            passHref: true,
+                                                            href: "/settings",
+                                                            children: /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
                                                                 children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                                                                     className: "dropdown-item",
                                                                     children: [
@@ -365,19 +388,22 @@ const AppNavbar = ()=>{
                                                                 })
                                                             })
                                                         }),
-                                                        /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
-                                                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("a", {
-                                                                href: "javascript:void(0)",
-                                                                className: "dropdown-item",
-                                                                children: [
-                                                                    /*#__PURE__*/ jsx_runtime_.jsx(go_namespaceObject.GoSettings, {
-                                                                        fontSize: "20px"
-                                                                    }),
-                                                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                                                        className: "px-2",
-                                                                        children: "Account Settings"
-                                                                    })
-                                                                ]
+                                                        /*#__PURE__*/ jsx_runtime_.jsx(next_link["default"], {
+                                                            passHref: true,
+                                                            href: "/profile-management",
+                                                            children: /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {
+                                                                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                                                    className: "dropdown-item",
+                                                                    children: [
+                                                                        /*#__PURE__*/ jsx_runtime_.jsx(go_namespaceObject.GoSettings, {
+                                                                            fontSize: "20px"
+                                                                        }),
+                                                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                                                            className: "px-2",
+                                                                            children: "Account Settings"
+                                                                        })
+                                                                    ]
+                                                                })
                                                             })
                                                         }),
                                                         /*#__PURE__*/ jsx_runtime_.jsx(external_react_bootstrap_.Dropdown.Item, {

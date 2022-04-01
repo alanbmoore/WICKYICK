@@ -3,9 +3,59 @@ import Image from "next/image";
 import { Button, Container, Form } from "react-bootstrap";
 import { showModal } from "../../store/modalSlice";
 import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../store/loadingSlice";
+import { AuthServices } from "../../services/auth";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { isValid } from "../../utils/helper";
 
 const AppFooter = () => {
+  const [email, setEmail] = useState({ isInvalid: false, value: "", err: "" });
   const dispatch = useDispatch();
+
+  const handleEmail = (e: React.FormEvent<any>) => {
+    setEmail({ isInvalid: false, value: e.currentTarget.value, err: "" });
+  };
+
+  const validate = () => {
+    let isValidFlag = true;
+    if (email.value === "") {
+      let err = "Email is required !";
+      setEmail({ isInvalid: true, value: email.value, err: err });
+      isValidFlag = false;
+    } else {
+      const errors = isValid(email.value, { email: true });
+      if (errors.length) {
+        setEmail({ isInvalid: true, value: email.value, err: errors[0] });
+        isValidFlag = false;
+      }
+    }
+    return isValidFlag;
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (validate()) {
+      let obj = {
+        email: email.value,
+      };
+      dispatch(showLoading());
+      AuthServices.requestAccess(obj)
+        .then((data: any) => {
+          toast.success(data.detail, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        })
+        .catch((error: any) => {
+          setTimeout(() => {
+            dispatch(hideLoading());
+          }, 1000);
+        });
+    }
+  };
 
   return (
     <>
@@ -87,10 +137,24 @@ const AppFooter = () => {
                         </div>
                         <div className={styles["subscribe-form"]}>
                           <Form.Control
+                            onChange={handleEmail}
+                            value={email.value}
                             type="text"
                             placeholder="Enter email address..."
                           />
+                          {email.isInvalid && (
+                            <div
+                              style={{
+                                color: "red",
+                                fontSize: "12px",
+                                marginTop: "5px",
+                              }}
+                            >
+                              {email.err}
+                            </div>
+                          )}
                           <Button
+                            onClick={handleSubmit}
                             className={styles["subscribe-btn"]}
                             type="submit"
                           >

@@ -6,7 +6,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import facebookLogo from "../../public/static/images/facebook.png";
 import styles from "../../styles/SignUp.module.scss";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useState } from "react";
 import { AuthServices } from "../../services/auth";
 import { isValid } from "../../utils/helper";
@@ -109,6 +109,11 @@ const SignUpForm = () => {
       dispatch(showLoading());
       AuthServices.signup(obj)
         .then((data: any) => {
+          if (data?.message) {
+            toast.success(data?.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
@@ -134,11 +139,9 @@ const SignUpForm = () => {
     toast.success("You have successfully registered", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    router.push("/settings");
-  };
-
-  const handleSocialLoginFailure = (err: any) => {
-    console.error(err);
+    data.user.is_on_boarding_completed
+      ? router.push(`/agent-profile/${data.user.pk}`)
+      : router.push("/settings");
   };
 
   return (

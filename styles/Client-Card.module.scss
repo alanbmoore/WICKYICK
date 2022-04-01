@@ -14,6 +14,8 @@
   .card-body{
     padding-left: 12px !important;
     .agent-name{
+      display: flex;
+      align-items: center;
       color: $black;
       font-size: 15px;
       font-weight: 700;

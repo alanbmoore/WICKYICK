@@ -38,14 +38,26 @@ module.exports = {
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3788);
-/* harmony import */ var _styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3788);
+/* harmony import */ var _styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5675);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(358);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _store_modalSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2507);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6022);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _store_loadingSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6487);
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7329);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1187);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_toastify__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils_helper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5169);
+
+
+
+
+
 
 
 
@@ -53,28 +65,86 @@ module.exports = {
 
 
 const AppFooter = ()=>{
+    const { 0: email , 1: setEmail  } = (0,react__WEBPACK_IMPORTED_MODULE_8__.useState)({
+        isInvalid: false,
+        value: "",
+        err: ""
+    });
     const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_4__.useDispatch)();
+    const handleEmail = (e)=>{
+        setEmail({
+            isInvalid: false,
+            value: e.currentTarget.value,
+            err: ""
+        });
+    };
+    const validate = ()=>{
+        let isValidFlag = true;
+        if (email.value === "") {
+            let err = "Email is required !";
+            setEmail({
+                isInvalid: true,
+                value: email.value,
+                err: err
+            });
+            isValidFlag = false;
+        } else {
+            const errors = (0,_utils_helper__WEBPACK_IMPORTED_MODULE_9__/* .isValid */ .J)(email.value, {
+                email: true
+            });
+            if (errors.length) {
+                setEmail({
+                    isInvalid: true,
+                    value: email.value,
+                    err: errors[0]
+                });
+                isValidFlag = false;
+            }
+        }
+        return isValidFlag;
+    };
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        if (validate()) {
+            let obj = {
+                email: email.value
+            };
+            dispatch((0,_store_loadingSlice__WEBPACK_IMPORTED_MODULE_5__/* .showLoading */ .QP)());
+            _services_auth__WEBPACK_IMPORTED_MODULE_6__/* .AuthServices.requestAccess */ .J.requestAccess(obj).then((data)=>{
+                react_toastify__WEBPACK_IMPORTED_MODULE_7__.toast.success(data.detail, {
+                    position: react_toastify__WEBPACK_IMPORTED_MODULE_7__.toast.POSITION.TOP_RIGHT
+                });
+                setTimeout(()=>{
+                    dispatch((0,_store_loadingSlice__WEBPACK_IMPORTED_MODULE_5__/* .hideLoading */ .Zk)());
+                }, 1000);
+            }).catch((error)=>{
+                setTimeout(()=>{
+                    dispatch((0,_store_loadingSlice__WEBPACK_IMPORTED_MODULE_5__/* .hideLoading */ .Zk)());
+                }, 1000);
+            });
+        }
+    };
     return(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Container, {
             fluid: true,
             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("footer", {
-                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-section"]),
+                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-section"]),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["custom-container"]),
+                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["custom-container"]),
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-content"]) + " pb-5",
+                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-content"]) + " pb-5",
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                 className: "row",
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                         className: "col-12 mb-50 ",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget"]),
+                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget"]),
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-logo"]),
+                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-logo"]),
                                                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-logo"]) + " d-flex align-items-center",
+                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-logo"]) + " d-flex align-items-center",
                                                     children: [
                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_image__WEBPACK_IMPORTED_MODULE_1__["default"], {
                                                             src: "/logo.png",
@@ -83,7 +153,7 @@ const AppFooter = ()=>{
                                                             height: 33
                                                         }),
                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-text"]),
+                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-text"]),
                                                             children: "WickYick"
                                                         })
                                                     ]
@@ -92,7 +162,7 @@ const AppFooter = ()=>{
                                         })
                                     }),
                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-columns"]) + " col-12 d-flex flex-column flex-md-row",
+                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-columns"]) + " col-12 d-flex flex-column flex-md-row",
                                         children: [
                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                                 className: "col-md-6 col-12 row m-0",
@@ -100,10 +170,10 @@ const AppFooter = ()=>{
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                         className: "col-xl-6 col-lg-6 col-md-6 col-6 mb-30",
                                                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget"]),
+                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget"]),
                                                             children: [
                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget-heading"]),
+                                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget-heading"]),
                                                                     children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
                                                                         children: "Explore WickYick"
                                                                     })
@@ -131,10 +201,10 @@ const AppFooter = ()=>{
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                         className: "col-xl-6 col-lg-6 col-md-6 col-6 mb-30",
                                                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget"]),
+                                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget"]),
                                                             children: [
                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget-heading"]),
+                                                                    className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget-heading"]),
                                                                     children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
                                                                         children: "Company"
                                                                     })
@@ -172,24 +242,35 @@ const AppFooter = ()=>{
                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                     className: "col-12 mb-50 row",
                                                     children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget"]),
+                                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget"]),
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["footer-widget-heading"]),
+                                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["footer-widget-heading"]),
                                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
                                                                     className: " mt-md-0 mt-4 mx-md-0 px-md-0 mx-2 px-1",
                                                                     children: "Not a real estate agent, but have a story to tell?"
                                                                 })
                                                             }),
                                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["subscribe-form"]),
+                                                                className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["subscribe-form"]),
                                                                 children: [
                                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Form.Control, {
+                                                                        onChange: handleEmail,
+                                                                        value: email.value,
                                                                         type: "text",
                                                                         placeholder: "Enter email address..."
                                                                     }),
+                                                                    email.isInvalid && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                                                        style: {
+                                                                            color: "red",
+                                                                            fontSize: "12px",
+                                                                            marginTop: "5px"
+                                                                        },
+                                                                        children: email.err
+                                                                    }),
                                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                                                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["subscribe-btn"]),
+                                                                        onClick: handleSubmit,
+                                                                        className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["subscribe-btn"]),
                                                                         type: "submit",
                                                                         children: "Request Invite"
                                                                     })
@@ -205,21 +286,21 @@ const AppFooter = ()=>{
                             })
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["copyright-area"]),
+                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["copyright-area"]),
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: "row",
                                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                                     className: "col-xl-6 col-lg-6 text-left text-lg-left",
                                     children: [
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["copyright-text"]),
+                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["copyright-text"]),
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
                                                 className: "m-0 pb-1",
                                                 children: "\xa9 2022 WickYick. All rights reserved"
                                             })
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_5___default()["copyright-text"]),
+                                            className: (_styles_Footer_module_scss__WEBPACK_IMPORTED_MODULE_10___default()["copyright-text"]),
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
                                                 onClick: ()=>dispatch((0,_store_modalSlice__WEBPACK_IMPORTED_MODULE_3__/* .showModal */ .K4)())
                                                 ,

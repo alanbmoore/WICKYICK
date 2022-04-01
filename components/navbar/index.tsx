@@ -24,6 +24,7 @@ import { MdHelp } from "react-icons/md";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { UserService } from "../../services/user";
+import Agent from "../../public/static/images/userIcon.jpeg";
 // @ts-ignore
 import _ from "lodash";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
@@ -107,6 +108,17 @@ const AppNavbar = () => {
                 setSearchedText(e.target.value);
                 getUsers(e.target.value);
               }}
+              onClick={(e: any) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onKeyDown={(e: any) => {
+                if (e.key == "Enter") {
+                  setUserList([]);
+                  searchedText &&
+                    router.push(`/search-results?keyword=${searchedText}`);
+                }
+              }}
               value={searchedText}
               className={styles["search-input"] + " py-3"}
               type="text"
@@ -124,10 +136,20 @@ const AppNavbar = () => {
                         setUserList([]);
                         setSearchedText("");
                       }}
-                      className={styles["search-obj"]}
+                      className={
+                        styles["search-obj"] + " d-flex align-items-center"
+                      }
                       key={index}
                     >
-                      {item.first_name} {item.last_name}
+                      <Image
+                        className={styles["user-pic"]}
+                        src={item.picture ? item.picture : Agent}
+                        width="30px"
+                        height="30px"
+                      />
+                      <span className="mx-3">
+                        {item.first_name} {item.last_name}
+                      </span>
                     </div>
                   );
                 })}
@@ -213,35 +235,38 @@ const AppNavbar = () => {
                           {/*    <span className="px-2"> Account</span>*/}
                           {/*  </a>*/}
                           {/*</Dropdown.Item>*/}
-                          <Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              router.push("/agent-profile/" + userData.pk);
+                            }}
+                          >
                             <a
-                              href="javascript:void(0)"
-                              onClick={() => {
-                                router.push("/agent-profile/" + userData.pk);
-                              }}
                               className="dropdown-item"
+                              href="javascript:void(0)"
                             >
                               <FaUser />
                               <span className="px-2">My Profile</span>
                             </a>
                           </Dropdown.Item>
-                          <Dropdown.Item>
-                            <Link passHref href="/settings">
+
+                          <Link passHref href="/settings">
+                            <Dropdown.Item>
                               <div className="dropdown-item">
                                 <IoIosSettings fontSize="20px" />
                                 <span className="px-2">Manage Profile</span>
                               </div>
-                            </Link>
-                          </Dropdown.Item>
-                          <Dropdown.Item>
-                            <a
-                              href="javascript:void(0)"
-                              className="dropdown-item"
-                            >
-                              <GoSettings fontSize="20px" />
-                              <span className="px-2">Account Settings</span>
-                            </a>
-                          </Dropdown.Item>
+                            </Dropdown.Item>
+                          </Link>
+
+                          <Link passHref href="/profile-management">
+                            <Dropdown.Item>
+                              <div className="dropdown-item">
+                                <GoSettings fontSize="20px" />
+                                <span className="px-2">Account Settings</span>
+                              </div>
+                            </Dropdown.Item>
+                          </Link>
+
                           <Dropdown.Item>
                             <a
                               href="javascript:void(0)"

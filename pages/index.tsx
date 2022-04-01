@@ -132,6 +132,7 @@ const Home = () => {
                   }}
                 >
                   <CustomCard
+                    isVerified={item.is_verified}
                     image={item.picture}
                     title={item.first_name + " " + item.last_name}
                     subDescription={item?.location}
@@ -172,6 +173,7 @@ const Home = () => {
                 }}
               >
                 <CustomCard
+                  isVerified={item.is_verified}
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
                   subDescription={item?.location}
@@ -211,6 +213,7 @@ const Home = () => {
                 }}
               >
                 <CustomCard
+                  isVerified={item.is_verified}
                   image={item.picture}
                   title={item.first_name + " " + item.last_name}
                   subDescription={item.location}

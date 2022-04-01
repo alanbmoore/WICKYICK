@@ -312,8 +312,13 @@ body {
   line-height: 0.4
 }
 
+.nav-user-dropdown .dropdown-item:active {
+ color: #2F2F2F;
+}
+
 .nav-user-dropdown .dropdown-item:hover {
-  background-color: #f7f7fb
+  background-color: #f7f7fb;
+  color:#7E3076 !important;
 }
 
 
@@ -393,4 +398,21 @@ body {
   z-index: 9;
   height: 43px;
   width: 140px;
+}
+
+.approve-icon :nth-child(1){
+  fill: #7E3076;
+}
+
+.approve-icon :nth-child(2){
+  fill: white;
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: none !important;
+}
+
+.disabled p{
+  color: #c8c8c8 !important;
 }
