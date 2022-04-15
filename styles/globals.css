@@ -416,3 +416,18 @@ body {
 .disabled p{
   color: #c8c8c8 !important;
 }
+
+.konvajs-content {
+  width: 468px !important;
+}
+
+.konvajs-content canvas{
+  width: 470px !important;
+  object-fit: cover;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background: #7E3076FF;
+  border-color: #7E3076FF;
+}

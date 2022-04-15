@@ -1,5 +1,5 @@
 import styles from "../../../styles/Profile.module.scss";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { USACities } from "../../../utils/usCities";
 import { createFilter } from "react-select";
@@ -14,8 +14,9 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 // @ts-ignore
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
-import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
+import dynamic from "next/dynamic";
+
+const Avatar = dynamic(() => import("react-avatar-edit"), { ssr: false });
 
 const themeStyle = (theme: any) => ({
   ...theme,
@@ -33,11 +34,13 @@ const themeStyle = (theme: any) => ({
 
 const ProfileDetails = ({ goToNextStep }: any) => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
   const [cityList, setCityList] = useState([]);
-  const [img, setImage] = useState(Person);
-  const [selectedFile, setSelectedFile] = useState();
+  const [img, setImg] = useState(Person);
+  const [selectedFile, setSelectedFile] = useState<any>();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [tags, setTags] = useState<any>([]);
+  const [preview, setPreview] = useState<any>(null);
   const [phone, setPhone] = useState({
     isInvalid: false,
     value: "",
@@ -87,6 +90,23 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     err: "",
   });
 
+  const handleClose = async () => {
+    setShow(false);
+    setImg(preview);
+    const res: Response = await fetch(preview);
+    const blob: Blob = await res.blob();
+    let file = new File([blob], "test.png", { type: "image/png" });
+    setSelectedFile(file);
+  };
+
+  const onClose = () => {
+    setPreview(null);
+  };
+
+  const onCrop = (preview: any) => {
+    setPreview(preview);
+  };
+
   useEffect(() => {
     if (cityList.length === 0) {
       let arr: any = [];
@@ -114,7 +134,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       label: user?.location,
       err: "",
     });
-    setImage(user?.picture ? user.picture : Person);
+    setImg(user?.picture ? user.picture : Person);
     user?.tags && setTags(user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
     user?.job_title != "null" &&
@@ -127,18 +147,6 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       setFirstName({ isInvalid: false, value: user?.first_name, err: "" });
     user?.last_name != "null" &&
       setLastName({ isInvalid: false, value: user?.last_name, err: "" });
-  };
-
-  const onChangePicture = (e: any) => {
-    if (e.target.files[0]) {
-      // setPicture(e.target.files[0]);
-      const reader: any = new FileReader();
-      reader.addEventListener("load", () => {
-        setImage(reader.result);
-      });
-      setSelectedFile(e.target.files[0]);
-      reader.readAsDataURL(e.target.files[0]);
-    }
   };
 
   const formatPhoneNumber = (value: any) => {
@@ -314,15 +322,41 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       <div>
         <div>
           <p className={styles["helper-text"]}>
-            <label htmlFor="uploadImage">Upload Photo</label>
-            <input
-              accept="image/png, image/jpeg"
-              type="file"
-              className="form-control-file d-none"
-              id="uploadImage"
-              onChange={onChangePicture}
-            />
+            <p
+              onClick={() => {
+                setShow(true);
+              }}
+            >
+              Upload Photo
+            </p>
           </p>
+
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Body>
+              <Avatar
+                width={468}
+                height={295}
+                onCrop={onCrop}
+                onClose={onClose}
+                onFileLoad={(obj: any) => {
+                  setShow(true);
+                }}
+                exportAsSquare={false}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                disabled={!preview}
+                className={styles["modal-save"]}
+                onClick={handleClose}
+              >
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
       <Form className={styles["profile"]}>
