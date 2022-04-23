@@ -91,7 +91,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
 
   useEffect(() => {
     if (keyword?.length == 0 && Boolean(viewAll)) {
-      debugger;
+      dispatch(showLoading());
       getList({});
     }
   }, [getUsers, keyword]);
@@ -173,6 +173,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                     }}
                   >
                     <CustomCard
+                      isVerified={item.is_verified}
                       image={item.picture}
                       title={item.first_name + " " + item.last_name}
                       subDescription={item.location}
@@ -215,7 +216,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                     getList({
                       keyword: searchedText,
                       ordering: orderBy,
-                      language: e.value,
+                      language: language,
                       is_verified: "True",
                     });
                   } else {
@@ -223,7 +224,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                     getList({
                       keyword: searchedText,
                       ordering: orderBy,
-                      language: e.value,
+                      language: language,
                       is_verified: "False",
                     });
                   }
