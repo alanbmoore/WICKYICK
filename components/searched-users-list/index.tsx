@@ -209,7 +209,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                   }
                 }
                 onChange={(e: any) => {
-                  if (isVerified === "False") {
+                  if (isVerified === "") {
                     setIsVerified("True");
                     dispatch(showLoading());
                     getList({
@@ -219,12 +219,12 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                       is_verified: "True",
                     });
                   } else {
-                    setIsVerified("False");
+                    setIsVerified("");
                     getList({
                       keyword: searchedText,
                       ordering: orderBy,
                       language: language,
-                      is_verified: "False",
+                      is_verified: "",
                     });
                   }
                 }}
