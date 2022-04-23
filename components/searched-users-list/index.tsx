@@ -32,19 +32,18 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const [orderBy, setOrderBy] = useState<string>("");
   const [count, setCount] = useState([]);
   const [language, setLanguage] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState("");
   const [marker, setMarkers] = useState([]);
 
   const getUsers = useCallback(
     (text: any) => {
       if (text && text.length > 0) {
         dispatch(showLoading());
-        let isVerify = isVerified ? "True" : "False";
         getList({
           keyword: text,
           language: language,
           ordering: orderBy,
-          is_verified: isVerify,
+          is_verified: isVerified,
         });
       }
     },
@@ -210,8 +209,8 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                   }
                 }
                 onChange={(e: any) => {
-                  if (!isVerified) {
-                    setIsVerified(true);
+                  if (isVerified === "False") {
+                    setIsVerified("True");
                     dispatch(showLoading());
                     getList({
                       keyword: searchedText,
@@ -220,7 +219,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                       is_verified: "True",
                     });
                   } else {
-                    setIsVerified(false);
+                    setIsVerified("False");
                     getList({
                       keyword: searchedText,
                       ordering: orderBy,
