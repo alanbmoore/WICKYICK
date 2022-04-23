@@ -59,14 +59,24 @@
 }
 
 .map-btn-2{
-  left: 53%;
+  left: 56%;
   top: 1.75%;
 }
 
 .map-btn-3{
-  left: 75%;
+  left: 83%;
   top: 1.75%;
 }
+
+.no-result{
+  display: flex;
+  justify-content: center;
+  font-size: 22px;
+  margin-top: 8%;
+  background: #f8f8f8;
+  padding: 6%;
+}
+
 
 @media (max-width: 768px) {
   .search-result{

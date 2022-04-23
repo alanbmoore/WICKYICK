@@ -2,7 +2,7 @@ import styles from "../../../styles/Profile.module.scss";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { USACities } from "../../../utils/usCities";
-import { createFilter } from "react-select";
+import Select, { createFilter } from "react-select";
 import Image from "next/image";
 import Person from "../../../public/static/images/person.svg";
 import { UserService } from "../../../services/user";
@@ -15,8 +15,11 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import dynamic from "next/dynamic";
+import { languages } from "../../../utils/languages";
+import { FcApproval } from "react-icons/fc";
 
 const Avatar = dynamic(() => import("react-avatar-edit"), { ssr: false });
+const langOptions = languages;
 
 const themeStyle = (theme: any) => ({
   ...theme,
@@ -90,6 +93,13 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     err: "",
   });
 
+  const [language, setLanguage] = useState({
+    isInvalid: false,
+    label: "",
+    value: "",
+    err: "",
+  });
+
   const handleClose = async () => {
     setShow(false);
     setImg(preview);
@@ -122,6 +132,8 @@ const ProfileDetails = ({ goToNextStep }: any) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "");
+    debugger;
+
     setUserData(user);
     setUserInfo(user);
   }, []);
@@ -132,6 +144,12 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       isInvalid: false,
       value: user?.location,
       label: user?.location,
+      err: "",
+    });
+    setLanguage({
+      isInvalid: false,
+      value: user?.language,
+      label: user?.language,
       err: "",
     });
     setImg(user?.picture ? user.picture : Person);
@@ -259,6 +277,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       formData.append("bio", bio.value);
       formData.append("job_title", jobTitle.value);
       formData.append("site_username", username.value);
+      formData.append("language", language.value);
       formData.append("tags", tags.join(","));
       dispatch(showLoading());
       UserService.updateProfile(formData)
@@ -289,6 +308,15 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     });
   };
 
+  const languageChangeHandler = (opt: any) => {
+    setLanguage({
+      isInvalid: false,
+      value: opt?.value,
+      label: opt?.value,
+      err: "",
+    });
+  };
+
   const handleChange = (tag: any) => {
     setTags(tag);
   };
@@ -313,8 +341,11 @@ const ProfileDetails = ({ goToNextStep }: any) => {
         />
         <div className={styles["user-info"]}>
           <p className={styles["user-name"]}>
-            {userInfo?.first_name} {userInfo?.last_name} ·{" "}
-            {userInfo?.license_number}
+            {userInfo?.first_name} {userInfo?.last_name}
+            {userInfo?.is_verified && (
+              <FcApproval className="approve-icon mx-2" />
+            )}{" "}
+            · {userInfo?.license_number}
           </p>
           <p className={styles["user-email"]}>{userInfo?.email}</p>
         </div>
@@ -530,6 +561,38 @@ const ProfileDetails = ({ goToNextStep }: any) => {
           className={styles["profile-input"]}
           type="text"
           placeholder="@username"
+        />
+
+        {username.isInvalid && (
+          <div style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+            {username.err}
+          </div>
+        )}
+
+        <Form.Label className={styles["profile-input-label"] + " mt-4"}>
+          Languages (Optional)
+        </Form.Label>
+
+        <Select
+          styles={{
+            control: (provided: any, state: any) => ({
+              ...provided,
+              border: "1px solid #888C94",
+            }),
+          }}
+          filterOption={createFilter({ ignoreCase: true })}
+          theme={themeStyle}
+          value={
+            location.value && {
+              value: language.value,
+              label: language.value,
+            }
+          }
+          onChange={languageChangeHandler}
+          isSearchable={true}
+          isClearable={true}
+          placeholder={"Language"}
+          options={langOptions}
         />
 
         {username.isInvalid && (

@@ -9,6 +9,7 @@ import CustomCard from "../card";
 import router from "next/router";
 import Select from "react-select";
 import { BiSearch } from "react-icons/bi";
+import { languages } from "../../utils/languages";
 
 const experienceOptions = [
   { value: "> 5 Years", label: "> 5 Years" },
@@ -16,7 +17,7 @@ const experienceOptions = [
 ];
 
 const verifiesOptions = [{ value: "Verified", label: "Verified" }];
-const langOptions = [{ value: "English", label: "English" }];
+const langOptions = languages;
 const sortByOptions = [
   { value: "first_name", label: "A to Z" },
   { value: "-first_name", label: "Z to A" },
@@ -24,18 +25,27 @@ const sortByOptions = [
   { value: "Followers (Low to High)", label: "Followers (Low to High)" },
 ];
 
-const SearchedUsersList = ({ keyword }: any) => {
+const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const dispatch = useDispatch();
   const [userList, setUserList] = useState([]);
   const [searchedText, setSearchedText] = useState<string>("");
+  const [orderBy, setOrderBy] = useState<string>("");
   const [count, setCount] = useState([]);
+  const [language, setLanguage] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
   const [marker, setMarkers] = useState([]);
 
   const getUsers = useCallback(
     (text: any) => {
       if (text && text.length > 0) {
         dispatch(showLoading());
-        getList({ keyword: text });
+        let isVerify = isVerified ? "True" : "False";
+        getList({
+          keyword: text,
+          language: language,
+          ordering: orderBy,
+          is_verified: isVerify,
+        });
       }
     },
     [dispatch]
@@ -49,16 +59,20 @@ const SearchedUsersList = ({ keyword }: any) => {
         }, 1000);
         setUserList(response.results);
         setCount(response.count);
-        let arr = response.results.map((item: any, index: number) => {
+        let arr: any = [];
+        response.results.forEach((item: any, index: number) => {
           if (item.address) {
-            return {
-              id: 1,
+            arr.push({
+              id: index,
               latitude: item.address.latitude,
               longitude: item.address.longitude,
               shelter: "marker " + index,
-            };
+            });
           }
         });
+        if (arr.length === 0) {
+          arr.push(undefined);
+        }
         setMarkers(arr);
       })
       .catch((error: any) => {
@@ -69,14 +83,22 @@ const SearchedUsersList = ({ keyword }: any) => {
   };
 
   useEffect(() => {
-    if (Object.keys(keyword).length > 0 && userList.length === 0) {
-      getUsers(keyword.keyword);
-      setSearchedText(keyword.keyword);
+    if (keyword?.length > 0 && userList.length === 0) {
+      getUsers(keyword);
+      setSearchedText(keyword);
     }
-  }, [getUsers, keyword, userList.length]);
+  }, [getUsers, keyword]);
+
+  useEffect(() => {
+    if (keyword?.length == 0 && Boolean(viewAll)) {
+      debugger;
+      getList({});
+    }
+  }, [getUsers, keyword]);
 
   const sortHandler = (e: any) => {
     dispatch(showLoading());
+    setOrderBy(e.value);
     getList({ keyword: searchedText, ordering: e.value });
   };
 
@@ -114,10 +136,10 @@ const SearchedUsersList = ({ keyword }: any) => {
 
         <Row className="mt-4">
           <Col xs={12} md={6} lg={6}>
-            {userList.length > 0 && (
+            {userList.length > 0 ? (
               <div className="d-flex justify-content-between">
                 <p className={styles["total-search"]}>
-                  Showing {userList.length} results{" "}
+                  Showing {userList.length} results
                 </p>
 
                 <Select
@@ -129,8 +151,16 @@ const SearchedUsersList = ({ keyword }: any) => {
                   onChange={sortHandler}
                 />
               </div>
+            ) : (
+              <div className={styles["no-result"]}>No result found</div>
             )}
-            <Row>
+            <Row
+              style={{
+                maxHeight: "70vh",
+                height: "70vh",
+                overflow: "auto",
+              }}
+            >
               {userList.map((item: any, index: number) => {
                 return (
                   <Col
@@ -172,15 +202,59 @@ const SearchedUsersList = ({ keyword }: any) => {
                 placeholder={"Verified"}
                 classNamePrefix={"map-filter-btn"}
                 options={verifiesOptions}
+                value={
+                  isVerified && {
+                    value: "Verified",
+                    label: "Verified",
+                  }
+                }
+                onChange={(e: any) => {
+                  if (!isVerified) {
+                    setIsVerified(true);
+                    dispatch(showLoading());
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: e.value,
+                      is_verified: "True",
+                    });
+                  } else {
+                    setIsVerified(false);
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: e.value,
+                      is_verified: "False",
+                    });
+                  }
+                }}
               />
             </div>
             <div className={styles["map-btn-3"] + " position-absolute"}>
               <Select
-                isSearchable={false}
-                isClearable={false}
+                isSearchable={true}
+                isClearable={true}
                 placeholder={"Language"}
                 classNamePrefix={"map-filter-btn"}
                 options={langOptions}
+                onChange={(e: any) => {
+                  if (e?.value) {
+                    setLanguage(e.value);
+                    dispatch(showLoading());
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: e.value,
+                    });
+                  } else {
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: "",
+                      is_verified: "False",
+                    });
+                  }
+                }}
               />
             </div>
             <MapContainer marker={marker} />

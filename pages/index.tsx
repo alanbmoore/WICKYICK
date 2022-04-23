@@ -117,7 +117,12 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Trending Agents</h1>
-          <a className={styles["link"]}>
+          <a
+            className={styles["link"]}
+            onClick={() => {
+              router.push(`/search-results?keyword=&view_all=true`);
+            }}
+          >
             View all {count} {">"}{" "}
           </a>
         </div>
@@ -155,7 +160,12 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Top Agents</h1>
-          <a className={styles["link"]}>
+          <a
+            className={styles["link"]}
+            onClick={() => {
+              router.push(`/search-results?keyword=&view_all=true`);
+            }}
+          >
             View all {count} {">"}{" "}
           </a>
         </div>
@@ -195,7 +205,12 @@ const Home = () => {
           }
         >
           <h1 className={styles["heading"]}>Featured Agents</h1>
-          <a className={styles["link"]}>
+          <a
+            className={styles["link"]}
+            onClick={() => {
+              router.push(`/search-results?keyword=&view_all=true`);
+            }}
+          >
             View all {count} {">"}{" "}
           </a>
         </div>
@@ -257,81 +272,81 @@ const Home = () => {
 
         {/* Top Properties Section */}
 
-        <div
-          className={
-            styles["heading-title"] +
-            " d-flex justify-content-between align-items-center"
-          }
-        >
-          <h1 className={styles["heading"]}>Top Properties</h1>
-          <a className={styles["link"]}>View all 1,000+ {">"} </a>
-        </div>
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    styles["heading-title"] +*/}
+        {/*    " d-flex justify-content-between align-items-center"*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  <h1 className={styles["heading"]}>Top Properties</h1>*/}
+        {/*  <a className={styles["link"]}>View all 1,000+ {">"} </a>*/}
+        {/*</div>*/}
 
-        <Row className="my-3">
-          {properties.map((item: ICard, index: number) => {
-            return (
-              <Col xs={12} md={4} lg={2} key={index}>
-                <CustomCard
-                  image={item.image}
-                  title={item.title}
-                  subDescription={item.subDescription}
-                  description={item.description}
-                  width={350}
-                  height={309}
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        {/*<Row className="my-3">*/}
+        {/*  {properties.map((item: ICard, index: number) => {*/}
+        {/*    return (*/}
+        {/*      <Col xs={12} md={4} lg={2} key={index}>*/}
+        {/*        <CustomCard*/}
+        {/*          image={item.image}*/}
+        {/*          title={item.title}*/}
+        {/*          subDescription={item.subDescription}*/}
+        {/*          description={item.description}*/}
+        {/*          width={350}*/}
+        {/*          height={309}*/}
+        {/*        />*/}
+        {/*      </Col>*/}
+        {/*    );*/}
+        {/*  })}*/}
+        {/*</Row>*/}
 
         {/* Cities Section */}
 
-        <div
-          className={
-            styles["heading-title"] +
-            " d-flex justify-content-between align-items-center"
-          }
-        >
-          <h1 className={styles["heading"]}>Top Cities</h1>
-          <a className={styles["link"]}>View all {">"} </a>
-        </div>
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    styles["heading-title"] +*/}
+        {/*    " d-flex justify-content-between align-items-center"*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  <h1 className={styles["heading"]}>Top Cities</h1>*/}
+        {/*  <a className={styles["link"]}>View all {">"} </a>*/}
+        {/*</div>*/}
 
-        <div className="my-3">
-          <Row className="mx-0" style={{ maxWidth: "100%" }}>
-            <Col xs={12} md={12} lg={5} className={"px-0 px-md-2"}>
-              <CityCard
-                image={City1}
-                title={"Atlanta"}
-                description={"134 homes · 12 agents"}
-                width={550}
-                height={515}
-              />
-            </Col>
-            <Col xs={12} md={12} lg={7} className={"px-0 px-md-2"}>
-              <Row style={{ maxWidth: "100%", margin: "auto" }}>
-                {cities.map((item: ICard, index: number) => {
-                  return (
-                    <Col
-                      className={"px-0 mb-3 px-md-2 mt-3 mt-lg-0"}
-                      xs={12}
-                      md={6}
-                      lg={6}
-                      key={index}
-                    >
-                      <CityCard
-                        image={item.image}
-                        title={item.title}
-                        description={item.description}
-                        width={350}
-                        height={242}
-                      />
-                    </Col>
-                  );
-                })}
-              </Row>
-            </Col>
-          </Row>
-        </div>
+        {/*<div className="my-3">*/}
+        {/*  <Row className="mx-0" style={{ maxWidth: "100%" }}>*/}
+        {/*    <Col xs={12} md={12} lg={5} className={"px-0 px-md-2"}>*/}
+        {/*      <CityCard*/}
+        {/*        image={City1}*/}
+        {/*        title={"Atlanta"}*/}
+        {/*        description={"134 homes · 12 agents"}*/}
+        {/*        width={550}*/}
+        {/*        height={515}*/}
+        {/*      />*/}
+        {/*    </Col>*/}
+        {/*    <Col xs={12} md={12} lg={7} className={"px-0 px-md-2"}>*/}
+        {/*      <Row style={{ maxWidth: "100%", margin: "auto" }}>*/}
+        {/*        {cities.map((item: ICard, index: number) => {*/}
+        {/*          return (*/}
+        {/*            <Col*/}
+        {/*              className={"px-0 mb-3 px-md-2 mt-3 mt-lg-0"}*/}
+        {/*              xs={12}*/}
+        {/*              md={6}*/}
+        {/*              lg={6}*/}
+        {/*              key={index}*/}
+        {/*            >*/}
+        {/*              <CityCard*/}
+        {/*                image={item.image}*/}
+        {/*                title={item.title}*/}
+        {/*                description={item.description}*/}
+        {/*                width={350}*/}
+        {/*                height={242}*/}
+        {/*              />*/}
+        {/*            </Col>*/}
+        {/*          );*/}
+        {/*        })}*/}
+        {/*      </Row>*/}
+        {/*    </Col>*/}
+        {/*  </Row>*/}
+        {/*</div>*/}
       </Container>
       <AppFooter />
     </>

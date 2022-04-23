@@ -30,6 +30,7 @@ const themeStyle = (theme: any) => ({
 });
 
 import dynamic from "next/dynamic";
+import { FcApproval } from "react-icons/fc";
 
 const Avatar = dynamic(() => import("react-avatar-edit"), { ssr: false });
 
@@ -297,8 +298,11 @@ const Profile = ({ goToNextStep }: any) => {
         />
         <div className={styles["user-info"]}>
           <p className={styles["user-name"]}>
-            {userInfo?.first_name} {userInfo?.last_name} ·{" "}
-            {userInfo?.license_number}
+            {userInfo?.first_name} {userInfo?.last_name}{" "}
+            {userInfo?.is_verified && (
+              <FcApproval className="approve-icon mx-2" />
+            )}{" "}
+            · {userInfo?.license_number}
           </p>
           <p className={styles["user-email"]}>{userInfo?.email}</p>
         </div>

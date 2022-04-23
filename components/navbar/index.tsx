@@ -28,6 +28,7 @@ import Agent from "../../public/static/images/userIcon.jpeg";
 // @ts-ignore
 import _ from "lodash";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
+import { FcApproval } from "react-icons/fc";
 
 const AppNavbar = () => {
   const dispatch = useDispatch();
@@ -149,6 +150,9 @@ const AppNavbar = () => {
                       />
                       <span className="mx-3">
                         {item.first_name} {item.last_name}
+                        {item.is_verified && (
+                          <FcApproval className="approve-icon mx-2" />
+                        )}
                       </span>
                     </div>
                   );

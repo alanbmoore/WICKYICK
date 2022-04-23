@@ -342,7 +342,7 @@ body {
 
 .google-map{
   width: 120% !important;
-  height: 120% !important;
+  height: 100% !important;
 }
 
 
@@ -385,7 +385,7 @@ body {
   margin: 0px 8px !important;
   z-index: 9;
   height: 43px;
-  width: 140px;
+  width: 180px;
 }
 
 .map-sort-by-btn__control{

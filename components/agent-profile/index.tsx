@@ -86,6 +86,12 @@ const AgentProfileBanner = () => {
                   <div className="social-list mt-3">
                     {userData?.instagram_connected && (
                       <Image
+                        onClick={() =>
+                          window.open(
+                            `https://www.instagram.com/${userData?.instagram_data?.instagram_user_name}`,
+                            "_blank"
+                          )
+                        }
                         width="30px"
                         height="30px"
                         src={Instagram}

@@ -4,7 +4,8 @@ import AppFooter from "../components/footer";
 
 const SearchResults = () => {
   const router = useRouter();
-  const keyword = router.query;
+  const { keyword } = router.query;
+  const { view_all } = router.query;
 
   return (
     <>
@@ -16,7 +17,7 @@ const SearchResults = () => {
           display: "flex",
         }}
       >
-        <SearchedUsersList keyword={keyword} />
+        <SearchedUsersList keyword={keyword} viewAll={view_all} />
       </div>
       <AppFooter />
     </>

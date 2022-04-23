@@ -7,8 +7,22 @@ const mapStyles = {
 };
 
 export class MapContainer extends Component {
+  getCenter() {
+    const { marker } = this.props;
+    return marker.length > 0 && marker[0]
+      ? {
+          lng: marker.length > 0 && marker[0]?.longitude,
+          lat: marker.length > 0 && marker[0]?.latitude,
+        }
+      : {
+          lng: -122.6067583,
+          lat: 45.3573429,
+        };
+  }
+
   render() {
     const { marker } = this.props;
+
     return (
       this.props.marker.length > 0 && (
         <Map
@@ -16,10 +30,7 @@ export class MapContainer extends Component {
           google={this.props.google}
           zoom={14}
           style={mapStyles}
-          // initialCenter={{
-          //   lng: marker && marker[0]?.longitude,
-          //   lat: marker && marker[0]?.latitude,
-          // }}
+          initialCenter={this.getCenter()}
         >
           {this.props.marker.map((marker) => {
             return (
