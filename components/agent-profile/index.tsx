@@ -2,7 +2,7 @@ import { useRouter, withRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { RiShareFill } from "react-icons/ri";
 import { FcApproval } from "react-icons/fc";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import FeedImage from "../../public/static/images/feed-img.png";
 import Instagram from "../../public/static/images/instgram-post.svg";
 import FollowIcon from "../../public/static/images/follow-icon.svg";
@@ -17,6 +17,7 @@ import { UserService } from "../../services/user";
 // @ts-ignore
 import ModalImage from "react-modal-image";
 import { toast } from "react-toastify";
+import { getUser, isLogin } from "../../services/isLoggedIn";
 
 const AgentProfileBanner = () => {
   const router = useRouter();
@@ -24,6 +25,12 @@ const AgentProfileBanner = () => {
   const [userData, setUserData] = useState<any>({});
   const [media, setMedia] = useState([]);
   const { id } = router.query;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const user = getUser();
+
+  useEffect(() => {
+    setIsLoggedIn(isLogin);
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -43,6 +50,46 @@ const AgentProfileBanner = () => {
         });
     }
   }, [dispatch, id]);
+
+  const followAgent = (agentId: any) => {
+    dispatch(showLoading());
+    let obj = {
+      agent_id: agentId,
+      user_id: user.pk,
+    };
+    UserService.followAgent(obj)
+      .then((response: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+        setUserData(response.user);
+      })
+      .catch((error: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+      });
+  };
+
+  const likeAgent = (agentId: any) => {
+    dispatch(showLoading());
+    let obj = {
+      agent_id: agentId,
+      user_id: user.pk,
+    };
+    UserService.likeAgent(obj)
+      .then((response: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+        setUserData(response.user);
+      })
+      .catch((error: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+      });
+  };
 
   return (
     <>
@@ -72,16 +119,23 @@ const AgentProfileBanner = () => {
                         <FcApproval className="approve-icon mx-2" />
                       )}
                     </h5>
-                    <span className="mx-2">. {userData?.license_number}</span>
+                    <span className="mx-4">
+                      {" "}
+                      License: {userData?.license_number}
+                    </span>
                   </div>
                   <div className=" mt-1">
-                    <p className="fonts">Email: {userData?.email}</p>
-                    <p className="fonts mt-2">Company: {userData?.company}</p>
-                    <p className="fonts mt-2">Tags: {userData?.tags}</p>
-                    <p className="fonts mt-2">
-                      Phone No: {userData?.phone_number}
-                    </p>
-                    <p className="fonts mt-2">Location: {userData?.location}</p>
+                    <p className="fonts">{userData?.job_title}</p>
+                    <p className="fonts mt-2"> {userData?.company}</p>
+                    <p className="fonts mt-2"> {userData?.location}</p>
+                    <p className="fonts mt-2"> {userData?.email}</p>
+                    <p className="fonts mt-2"> {userData?.phone_number}</p>
+                    <p className="fonts mt-3">{userData?.bio}</p>
+                    {userData?.tags && (
+                      <p className="fonts mt-3">
+                        #{userData?.tags?.split(",").join("  #")}
+                      </p>
+                    )}
                   </div>
                   <div className="social-list mt-3">
                     {userData?.instagram_connected && (
@@ -101,37 +155,60 @@ const AgentProfileBanner = () => {
                   </div>
                 </div>
               </div>
-              <div className="buttons d-flex justify-content-between mt-4">
-                <div>
-                  <button className="btn btn-primary px-4 ms-3">
-                    <div className="d-flex align-items-center">
-                      <Image src={FollowIcon} alt="follow-icon" />
-                      <span
-                        className="mx-2 font-bold"
-                        style={{ fontSize: "16px" }}
-                      >
-                        Follow
-                      </span>
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => {
-                      document.location = `mailto:${userData.email}?subject=Message: `;
-                    }}
-                    className="btn btn-outline-primary px-4 mx-2"
-                  >
-                    <div className="d-flex align-items-center">
-                      <Image src={MessageIcon} alt="message-icon" />
-                      <span
-                        className="mx-2 font-bold"
-                        style={{ fontSize: "16px" }}
-                      >
-                        Message
-                      </span>
-                    </div>
-                  </button>
-                </div>
+              <div
+                className={"buttons d-flex mt-4 ".concat(
+                  isLoggedIn && user.pk !== userData.pk
+                    ? "justify-content-between"
+                    : "justify-content-end"
+                )}
+              >
+                {isLoggedIn && user.pk !== userData.pk && (
+                  <div>
+                    <button
+                      className="btn btn-primary px-4 ms-3"
+                      onClick={() => {
+                        followAgent(userData.pk);
+                      }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <Image src={FollowIcon} alt="follow-icon" />
+                        <span
+                          className="mx-2 font-bold"
+                          style={{ fontSize: "16px" }}
+                        >
+                          {userData?.agent_followed?.some((item: any) => {
+                            return item.user === user.pk;
+                          })
+                            ? "Following"
+                            : "Follow"}
+                        </span>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => {
+                        document.location = `mailto:${userData.email}?subject=Message From WickYick User: `;
+                      }}
+                      className="btn btn-outline-primary px-4 mx-2"
+                    >
+                      <div className="d-flex align-items-center">
+                        <Image src={MessageIcon} alt="message-icon" />
+                        <span
+                          className="mx-2 font-bold"
+                          style={{ fontSize: "16px" }}
+                        >
+                          Message
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                )}
                 <div className="d-flex align-items-center">
+                  <div className="follow-icon d-flex align-items-center mx-3">
+                    Followers:
+                    <span className="mx-1">
+                      {userData?.agent_followed?.length}
+                    </span>
+                  </div>
                   <div className="follow-icon d-flex align-items-center mx-3">
                     <Image
                       src={FollowBlack}
@@ -141,7 +218,27 @@ const AgentProfileBanner = () => {
                     />
                     <span className="mx-1"> 1.2K</span>
                   </div>
-                  <AiOutlineHeart className="mx-3" size="23px" />
+                  {user.pk !== userData.pk &&
+                  userData?.agent_liked?.some((item: any) => {
+                    return item.user === user.pk;
+                  }) ? (
+                    <AiFillHeart
+                      fill="#df0303"
+                      onClick={() => {
+                        likeAgent(userData.pk);
+                      }}
+                      className="mx-3"
+                      size="23px"
+                    />
+                  ) : (
+                    <AiOutlineHeart
+                      onClick={() => {
+                        likeAgent(userData.pk);
+                      }}
+                      className="mx-3"
+                      size="23px"
+                    />
+                  )}
                   <RiShareFill
                     title="share"
                     onClick={() => {

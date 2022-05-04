@@ -62,4 +62,34 @@ export const UserService = {
       throw error?.response?.data;
     }
   },
+
+  followAgent: async (data: any) => {
+    try {
+      const url = "api/user/add-follower/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
+
+  likeAgent: async (data: any) => {
+    try {
+      const url = "api/user/like-agent/";
+      const response = (await makeRequest(
+        url,
+        "post",
+        {},
+        data
+      )) as AxiosResponse<any>;
+      return response.data;
+    } catch (error: any) {
+      throw error?.response?.data;
+    }
+  },
 };

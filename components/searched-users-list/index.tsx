@@ -33,6 +33,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const [count, setCount] = useState([]);
   const [language, setLanguage] = useState("");
   const [isVerified, setIsVerified] = useState("");
+  const [experience, setExperience] = useState("");
   const [marker, setMarkers] = useState([]);
 
   const getUsers = useCallback(
@@ -189,16 +190,38 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
             <div className={styles["map-btn-1"] + " position-absolute"}>
               <Select
                 isSearchable={false}
-                isClearable={false}
+                isClearable={true}
                 placeholder={"Experience"}
                 classNamePrefix={"map-filter-btn"}
                 options={experienceOptions}
+                onChange={(e: any) => {
+                  if (e?.value) {
+                    setExperience(e.value);
+                    dispatch(showLoading());
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: language,
+                      is_verified: isVerified,
+                      experience: e.value,
+                    });
+                  } else {
+                    setExperience("");
+                    dispatch(showLoading());
+                    getList({
+                      keyword: searchedText,
+                      ordering: orderBy,
+                      language: language,
+                      is_verified: isVerified,
+                    });
+                  }
+                }}
               />
             </div>
             <div className={styles["map-btn-2"] + " position-absolute"}>
               <Select
                 isSearchable={false}
-                isClearable={false}
+                isClearable={true}
                 placeholder={"Verified"}
                 classNamePrefix={"map-filter-btn"}
                 options={verifiesOptions}
@@ -209,7 +232,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                   }
                 }
                 onChange={(e: any) => {
-                  if (isVerified === "") {
+                  if (e?.value) {
                     setIsVerified("True");
                     dispatch(showLoading());
                     getList({

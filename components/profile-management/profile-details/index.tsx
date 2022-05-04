@@ -17,6 +17,10 @@ import "react-tagsinput/react-tagsinput.css";
 import dynamic from "next/dynamic";
 import { languages } from "../../../utils/languages";
 import { FcApproval } from "react-icons/fc";
+// @ts-ignore
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const Avatar = dynamic(() => import("react-avatar-edit"), { ssr: false });
 const langOptions = languages;
@@ -44,6 +48,13 @@ const ProfileDetails = ({ goToNextStep }: any) => {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [tags, setTags] = useState<any>([]);
   const [preview, setPreview] = useState<any>(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState({
+    isInvalid: false,
+    value: new Date(),
+    err: "",
+  });
+
   const [phone, setPhone] = useState({
     isInvalid: false,
     value: "",
@@ -132,8 +143,6 @@ const ProfileDetails = ({ goToNextStep }: any) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "");
-    debugger;
-
     setUserData(user);
     setUserInfo(user);
   }, []);
@@ -246,6 +255,12 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       isValidFlag = false;
     }
 
+    if (!startDate) {
+      let err = "Date is required !";
+      setDate({ isInvalid: true, value: startDate, err: err });
+      isValidFlag = false;
+    }
+
     if (!company.value) {
       let err = "Company title is required !";
       setCompany({ isInvalid: true, value: company.value, err: err });
@@ -268,6 +283,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     const formData: any = new FormData();
 
     if (validate()) {
+      debugger;
       selectedFile && formData.append("picture", selectedFile);
       formData.append("location", location.value);
       formData.append("first_name", firstName.value);
@@ -277,6 +293,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       formData.append("bio", bio.value);
       formData.append("job_title", jobTitle.value);
       formData.append("site_username", username.value);
+      formData.append("experience", moment(startDate).format());
       formData.append("language", language.value);
       formData.append("tags", tags.join(","));
       dispatch(showLoading());
@@ -327,6 +344,11 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     } else if (e.target.name === "lastName") {
       setLastName({ isInvalid: false, value: e.currentTarget.value, err: "" });
     }
+  };
+
+  const dateChangeHandler = (date: Date) => {
+    setDate({ isInvalid: false, value: date, err: "" });
+    setStartDate(date);
   };
 
   return (
@@ -482,6 +504,21 @@ const ProfileDetails = ({ goToNextStep }: any) => {
             {location.err}
           </div>
         )}
+
+        <Form.Label className={styles["profile-input-label"] + " mt-4"}>
+          Experience Since
+        </Form.Label>
+
+        <DatePicker
+          className={styles["date-picker"]}
+          onChange={dateChangeHandler}
+          selected={startDate}
+          dateFormat="MM/yyyy"
+          showMonthYearPicker
+          isClearable
+          showFullMonthYearPicker
+          showTwoColumnMonthYearPicker
+        />
 
         <Form.Label className={styles["profile-input-label"] + " mt-4"}>
           Phone#
