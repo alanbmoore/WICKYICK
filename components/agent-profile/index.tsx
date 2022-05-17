@@ -120,7 +120,6 @@ const AgentProfileBanner = () => {
                       )}
                     </h5>
                     <span className="mx-4">
-                      {" "}
                       License: {userData?.license_number}
                     </span>
                   </div>

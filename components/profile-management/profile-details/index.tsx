@@ -21,6 +21,14 @@ import { FcApproval } from "react-icons/fc";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import Uppy from "@uppy/core";
+import { Dashboard } from "@uppy/react";
+import ImageEditor from "@uppy/image-editor";
+
+import "@uppy/image-editor/dist/style.css";
+import "@uppy/core/dist/style.css";
+import "@uppy/dashboard/dist/style.css";
+import Webcam from "@uppy/webcam";
 
 const Avatar = dynamic(() => import("react-avatar-edit"), { ssr: false });
 const langOptions = languages;
@@ -40,6 +48,8 @@ const themeStyle = (theme: any) => ({
 });
 
 const ProfileDetails = ({ goToNextStep }: any) => {
+  let uppy = new Uppy().use(Webcam);
+
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [cityList, setCityList] = useState([]);
@@ -161,6 +171,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       label: user?.language,
       err: "",
     });
+    setStartDate(new Date(user.experience));
     setImg(user?.picture ? user.picture : Person);
     user?.tags && setTags(user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
@@ -283,7 +294,6 @@ const ProfileDetails = ({ goToNextStep }: any) => {
     const formData: any = new FormData();
 
     if (validate()) {
-      debugger;
       selectedFile && formData.append("picture", selectedFile);
       formData.append("location", location.value);
       formData.append("first_name", firstName.value);
@@ -374,6 +384,8 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       </div>
       <div>
         <div>
+          {/*<Dashboard id="Dashboard" uppy={uppy} plugins={["Webcam"]} />*/}
+
           <p className={styles["helper-text"]}>
             <p
               onClick={() => {
@@ -506,7 +518,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
         )}
 
         <Form.Label className={styles["profile-input-label"] + " mt-4"}>
-          Experience Since
+          Licensed Since
         </Form.Label>
 
         <DatePicker
