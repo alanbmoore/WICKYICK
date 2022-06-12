@@ -164,9 +164,14 @@ const AgentProfileBanner = () => {
                 {isLoggedIn && user.pk !== userData.pk && (
                   <div>
                     <button
+                      disabled={
+                        user.pk !== userData.pk && userData.role === "Basic"
+                      }
                       className="btn btn-primary px-4 ms-3"
                       onClick={() => {
-                        followAgent(userData.pk);
+                        user.pk !== userData.pk &&
+                          userData.role !== "Basic" &&
+                          followAgent(userData.pk);
                       }}
                     >
                       <div className="d-flex align-items-center">
@@ -202,21 +207,29 @@ const AgentProfileBanner = () => {
                   </div>
                 )}
                 <div className="d-flex align-items-center">
-                  <div className="follow-icon d-flex align-items-center mx-3">
-                    Followers:
-                    <span className="mx-1">
-                      {userData?.agent_followed?.length}
-                    </span>
-                  </div>
-                  <div className="follow-icon d-flex align-items-center mx-3">
-                    <Image
-                      src={FollowBlack}
-                      width="25px"
-                      height="25px"
-                      alt="follow-back-icon"
-                    />
-                    <span className="mx-1"> 1.2K</span>
-                  </div>
+                  {userData.role !== "Basic" && (
+                    <div className="follow-icon d-flex align-items-center mx-3">
+                      Followers:
+                      <span className="mx-1">
+                        {userData?.agent_followed?.length}
+                      </span>
+                    </div>
+                  )}
+                  {userData.role !== "Basic" && (
+                    <div className="follow-icon d-flex align-items-center mx-3">
+                      <Image
+                        src={FollowBlack}
+                        width="25px"
+                        height="25px"
+                        alt="follow-back-icon"
+                      />
+                      <span className="mx-1">
+                        {" "}
+                        {userData?.agent_followed?.length}
+                      </span>
+                    </div>
+                  )}
+
                   {user.pk !== userData.pk &&
                   userData?.agent_liked?.some((item: any) => {
                     return item.user === user.pk;
@@ -224,7 +237,9 @@ const AgentProfileBanner = () => {
                     <AiFillHeart
                       fill="#df0303"
                       onClick={() => {
-                        likeAgent(userData.pk);
+                        user.pk !== userData.pk &&
+                          userData.role !== "Basic" &&
+                          likeAgent(userData.pk);
                       }}
                       className="mx-3"
                       size="23px"
@@ -232,7 +247,9 @@ const AgentProfileBanner = () => {
                   ) : (
                     <AiOutlineHeart
                       onClick={() => {
-                        likeAgent(userData.pk);
+                        user.pk !== userData.pk &&
+                          userData.role !== "Basic" &&
+                          likeAgent(userData.pk);
                       }}
                       className="mx-3"
                       size="23px"
