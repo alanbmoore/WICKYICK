@@ -161,7 +161,6 @@ const SignUpForm = () => {
   // }
 
   const onSuccess = (data: any) => {
-    console.log("data", data);
     dispatch(setUser(data.user));
     localStorage.setItem("id_token", data.token.key);
     localStorage.setItem("user", JSON.stringify(data.user));

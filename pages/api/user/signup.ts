@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { body } = req;
-  console.log("body", body);
+
   try {
     const user = await auth.createUser({
       email: body.email,
@@ -35,7 +35,6 @@ export default async function handler(
     userProfile.last_name = body.last_name;
     await createUserProfile(user.uid, userProfile);
 
-    // console.log("auth.currentUser", auth.currentUser);
     const link = await auth.generateEmailVerificationLink(body.email);
 
     const emailBody = `User ${user.email} has requested an access to ${process.env.DOMAIN_URL}. Please use this link to make user active ${link}`;

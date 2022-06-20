@@ -24,8 +24,6 @@ export const sendMail = (
         subject,
         text,
       };
-      //   console.log("transporter", transporter);
-      console.log("mailOptions", mailOptions);
       await transporter.sendMail(mailOptions);
       resolve({});
     } catch (error) {

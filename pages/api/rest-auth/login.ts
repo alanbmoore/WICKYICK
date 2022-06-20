@@ -41,16 +41,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // console.log("req", req);
   const { body } = req;
   try {
-    console.log("body", body);
     const response = await signInWithEmailAndPassword(
       auth,
       body.email,
       body.password
     );
-    console.log("response", response);
+
     const profileRef = db.collection("users");
     //   .doc(uid);
     const profileDocs = await profileRef
