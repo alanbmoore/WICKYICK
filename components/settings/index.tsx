@@ -55,6 +55,7 @@ const SettingForm = () => {
       dispatch(showLoading());
       UserService.sendInstagramCode(obj)
         .then((data: any) => {
+          console.log("sendInstagramCode: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
@@ -74,6 +75,7 @@ const SettingForm = () => {
     dispatch(showLoading());
     UserService.updateProfile(formData)
       .then((data: any) => {
+        console.log("updateProfile: data", data);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);

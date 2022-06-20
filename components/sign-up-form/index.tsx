@@ -16,6 +16,11 @@ import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { setUser } from "../../store/userSlice";
 import { showModal } from "../../store/modalSlice";
+import {
+  signInWithPopup,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+} from "firebase/auth";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -109,6 +114,7 @@ const SignUpForm = () => {
       dispatch(showLoading());
       AuthServices.signup(obj)
         .then((data: any) => {
+          console.log("AuthServices.signup: response", data);
           if (data?.message) {
             toast.success(data?.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -123,8 +129,8 @@ const SignUpForm = () => {
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
-          if (error?.email) {
-            toast.error(error?.email[0], {
+          if (error?.message) {
+            toast.error(error?.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
@@ -132,7 +138,30 @@ const SignUpForm = () => {
     }
   };
 
+  // try {
+  //   const response = await createUserWithEmailAndPassword(
+  //     auth,
+  //     email.value,
+  //     password.value
+  //   );
+  //   console.log("response", response);
+  //   setTimeout(() => {
+  //     dispatch(hideLoading());
+  //   }, 1000);
+  //   onSuccess(response);
+  // } catch (error) {
+  //   setTimeout(() => {
+  //     dispatch(hideLoading());
+  //   }, 1000);
+  //   if (error?.message) {
+  //     toast.error(error?.message, {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+  //   }
+  // }
+
   const onSuccess = (data: any) => {
+    console.log("data", data);
     dispatch(setUser(data.user));
     localStorage.setItem("id_token", data.token.key);
     localStorage.setItem("user", JSON.stringify(data.user));
@@ -177,6 +206,10 @@ const SignUpForm = () => {
                   "api/user/social-login/google/"
                 )
                   .then((response: any) => {
+                    console.log(
+                      "AuthServices.submitSocialLogin: response",
+                      response
+                    );
                     onSuccess(response);
                     setTimeout(() => {
                       dispatch(hideLoading());
@@ -218,6 +251,10 @@ const SignUpForm = () => {
                   "api/user/social-login/facebook/"
                 )
                   .then((response: any) => {
+                    console.log(
+                      "AuthServices.submitSocialLogin: response",
+                      response
+                    );
                     setTimeout(() => {
                       dispatch(hideLoading());
                     }, 1000);

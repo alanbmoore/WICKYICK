@@ -243,16 +243,16 @@ const ProfileDetails = ({ goToNextStep }: any) => {
 
   const validate = () => {
     let isValidFlag = true;
-    if (!location.value) {
-      let err = "Location is required !";
-      setLocation({
-        isInvalid: true,
-        value: location.value,
-        label: location.value,
-        err: err,
-      });
-      isValidFlag = false;
-    }
+    // if (!location.value) {
+    //   let err = "Location is required !";
+    //   setLocation({
+    //     isInvalid: true,
+    //     value: location.value,
+    //     label: location.value,
+    //     err: err,
+    //   });
+    //   isValidFlag = false;
+    // }
 
     if (!firstName.value) {
       let err = "First Name is required !";
@@ -309,6 +309,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
+          console.log("updateProfile: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

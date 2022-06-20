@@ -11,6 +11,7 @@ export const makeRequest = (
   body?: AxiosRequestConfig["data"],
   params?: AxiosRequestConfig["params"]
 ) => {
+  console.log("BASE_URL", BASE_URL);
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("id_token");
     let updatedHeaders: any = { ...headers };

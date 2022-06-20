@@ -4,26 +4,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import store from "../store";
 import "../styles/globals.css";
-import { ToastContainer } from "react-toastify";
-import Head from "next/head";
-import Loader from "./loader";
-import AppNavbar from "../components/navbar";
+import AppIndex from "../components/app-index";
+import { useEffect } from "react";
+import { makeRequest } from "../Axios";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider store={store}>
-        <Loader />
-        <ToastContainer hideProgressBar={true} />
-        <Head>
-          <title>WickYick</title>
-          <meta name="description" content="WickYick" />
-          <link rel="icon" href="/logo.png" />
-        </Head>
-        <AppNavbar />
-        <Component {...pageProps} />
-
-        {/*<AppFooter />*/}
+        <AppIndex Component={Component} {...pageProps}></AppIndex>
       </Provider>
     </>
   );

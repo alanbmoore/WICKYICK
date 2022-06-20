@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 export const AuthServices = {
   requestAccess: async (data: any) => {
     try {
-      const url = "api/user/request-access/";
+      const url = "/api/user/request-access/";
       const response = (await makeRequest(
         url,
         "post",
@@ -18,7 +18,7 @@ export const AuthServices = {
   },
   resetPassword: async (data: any) => {
     try {
-      const url = "api/user/send-password-reset-email/";
+      const url = "/api/user/send-password-reset-email/";
       const response = (await makeRequest(
         url,
         "post",
@@ -32,7 +32,7 @@ export const AuthServices = {
   },
   changePassword: async (data: any) => {
     try {
-      const url = "api/user/change-password/";
+      const url = "/api/user/change-password/";
       const response = (await makeRequest(
         url,
         "post",
@@ -46,7 +46,7 @@ export const AuthServices = {
   },
   changeEmail: async (data: any) => {
     try {
-      const url = "api/user/change-email/";
+      const url = "/api/user/change-email/";
       const response = (await makeRequest(
         url,
         "post",
@@ -60,7 +60,7 @@ export const AuthServices = {
   },
   setPassword: async (data: any) => {
     try {
-      const url = "api/user/password-reset/";
+      const url = "/api/user/password-reset/";
       const response = (await makeRequest(
         url,
         "patch",
@@ -74,7 +74,7 @@ export const AuthServices = {
   },
   login: async (data: any) => {
     try {
-      const url = "api/rest-auth/login/";
+      const url = "/api/rest-auth/login/";
       const response = (await makeRequest(
         url,
         "post",
@@ -88,7 +88,7 @@ export const AuthServices = {
   },
   signup: async (data: any) => {
     try {
-      const url = "api/user/signup/";
+      const url = "/api/user/signup/";
       const response = (await makeRequest(
         url,
         "post",

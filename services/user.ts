@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 export const UserService = {
   updateProfile: async (data: any) => {
     try {
-      const url = "api/user/update/profile/";
+      const url = "/api/user/update/profile/";
       const response = (await makeRequest(
         url,
         "put",
@@ -19,7 +19,7 @@ export const UserService = {
 
   getUserList: async (params: any) => {
     try {
-      const url = "api/user/users/";
+      const url = "/api/user/users/";
       const response = (await makeRequest(
         url,
         "get",
@@ -50,7 +50,7 @@ export const UserService = {
 
   sendInstagramCode: async (data: any) => {
     try {
-      const url = "api/user/get-instagram-token/";
+      const url = "/api/user/get-instagram-token/";
       const response = (await makeRequest(
         url,
         "post",
@@ -65,7 +65,7 @@ export const UserService = {
 
   followAgent: async (data: any) => {
     try {
-      const url = "api/user/add-follower/";
+      const url = "/api/user/add-follower/";
       const response = (await makeRequest(
         url,
         "post",
@@ -80,7 +80,7 @@ export const UserService = {
 
   likeAgent: async (data: any) => {
     try {
-      const url = "api/user/like-agent/";
+      const url = "/api/user/like-agent/";
       const response = (await makeRequest(
         url,
         "post",

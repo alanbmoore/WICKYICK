@@ -20,6 +20,10 @@ export const isLogin = () => {
 export const getUser = () => {
   if (typeof window !== "undefined") {
     if (localStorage.getItem(USER_KEY) || "") {
+      console.log(
+        "localStorage.getItem(USER_KEY)",
+        localStorage.getItem(USER_KEY)
+      );
       return JSON.parse(localStorage.getItem(USER_KEY) || "");
     }
   }

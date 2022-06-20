@@ -53,6 +53,7 @@ const ProfileManagementForm = () => {
       dispatch(showLoading());
       UserService.sendInstagramCode(obj)
         .then((data: any) => {
+          console.log("sendInstagramCode: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

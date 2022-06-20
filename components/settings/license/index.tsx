@@ -46,6 +46,7 @@ const LicenseForm = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       UserService.updateProfile(obj)
         .then((data: any) => {
+          console.log("updateProfile: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

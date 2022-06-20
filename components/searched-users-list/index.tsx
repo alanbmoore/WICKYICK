@@ -54,6 +54,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const getList = (params: any) => {
     UserService.getUserList(params)
       .then((response: any) => {
+        console.log("getUserList: response", response);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);

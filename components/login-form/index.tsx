@@ -15,6 +15,13 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setUser } from "../../store/userSlice";
 import { isValid } from "../../utils/helper";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+} from "firebase/auth";
+import { auth } from "../../config/firebase-client";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -69,13 +76,14 @@ const LoginForm = () => {
     return isValidFlag;
   };
 
-  const login = (e: any) => {
+  const login = async (e: any) => {
     e.preventDefault();
     let isValidForm = validate();
     if (isValidForm) {
       dispatch(showLoading());
       AuthServices.login({ email: email.value, password: password.value })
         .then((data: any) => {
+          console.log("AuthServices.login: response", data);
           onSuccess(data);
           setTimeout(() => {
             dispatch(hideLoading());
@@ -92,6 +100,33 @@ const LoginForm = () => {
     }
   };
 
+  // try {
+  //   const data = await signInWithEmailAndPassword(
+  //     auth,
+  //     email.value,
+  //     password.value
+  //   );
+  //   console.log("data", data);
+  //   onSuccess(data);
+  //   setTimeout(() => {
+  //     dispatch(hideLoading());
+  //   }, 1000);
+
+  //   console.log("response", data);
+  // } catch (error: any) {
+  //   let errorMessage: string =
+  //     "Unhandled error.  Please contact site administrator.";
+  //   if (error) {
+  //     switch (error.code) {
+  //       case "auth/wrong-password":
+  //         errorMessage = "Login Incorrect.";
+  //         break;
+
+  //       default:
+  //         break;
+  //     }
+  //   }
+  // }
   return (
     <>
       <div className={styles["signup-form"]}>
@@ -121,6 +156,10 @@ const LoginForm = () => {
                   "api/user/social-login/google/"
                 )
                   .then((response: any) => {
+                    console.log(
+                      "AuthServices.submitSocialLogin: response",
+                      response
+                    );
                     onSuccess(response);
                     setTimeout(() => {
                       dispatch(hideLoading());
@@ -162,6 +201,10 @@ const LoginForm = () => {
                   "api/user/social-login/facebook/"
                 )
                   .then((response: any) => {
+                    console.log(
+                      "AuthServices.submitSocialLogin: response",
+                      response
+                    );
                     setTimeout(() => {
                       dispatch(hideLoading());
                     }, 1000);
