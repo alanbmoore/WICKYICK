@@ -37,3 +37,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 wickyick.pem
+build/***
+wickyick-dev-firebase-adminsdk*.json
