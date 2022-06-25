@@ -1,0 +1,25 @@
+version: 0.2
+env:
+    variables:
+        NODE_ENV: test
+        PORT: "8081"       
+phases:
+    install:
+        runtime-versions:
+            nodejs: 16
+        commands:            
+            - "echo Entered the install phase..."
+            - "npm install -g npm"
+            - "npm install"
+    pre_build:
+        commands:
+            - "echo Entered the prebuild phase..."
+    post_build:
+        commands:
+            - "echo Entered the postbuild phase..."            
+            - "npm run build"
+            - "npm start"
+artifacts:
+    files:
+        - package.json
+        - "build/**/*"        
