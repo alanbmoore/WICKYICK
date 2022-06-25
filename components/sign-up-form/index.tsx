@@ -20,8 +20,10 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
+  AuthProvider,
 } from "firebase/auth";
 import { auth } from "../../config/firebase-client";
+import { getErrorMessageFromFirebaseCode } from "../../utils/errors";
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -142,33 +144,40 @@ const SignUpForm = () => {
     }
   };
 
-  // try {
-  //   const response = await createUserWithEmailAndPassword(
-  //     auth,
-  //     email.value,
-  //     password.value
-  //   );
-  //   console.log("response", response);
-  //   setTimeout(() => {
-  //     dispatch(hideLoading());
-  //   }, 1000);
-  //   onSuccess(response);
-  // } catch (error) {
-  //   setTimeout(() => {
-  //     dispatch(hideLoading());
-  //   }, 1000);
-  //   if (error?.message) {
-  //     toast.error(error?.message, {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-  //   }
-  // }
+  const submitSocialLogin = async (
+    providerName: "google" | "facebook",
+    authProvider: AuthProvider
+  ) => {
+    try {
+      const result = await signInWithPopup(auth, authProvider);
+      let obj = {
+        token: result.user.accessToken,
+      };
+      const response = await AuthService.submitSocialLogin(
+        obj,
+        `/api/user/social-login/${providerName}/`
+      );
+      console.log("AuthService.submitSocialLogin: response", response);
+      onSuccess(response);
+      setTimeout(() => {
+        dispatch(hideLoading());
+      }, 1000);
+    } catch (error) {
+      let message;
+      if (error.code) message = getErrorMessageFromFirebaseCode(error.code);
+      else message = error?.message;
 
+      dispatch(hideLoading());
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
   const onSuccess = (data: any) => {
     dispatch(setUser(data.user));
-    localStorage.setItem("id_token", data.token.key);
+    localStorage.setItem("id_token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
-    toast.success("You have successfully registered", {
+    toast.success(data.message, {
       position: toast.POSITION.TOP_RIGHT,
     });
     data.user.is_on_boarding_completed
@@ -198,15 +207,7 @@ const SignUpForm = () => {
             <Button
               className={styles["social-btn"] + " mb-2"}
               onClick={async () => {
-                console.log("Google Trigger Login");
-                const result = await signInWithPopup(auth, googleProvider);
-                const credential =
-                  GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                console.log("token", token);
-                console.log("credential", credential);
-                console.log("user", user);
+                await submitSocialLogin("google", googleProvider);
               }}
             >
               <Image
@@ -229,19 +230,7 @@ const SignUpForm = () => {
             <Button
               className={styles["social-btn"] + " mb-2"}
               onClick={async () => {
-                try {
-                  console.log("Facebook Trigger Login");
-                  const result = await signInWithPopup(auth, facebookProvider);
-                  const credential =
-                    FacebookAuthProvider.credentialFromResult(result);
-                  const token = credential.accessToken;
-                  const user = result.user;
-                  console.log("token", token);
-                  console.log("credential", credential);
-                  console.log("user", user);
-                } catch (error) {
-                  console.log("error", error);
-                }
+                await submitSocialLogin("facebook", facebookProvider);
               }}
             >
               <Image
@@ -252,88 +241,6 @@ const SignUpForm = () => {
               />
               <p> Sign Up with Facebook</p>
             </Button>
-            {/* <SocialButton
-              provider="google"
-              appId={process.env.REACT_APP_GG_APP_ID || ""}
-              onLoginSuccess={async (user: any) => {
-                let obj = {
-                  access_token: user?.token?.accessToken,
-                  provider: "google",
-                };
-                dispatch(showLoading());
-                AuthService.submitSocialLogin(
-                  obj,
-                  "/api/user/social-login/google/"
-                )
-                  .then((response: any) => {
-                    console.log(
-                      "AuthService.submitSocialLogin: response",
-                      response
-                    );
-                    onSuccess(response);
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  })
-                  .catch((error: any) => {
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  });
-              }}
-              onLoginFailure={(err: any) => {}}
-              icon={googleLogo}
-            >
-              Sign Up with Google
-            </SocialButton>
-
-            <Button className={styles["social-btn"] + " mb-2"}>
-              <Image
-                src={linkedInLogo}
-                width={"30px"}
-                height={"30px"}
-                alt={"linkedin image"}
-              />
-              <p> Sign Up with LinkedIn</p>
-            </Button>
-
-            <SocialButton
-              provider="facebook"
-              appId={process.env.REACT_APP_FACEBOOK_ID || ""}
-              triggerLogin={() => {
-                console.log("Faecbook trigger login");
-              }}
-              onLoginSuccess={async (user: any) => {
-                let obj = {
-                  access_token: user?.token?.accessToken,
-                  provider: "facebook",
-                };
-                dispatch(showLoading());
-                AuthService.submitSocialLogin(
-                  obj,
-                  "/api/user/social-login/facebook/"
-                )
-                  .then((response: any) => {
-                    console.log(
-                      "AuthService.submitSocialLogin: response",
-                      response
-                    );
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                    onSuccess(response);
-                  })
-                  .catch((error: any) => {
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  });
-              }}
-              onLoginFailure={(err: any) => {}}
-              icon={facebookLogo}
-            >
-              Sign Up with Facebook
-            </SocialButton> */}
           </div>
 
           <div className={styles["or-seperator"]}>or</div>

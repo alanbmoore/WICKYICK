@@ -1,7 +1,7 @@
 import router from "next/router";
 
-const TOKEN_KEY = "id_token";
-const USER_KEY = "user";
+export const TOKEN_KEY = "id_token";
+export const USER_KEY = "user";
 
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
@@ -20,10 +20,6 @@ export const isLogin = () => {
 export const getUser = () => {
   if (typeof window !== "undefined") {
     if (localStorage.getItem(USER_KEY) || "") {
-      console.log(
-        "localStorage.getItem(USER_KEY)",
-        localStorage.getItem(USER_KEY)
-      );
       return JSON.parse(localStorage.getItem(USER_KEY) || "");
     }
   }

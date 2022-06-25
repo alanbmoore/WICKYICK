@@ -40,7 +40,6 @@ middleware.use(async (req, res, next) => {
     }
     next();
   } catch (error) {
-    console.log("middleware: error", error);
     const { code, message } = await getErrorMessageAndStatusCode(error);
     switch (code) {
       case 403:

@@ -17,7 +17,7 @@ import { UserService } from "../../services/user";
 // @ts-ignore
 import ModalImage from "react-modal-image";
 import { toast } from "react-toastify";
-import { getUser, isLogin } from "../../services/isLoggedIn";
+import { getUser, isLogin, USER_KEY } from "../../services/isLoggedIn";
 
 const AgentProfileBanner = () => {
   const router = useRouter();

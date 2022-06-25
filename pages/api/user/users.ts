@@ -31,7 +31,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const start = parseInt(offset);
     const limitNum = parseInt(limit);
     const end = start + limitNum;
-    console.log(start, end, limitNum);
+
     const users = await getProfiles(limitNum, start, end);
     res.status(200).json({
       count: fakeUsers.length,

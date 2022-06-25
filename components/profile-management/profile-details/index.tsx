@@ -171,7 +171,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       label: user?.language,
       err: "",
     });
-    // console.log("experience", user.experience);
+
     if (user.experience) setStartDate(new Date(user.experience));
     setImg(user?.picture ? user.picture : Person);
     user?.tags && setTags(user.tags.split(","));

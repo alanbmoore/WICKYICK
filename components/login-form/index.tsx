@@ -45,7 +45,7 @@ const LoginForm = () => {
     dispatch(setUser(data.user));
     localStorage.setItem("id_token", data?.token?.key || data.key);
     localStorage.setItem("user", JSON.stringify(data.user));
-    toast.success("You have successfully registered", {
+    toast.success(data.message, {
       position: toast.POSITION.TOP_RIGHT,
     });
     data.user.is_on_boarding_completed
@@ -100,33 +100,6 @@ const LoginForm = () => {
     }
   };
 
-  // try {
-  //   const data = await signInWithEmailAndPassword(
-  //     auth,
-  //     email.value,
-  //     password.value
-  //   );
-  //   console.log("data", data);
-  //   onSuccess(data);
-  //   setTimeout(() => {
-  //     dispatch(hideLoading());
-  //   }, 1000);
-
-  //   console.log("response", data);
-  // } catch (error: any) {
-  //   let errorMessage: string =
-  //     "Unhandled error.  Please contact site administrator.";
-  //   if (error) {
-  //     switch (error.code) {
-  //       case "auth/wrong-password":
-  //         errorMessage = "Login Incorrect.";
-  //         break;
-
-  //       default:
-  //         break;
-  //     }
-  //   }
-  // }
   return (
     <>
       <div className={styles["signup-form"]}>
@@ -142,41 +115,6 @@ const LoginForm = () => {
           <p className={styles["title"]}>Log In</p>
 
           <div className="d-flex flex-column w-100">
-            {/* <SocialButton
-              provider="google"
-              appId={process.env.REACT_APP_GG_APP_ID || ""}
-              onLoginSuccess={async (user: any) => {
-                let obj = {
-                  access_token: user?.token?.accessToken,
-                  provider: "google",
-                };
-                dispatch(showLoading());
-                AuthService.submitSocialLogin(
-                  obj,
-                  "/api/user/social-login/google/"
-                )
-                  .then((response: any) => {
-                    console.log(
-                      "AuthService.submitSocialLogin: response",
-                      response
-                    );
-                    onSuccess(response);
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  })
-                  .catch((error: any) => {
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  });
-              }}
-              onLoginFailure={(err: any) => {}}
-              icon={googleLogo}
-            >
-              Login with Google
-            </SocialButton> */}
-
             <Button
               className={styles["social-btn"] + " mb-2"}
               onClick={async () => {}}
@@ -213,41 +151,6 @@ const LoginForm = () => {
               />
               <p> Login with Facebook</p>
             </Button>
-
-            {/* <SocialButton
-              provider="facebook"
-              appId={process.env.REACT_APP_FACEBOOK_ID || ""}
-              onLoginSuccess={async (user: any) => {
-                let obj = {
-                  access_token: user?.token?.accessToken,
-                  provider: "facebook",
-                };
-                dispatch(showLoading());
-                AuthService.submitSocialLogin(
-                  obj,
-                  "/api/user/social-login/facebook/"
-                )
-                  .then((response: any) => {
-                    console.log(
-                      "AuthService.submitSocialLogin: response",
-                      response
-                    );
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                    onSuccess(response);
-                  })
-                  .catch((error: any) => {
-                    setTimeout(() => {
-                      dispatch(hideLoading());
-                    }, 1000);
-                  });
-              }}
-              onLoginFailure={(err: any) => {}}
-              icon={facebookLogo}
-            >
-              Login with Facebook
-            </SocialButton> */}
           </div>
 
           <div className={styles["or-seperator"]}>or</div>

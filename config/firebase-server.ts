@@ -16,6 +16,4 @@ const app = !admin.apps.length
   ? admin.initializeApp(firebaseConfig)
   : admin.app();
 
-// export const dbAdmin = getFirestore();
-// console.log("admin.apps", admin.apps);
 export const auth = getAuth(app);

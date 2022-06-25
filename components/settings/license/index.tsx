@@ -17,7 +17,7 @@ const LicenseForm = ({ goToNextStep }: any) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "");
-    console.log("LicenseForm:user", user);
+
     setLicenseNumber({
       isInvalid: false,
       value: user?.license_number,

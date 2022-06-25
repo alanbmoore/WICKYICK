@@ -1,7 +1,18 @@
 import { UserRecord } from "firebase-admin/auth";
 import { User } from "firebase/auth";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import generator from "generate-password";
+import { db } from "../config/firebase-client";
 import { auth } from "../config/firebase-server";
+import { DB_CONSTANTS } from "../constants/db";
 import { IUser } from "../interfaces/user";
 import { sendMail } from "./mail";
 import { createUserProfile } from "./profile";
@@ -25,9 +36,9 @@ export const createNewUserAndProfile = (obj: any, password?: string) => {
 
       userProfile.first_name = obj.first_name;
       userProfile.last_name = obj.last_name;
-      const profile = await createUserProfile(user.uid, userProfile);
+      const profile = await createUserProfile(user, userProfile);
 
-      resolve(profile);
+      resolve({ ...profile, email: user.email });
     } catch (error) {
       reject(error);
     }
@@ -80,3 +91,83 @@ export const generatePasswordResetEmail = (profile: any) => {
     }
   });
 };
+
+export const addFollower = (userId: string, agentId: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const follwersQuery = query(
+        collection(db, DB_CONSTANTS.FOLLWERS.COLLECTION_NAME),
+        where("user", "==", userId),
+        where("agent", "==", agentId)
+      );
+      const follwerDocs = await getDocs(follwersQuery);
+      if (follwerDocs.empty) {
+        const followerRef = doc(
+          collection(db, DB_CONSTANTS.FOLLWERS.COLLECTION_NAME)
+        );
+        await setDoc(followerRef, {
+          user: userId,
+          agent: agentId,
+        });
+      }
+
+      resolve(null);
+    } catch (error) {
+      console.log("addFollower: error", error);
+      reject(error);
+    }
+  });
+};
+// export const removeFollower = (userId: string, agentId: string) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const follwersQuery = query(
+//         collection(db, DB_CONSTANTS.FOLLWERS.COLLECTION_NAME),
+//         where("user", "==", userId),
+//         where("agent", "==", agentId)
+//       );
+//       const follwerDocs = await getDocs(follwersQuery);
+//       if (!follwerDocs.empty) {
+//         await deleteDoc(
+//           doc(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME, follwerDocs.docs[0].id)
+//         );
+//       }
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };
+
+export const likeAgent = (userId: string, agentId: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const likesQuery = query(
+        collection(db, DB_CONSTANTS.LIKES.COLLECTION_NAME),
+        where("user", "==", userId),
+        where("agent", "==", agentId)
+      );
+      const likesDocs = await getDocs(likesQuery);
+      if (likesDocs.empty) {
+        const likesRef = doc(
+          collection(db, DB_CONSTANTS.LIKES.COLLECTION_NAME)
+        );
+        await setDoc(likesRef, {
+          user: userId,
+          agent: agentId,
+        });
+      }
+      resolve(null);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+// export const unLikeAgent = (userId: string, agentId: string) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       resolve();
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };

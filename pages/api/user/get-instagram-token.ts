@@ -41,7 +41,6 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         headers: formData.getHeaders(),
       }
     );
-    // console.log("instagramResponse", instagramResponse);
 
     // exchange short-lived access token with long one
     const longLivedTokenResponse = await axios.get(
@@ -66,7 +65,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const profile = await getProfileFromUser(user);
 
     const profileRecord = await updateUserProfile(profile.id, {
-      instagram_data: JSON.stringify(instagramData),
+      instagram_data: instagramData,
       instagram_connected: true,
     });
 

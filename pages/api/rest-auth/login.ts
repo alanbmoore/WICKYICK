@@ -25,7 +25,6 @@ export default async function handler(
       body.password
     );
 
-    // console.log("login:response", response);
     const profile = await getProfileFromUser(response.user);
 
     const key = await response.user.getIdToken();

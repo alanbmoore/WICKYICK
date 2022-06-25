@@ -1,14 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
+import { auth } from "../../../../config/firebase-server";
 import { IUser } from "../../../../interfaces/user";
+
 import middleware from "../../../../middleware/middleware";
 import { getErrorMessageAndStatusCode } from "../../../../utils/errors";
-import { getProfileFromUser } from "../../../../utils/profile";
+import { getProfileFromUserId } from "../../../../utils/profile";
 
 type Data = {
   user?: IUser | null;
   messsage?: string;
+  media?: any;
 };
 
 const handler = nextConnect();
@@ -17,11 +21,24 @@ handler.use(middleware);
 handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     const { id } = req.query;
-    const { user: decodedUser } = req;
 
-    const profile = await getProfileFromUser(decodedUser);
+    const profile = await getProfileFromUserId(id, true);
 
-    res.status(200).json({ user: profile });
+    if (!profile.instagram_data) res.status(200).json({ user: profile });
+
+    const data = profile.instagram_data;
+    const instagram_token = data.instagram_access_token;
+    const instagram_user_id = data.instagram_user_id;
+    const params = {
+      fields: "media.limit(100){id,caption,media_url,username}",
+      access_token: instagram_token,
+    };
+    const response = await axios.get(
+      `https://graph.instagram.com/${instagram_user_id}`,
+      { params }
+    );
+    const user_media = response.data.media;
+    res.status(200).json({ media: user_media, user: profile });
   } catch (error) {
     const { code, message } = await getErrorMessageAndStatusCode(error);
     res.status(code).json({ message });

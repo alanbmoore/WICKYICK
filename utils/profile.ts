@@ -14,32 +14,32 @@ import {
   limit as collectionLimit,
   startAt,
   endAt,
+  DocumentReference,
 } from "firebase/firestore";
 import { db } from "../config/firebase-client";
+import { auth } from "../config/firebase-server";
 import { DB_CONSTANTS } from "../constants/db";
 import { ERRORS } from "../constants/errors";
 import { IUser } from "../interfaces/user";
 
-export const createUserProfile = (uid: string, obj: IUser) => {
+export const createUserProfile = (
+  user: UserRecord | User | UserCredential,
+  obj: IUser
+) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(
-        "DB_CONSTANTS.PROFILE.COLLECTION_NAME",
-        DB_CONSTANTS.PROFILE.COLLECTION_NAME
-      );
       const profileRef = doc(
         collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME)
       );
-      console.log("profileRef", profileRef);
-      const q = query(
+
+      const profileQuery = query(
         collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME),
-        where("pk", "==", uid)
+        where("pk", "==", user.uid)
       );
-      const profileDocs = await getDocs(q);
+      const profileDocs = await getDocs(profileQuery);
       if (!profileDocs.empty) {
         throw new Error(ERRORS.PROFILE.EXISTS);
       } else {
-        console.log("");
         await setDoc(profileRef, obj);
         let profileSnap = await getDoc(profileRef);
         resolve({ id: profileSnap.id, ...profileSnap.data() });
@@ -54,12 +54,11 @@ export const createUserProfile = (uid: string, obj: IUser) => {
 export const updateUserProfile = (id: string, obj: IUser) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
-      // console.log("updateUserProfile", id);
       const profileRef = doc(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME, id);
 
       let profileSnap = await getDoc(profileRef);
       if (!profileSnap.exists) throw new Error(ERRORS.PROFILE.NOT_FOUND);
-      // console.log("obj", obj);
+
       await updateDoc(profileRef, obj);
 
       profileSnap = await getDoc(profileRef);
@@ -72,15 +71,44 @@ export const updateUserProfile = (id: string, obj: IUser) => {
   });
 };
 
-export const getProfileFromId = (id: string) => {
+export const getProfileFromUserId = (id: string) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
-      const profileRef = doc(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME, id);
+      const user = await auth.getUser(id);
+      const profileQuery = query(
+        collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME),
+        where("pk", "==", id)
+      );
+      const profileDocs = await getDocs(profileQuery);
 
-      const profileSnap = await getDoc(profileRef);
+      if (!profileDocs.empty) {
+        // Get Followers
+        const follwersQuery = query(
+          collection(db, DB_CONSTANTS.FOLLWERS.COLLECTION_NAME),
+          where("agent", "==", id)
+        );
+        const followerDocs = await getDocs(follwersQuery);
+        const agent_followed = followerDocs.docs.map((d) => {
+          return d.data();
+        });
 
-      if (!profileSnap.exists()) {
-        resolve({ id: profileSnap.id, ...profileSnap.data() });
+        // Get Likes
+        const likesQuery = query(
+          collection(db, DB_CONSTANTS.LIKES.COLLECTION_NAME),
+          where("agent", "==", id)
+        );
+        const likesDocs = await getDocs(likesQuery);
+        const agent_liked = likesDocs.docs.map((d) => {
+          return d.data();
+        });
+
+        resolve({
+          id: profileDocs.docs[0].id,
+          ...profileDocs.docs[0].data(),
+          email: user.email,
+          agent_followed,
+          agent_liked,
+        });
       } else {
         throw new Error(ERRORS.PROFILE.EXISTS);
       }
@@ -89,23 +117,22 @@ export const getProfileFromId = (id: string) => {
     }
   });
 };
+
 export const getProfileFromUser = (
   user: UserRecord | User | UserCredential
 ) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
-      console.log("getProfileFromUserId");
-
-      const q = query(
+      const profileQuery = query(
         collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME),
         where("pk", "==", user.uid)
       );
 
-      const profileDocs = await getDocs(q);
+      const profileDocs = await getDocs(profileQuery);
 
       if (!profileDocs.empty) {
         const profile = profileDocs.docs.find((d) => d.data().pk === user.uid); //profileDocs.docs[0].data();
-        // console.log("getProfileFromUserId:profile", profile);
+
         resolve({ id: profile?.id, ...profile?.data(), email: user.email });
       } else {
         throw new Error(ERRORS.PROFILE.EXISTS);
@@ -123,7 +150,6 @@ export const getProfiles = (limit?: number, start?: number, end?: number) => {
       const profilesRef = collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME);
       let q;
       if (start || end) {
-        console.log("start || end", start, end);
         q = query(
           profilesRef,
           orderBy("last_name"),
@@ -131,7 +157,6 @@ export const getProfiles = (limit?: number, start?: number, end?: number) => {
           endAt(end)
         );
       } else {
-        console.log("else start || end");
         q = query(
           profilesRef,
           orderBy("last_name"),
@@ -141,7 +166,6 @@ export const getProfiles = (limit?: number, start?: number, end?: number) => {
       const profileDocs = await getDocs(q);
 
       if (!profileDocs.empty) {
-        // console.log("getProfileFromUserId:profile", profile);
         const profiles = profileDocs.forEach((profile) => {
           return { id: profile.id, ...profile.data() };
         });
