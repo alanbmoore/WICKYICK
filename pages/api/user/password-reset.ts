@@ -24,8 +24,12 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     res.status(200).json({ messsage: "Password updated successfully" });
   } catch (error) {
-    const { code, message } = await getErrorMessageAndStatusCode(error);
-    res.status(code).json({ message });
+    const { code } = await getErrorMessageAndStatusCode(error);
+    res
+      .status(code)
+      .json({
+        message: "There was an error setting your password, please try again.",
+      });
   }
 });
 

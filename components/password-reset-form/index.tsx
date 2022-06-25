@@ -8,7 +8,7 @@ import styles from "../../styles/SignUp.module.scss";
 import { useState } from "react";
 import { isValid } from "../../utils/helper";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
-import { AuthServices } from "../../services/auth";
+import { AuthService } from "../../services/auth";
 
 const PasswordResetForm = () => {
   const dispatch = useDispatch();
@@ -41,9 +41,9 @@ const PasswordResetForm = () => {
         email: email.value,
       };
       dispatch(showLoading());
-      AuthServices.resetPassword(obj)
+      AuthService.resetPassword(obj)
         .then((data: any) => {
-          console.log("AuthServices.resetPassword: response", data);
+          console.log("AuthService.resetPassword: response", data);
           toast.success("Password reset e-mail has been sent.", {
             position: toast.POSITION.TOP_RIGHT,
           });
@@ -52,6 +52,9 @@ const PasswordResetForm = () => {
           }, 1000);
         })
         .catch((error: any) => {
+          toast.error(error?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

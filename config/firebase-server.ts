@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 import { initializeApp, AppOptions, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig: AppOptions = {
   credential: cert({
@@ -12,8 +12,10 @@ const firebaseConfig: AppOptions = {
 };
 
 // Initialize Firebase
-const app = !admin.apps.length ? initializeApp(firebaseConfig) : admin.app();
+const app = !admin.apps.length
+  ? admin.initializeApp(firebaseConfig)
+  : admin.app();
 
-export const db = getFirestore(app);
-
-export const auth = getAuth();
+// export const dbAdmin = getFirestore();
+// console.log("admin.apps", admin.apps);
+export const auth = getAuth(app);

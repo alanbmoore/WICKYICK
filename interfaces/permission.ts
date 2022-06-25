@@ -12,6 +12,6 @@ enum IPermissionType {
 }
 export interface IPermission {
   type: IPermissionType;
-  key: String;
-  value: String;
+  key: string;
+  value: string;
 }

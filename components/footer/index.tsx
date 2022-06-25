@@ -4,7 +4,7 @@ import { Button, Container, Form } from "react-bootstrap";
 import { showModal } from "../../store/modalSlice";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
-import { AuthServices } from "../../services/auth";
+import { AuthService } from "../../services/auth";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { isValid } from "../../utils/helper";
@@ -40,10 +40,10 @@ const AppFooter = () => {
         email: email.value,
       };
       dispatch(showLoading());
-      AuthServices.requestAccess(obj)
+      AuthService.requestAccess(obj)
         .then((data: any) => {
-          console.log("AuthServices.requestAccess: response", data);
-          toast.success(data.detail, {
+          console.log("AuthService.requestAccess: response", data);
+          toast.success(data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           setTimeout(() => {
@@ -51,6 +51,9 @@ const AppFooter = () => {
           }, 1000);
         })
         .catch((error: any) => {
+          toast.error(error?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

@@ -35,7 +35,7 @@ export const UserService = {
 
   getInstagramData: async (id: any) => {
     try {
-      const url = `api/user/get-instagram-media/${id}/`;
+      const url = `/api/user/get-instagram-media/${id}/`;
       const response = (await makeRequest(
         url,
         "get",

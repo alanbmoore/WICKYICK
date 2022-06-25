@@ -9,20 +9,21 @@ import { hideLoading, showLoading } from "../../../store/loadingSlice";
 const LicenseForm = ({ goToNextStep }: any) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "");
-    setLicenseNumber({
-      isInvalid: false,
-      value: user?.license_number,
-      err: "",
-    });
-  }, []);
-
   const [licenseNumber, setLicenseNumber] = useState({
     isInvalid: false,
     value: "",
     err: "",
   });
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "");
+    console.log("LicenseForm:user", user);
+    setLicenseNumber({
+      isInvalid: false,
+      value: user?.license_number,
+      err: "",
+    });
+  }, [setLicenseNumber]);
 
   const handleLicenseNumber = (e: React.FormEvent<any>) => {
     // const re = /^[0-9\b]+$/;
@@ -50,7 +51,7 @@ const LicenseForm = ({ goToNextStep }: any) => {
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
-          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("License Number added successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });

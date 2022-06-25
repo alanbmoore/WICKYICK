@@ -9,7 +9,7 @@ import styles from "../../styles/SignUp.module.scss";
 import { useState } from "react";
 import { isValid } from "../../utils/helper";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
-import { AuthServices } from "../../services/auth";
+import { AuthService } from "../../services/auth";
 
 const SetPasswordForm = ({ params }: any) => {
   const dispatch = useDispatch();
@@ -76,15 +76,17 @@ const SetPasswordForm = ({ params }: any) => {
         token: params[1],
       };
       dispatch(showLoading());
-      AuthServices.setPassword(obj)
+      AuthService.setPassword(obj)
         .then((data: any) => {
-          console.log("AuthServices.setPassword: response", data);
+          console.log("AuthService.setPassword: response", data);
           toast.success("Password reset successfully.", {
             position: toast.POSITION.TOP_RIGHT,
           });
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
+          localStorage.removeItem("user");
+          localStorage.removeItem("id_token");
           router.push("/login");
         })
         .catch((error: any) => {

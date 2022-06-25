@@ -245,13 +245,14 @@ const Profile = ({ goToNextStep }: any) => {
 
     if (validate()) {
       selectedFile && formData.append("picture", selectedFile);
-      formData.append("location", location.value);
-      formData.append("company", company.value);
-      formData.append("phone_number", phone.value);
-      formData.append("bio", bio.value);
-      formData.append("job_title", jobTitle.value);
-      formData.append("site_username", username.value);
-      formData.append("tags", tags.join(","));
+      if (location.value) formData.append("location", location.value);
+      if (company.value) formData.append("company", company.value);
+      if (phone.value) formData.append("phone_number", phone.value);
+      if (bio.value) formData.append("bio", bio.value);
+      if (jobTitle.value) formData.append("job_title", jobTitle.value);
+      if (username.value) formData.append("site_username", username.value);
+      if (tags.length > 0) formData.append("tags", tags.join(","));
+
       dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
@@ -260,7 +261,7 @@ const Profile = ({ goToNextStep }: any) => {
             dispatch(hideLoading());
           }, 1000);
           dispatch(setUser(data));
-          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("Profile updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });

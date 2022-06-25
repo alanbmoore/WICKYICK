@@ -56,10 +56,10 @@ const SettingForm = () => {
       UserService.sendInstagramCode(obj)
         .then((data: any) => {
           console.log("sendInstagramCode: data", data);
+          localStorage.setItem("user", JSON.stringify(data.user));
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
-          localStorage.setItem("user", JSON.stringify(data.user));
         })
         .catch((error: any) => {
           setTimeout(() => {
@@ -80,7 +80,7 @@ const SettingForm = () => {
           dispatch(hideLoading());
         }, 1000);
         dispatch(setUser(data));
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data.user));
         toast.success("Profile completed successfully", {
           position: toast.POSITION.TOP_RIGHT,
         });

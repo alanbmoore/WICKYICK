@@ -1,7 +1,7 @@
 import { makeRequest } from "../Axios";
 import { AxiosResponse } from "axios";
 
-export const AuthServices = {
+export const AuthService = {
   requestAccess: async (data: any) => {
     try {
       const url = "/api/user/request-access/";

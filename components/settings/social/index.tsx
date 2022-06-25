@@ -9,7 +9,7 @@ const SocialConnect = ({ name, image, description }: any) => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "");
     setUser(user);
-  }, [user]);
+  }, [setUser]);
 
   const connect = (name: string) => {
     if (name === "Facebook/Instagram") {

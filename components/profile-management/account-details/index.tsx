@@ -6,7 +6,7 @@ import { hideLoading, showLoading } from "../../../store/loadingSlice";
 import { setUser } from "../../../store/userSlice";
 import { isValid } from "../../../utils/helper";
 import styles from "../../../styles/Profile-Settings.module.scss";
-import { AuthServices } from "../../../services/auth";
+import { AuthService } from "../../../services/auth";
 
 const AccountDetails = ({ goToNextStep }: any) => {
   const dispatch = useDispatch();
@@ -102,9 +102,9 @@ const AccountDetails = ({ goToNextStep }: any) => {
       formData.append("old_password", currentPassword.value);
       formData.append("new_password", newPassword.value);
       dispatch(showLoading());
-      AuthServices.changePassword(formData)
+      AuthService.changePassword(formData)
         .then((data: any) => {
-          console.log("AuthServices.changePassword: response", data);
+          console.log("AuthService.changePassword: response", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
@@ -129,9 +129,9 @@ const AccountDetails = ({ goToNextStep }: any) => {
     if (validateEmail()) {
       formData.append("email", email.value);
       dispatch(showLoading());
-      AuthServices.changeEmail(formData)
+      AuthService.changeEmail(formData)
         .then((data: any) => {
-          console.log("AuthServices.changeEmail: response", data);
+          console.log("AuthService.changeEmail: response", data);
           dispatch(setUser(data.user));
           localStorage.setItem("user", JSON.stringify(data.user));
           setIsChangeEmail(false);
@@ -143,7 +143,7 @@ const AccountDetails = ({ goToNextStep }: any) => {
           });
         })
         .catch((error: any) => {
-          toast.error(error?.email, {
+          toast.error(error?.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
           setTimeout(() => {

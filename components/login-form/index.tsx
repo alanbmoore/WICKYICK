@@ -10,7 +10,7 @@ import Link from "next/link";
 import router, { useRouter } from "next/router";
 import SocialButton from "../sign-up-form/SocialButton";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
-import { AuthServices } from "../../services/auth";
+import { AuthService } from "../../services/auth";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setUser } from "../../store/userSlice";
@@ -81,9 +81,9 @@ const LoginForm = () => {
     let isValidForm = validate();
     if (isValidForm) {
       dispatch(showLoading());
-      AuthServices.login({ email: email.value, password: password.value })
+      AuthService.login({ email: email.value, password: password.value })
         .then((data: any) => {
-          console.log("AuthServices.login: response", data);
+          console.log("AuthService.login: response", data);
           onSuccess(data);
           setTimeout(() => {
             dispatch(hideLoading());
@@ -142,7 +142,7 @@ const LoginForm = () => {
           <p className={styles["title"]}>Log In</p>
 
           <div className="d-flex flex-column w-100">
-            <SocialButton
+            {/* <SocialButton
               provider="google"
               appId={process.env.REACT_APP_GG_APP_ID || ""}
               onLoginSuccess={async (user: any) => {
@@ -151,13 +151,13 @@ const LoginForm = () => {
                   provider: "google",
                 };
                 dispatch(showLoading());
-                AuthServices.submitSocialLogin(
+                AuthService.submitSocialLogin(
                   obj,
-                  "api/user/social-login/google/"
+                  "/api/user/social-login/google/"
                 )
                   .then((response: any) => {
                     console.log(
-                      "AuthServices.submitSocialLogin: response",
+                      "AuthService.submitSocialLogin: response",
                       response
                     );
                     onSuccess(response);
@@ -175,9 +175,24 @@ const LoginForm = () => {
               icon={googleLogo}
             >
               Login with Google
-            </SocialButton>
+            </SocialButton> */}
 
-            <Button className={styles["social-btn"] + " mb-2"}>
+            <Button
+              className={styles["social-btn"] + " mb-2"}
+              onClick={async () => {}}
+            >
+              <Image
+                src={googleLogo}
+                width={"30px"}
+                height={"30px"}
+                alt={"google image"}
+              />
+              <p> Login with Google</p>
+            </Button>
+            <Button
+              className={styles["social-btn"] + " mb-2"}
+              onClick={async () => {}}
+            >
               <Image
                 src={linkedInLogo}
                 width={"30px"}
@@ -186,8 +201,20 @@ const LoginForm = () => {
               />
               <p> Login with LinkedIn</p>
             </Button>
+            <Button
+              className={styles["social-btn"] + " mb-2"}
+              onClick={async () => {}}
+            >
+              <Image
+                src={facebookLogo}
+                width={"30px"}
+                height={"30px"}
+                alt={"facebook image"}
+              />
+              <p> Login with Facebook</p>
+            </Button>
 
-            <SocialButton
+            {/* <SocialButton
               provider="facebook"
               appId={process.env.REACT_APP_FACEBOOK_ID || ""}
               onLoginSuccess={async (user: any) => {
@@ -196,13 +223,13 @@ const LoginForm = () => {
                   provider: "facebook",
                 };
                 dispatch(showLoading());
-                AuthServices.submitSocialLogin(
+                AuthService.submitSocialLogin(
                   obj,
-                  "api/user/social-login/facebook/"
+                  "/api/user/social-login/facebook/"
                 )
                   .then((response: any) => {
                     console.log(
-                      "AuthServices.submitSocialLogin: response",
+                      "AuthService.submitSocialLogin: response",
                       response
                     );
                     setTimeout(() => {
@@ -220,7 +247,7 @@ const LoginForm = () => {
               icon={facebookLogo}
             >
               Login with Facebook
-            </SocialButton>
+            </SocialButton> */}
           </div>
 
           <div className={styles["or-seperator"]}>or</div>

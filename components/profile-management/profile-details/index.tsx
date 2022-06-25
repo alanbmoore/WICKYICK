@@ -171,7 +171,8 @@ const ProfileDetails = ({ goToNextStep }: any) => {
       label: user?.language,
       err: "",
     });
-    setStartDate(new Date(user.experience));
+    // console.log("experience", user.experience);
+    if (user.experience) setStartDate(new Date(user.experience));
     setImg(user?.picture ? user.picture : Person);
     user?.tags && setTags(user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
@@ -314,7 +315,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
             dispatch(hideLoading());
           }, 1000);
           dispatch(setUser(data));
-          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("Profile updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });

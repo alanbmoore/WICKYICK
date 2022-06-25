@@ -12,7 +12,7 @@ export const makeRequest = (
   params?: AxiosRequestConfig["params"]
 ) => {
   return new Promise((resolve, reject) => {
-    const token = localStorage.getItem("id_token");
+    const token = body.token || localStorage.getItem("id_token");
     let updatedHeaders: any = { ...headers };
     if (token)
       updatedHeaders = {
