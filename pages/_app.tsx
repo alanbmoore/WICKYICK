@@ -5,8 +5,6 @@ import { Provider } from "react-redux";
 import store from "../store";
 import "../styles/globals.css";
 import AppIndex from "../components/app-index";
-import { useEffect } from "react";
-import { makeRequest } from "../Axios";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

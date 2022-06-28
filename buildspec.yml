@@ -1,5 +1,8 @@
 version: 0.2
-
+env:
+    variables:
+        NODE_ENV: test
+        PORT: "8081"       
 phases:
   install:
     commands:
@@ -14,9 +17,6 @@ phases:
       - npm install -g yarn
       - npm install -g next
       - yarn
-  pre_build:
-    commands:
-      - printenv > .env
   build:
     commands:
       - echo Compiling the Node.js code
@@ -26,4 +26,5 @@ phases:
       - echo Build completed on `date`
 artifacts:
   files:
-    - '**/*'
+    - 'package.json'
+    - 'build/**/*'
