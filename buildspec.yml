@@ -10,7 +10,7 @@ phases:
         commands:            
             - "echo Entered the install phase..."
             - "npm install -g npm"
-            - "npm install"
+            - "npm install --legacy-peer-deps"
     pre_build:
         commands:
             - "echo Entered the prebuild phase..."
