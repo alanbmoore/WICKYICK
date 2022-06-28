@@ -11,7 +11,7 @@ phases:
             - "echo Entered the install phase..."
             - "npm install -g npm@latest"
             - "npm install --legacy-peer-deps"
-            - "npm run build"
+            # - "npm run build"
     pre_build:
         commands:
             - "echo Entered the prebuild phase..."
