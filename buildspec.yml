@@ -8,8 +8,7 @@ phases:
         runtime-versions:
             nodejs: 12
         commands:            
-            - "echo Entered the install phase..."
-            - "npm install -g npm@lastest"
+            - "echo Entered the install phase..."            
             - "npm install --legacy-peer-deps"
             - "npm run build"
     pre_build:
