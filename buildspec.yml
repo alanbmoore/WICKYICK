@@ -11,13 +11,13 @@ phases:
             - "echo Entered the install phase..."
             - "npm install -g npm"
             - "npm install --legacy-peer-deps"
+            - "npm run build"
     pre_build:
         commands:
             - "echo Entered the prebuild phase..."
     post_build:
         commands:
-            - "echo Entered the postbuild phase..."            
-            - "npm run build"
+            - "echo Entered the postbuild phase..."
             - "npm start"
 artifacts:
     files:
