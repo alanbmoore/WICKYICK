@@ -4,6 +4,8 @@ phases:
   install:
     commands:
       - echo Installing dependency...
+      - npm install -g npm@latest
+      - npm install -g yarn
       - npm install -g next
       - yarn
   pre_build:
