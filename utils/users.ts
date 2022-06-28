@@ -77,14 +77,17 @@ export const generatePasswordResetEmail = (profile: any) => {
   return new Promise(async (resolve, reject) => {
     try {
       const link = await auth.generatePasswordResetLink(profile.email, {
-        url: process.env.DOMAIN_URL,
+        url: process.env.DOMAIN_URL || "wickyick.com",
       });
 
       const emailBody = `Please click on the link below to reset your password \n${link}`;
       const subject = `Reset your password - ${process.env.DOMAIN_URL}`;
-      await sendMail(subject, emailBody, process.env.DEFAULT_FROM_EMAIL, [
-        profile.email,
-      ]);
+      await sendMail(
+        subject,
+        emailBody,
+        process.env.DEFAULT_FROM_EMAIL || "invite@wickyick.com",
+        [profile.email]
+      );
       resolve("success");
     } catch (error) {
       reject(error);
@@ -118,25 +121,6 @@ export const addFollower = (userId: string, agentId: string) => {
     }
   });
 };
-// export const removeFollower = (userId: string, agentId: string) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       const follwersQuery = query(
-//         collection(db, DB_CONSTANTS.FOLLWERS.COLLECTION_NAME),
-//         where("user", "==", userId),
-//         where("agent", "==", agentId)
-//       );
-//       const follwerDocs = await getDocs(follwersQuery);
-//       if (!follwerDocs.empty) {
-//         await deleteDoc(
-//           doc(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME, follwerDocs.docs[0].id)
-//         );
-//       }
-//     } catch (error) {
-//       reject(error);
-//     }
-//   });
-// };
 
 export const likeAgent = (userId: string, agentId: string) => {
   return new Promise(async (resolve, reject) => {
@@ -162,12 +146,3 @@ export const likeAgent = (userId: string, agentId: string) => {
     }
   });
 };
-// export const unLikeAgent = (userId: string, agentId: string) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       resolve();
-//     } catch (error) {
-//       reject(error);
-//     }
-//   });
-// };

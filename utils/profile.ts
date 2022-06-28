@@ -1,4 +1,4 @@
-import { getAuth, UserRecord } from "firebase-admin/auth";
+import { DecodedIdToken, getAuth, UserRecord } from "firebase-admin/auth";
 import { User, UserCredential } from "firebase/auth";
 import {
   collection,
@@ -23,10 +23,10 @@ import { ERRORS } from "../constants/errors";
 import { IUser } from "../interfaces/user";
 
 export const createUserProfile = (
-  user: UserRecord | User | UserCredential,
+  user: UserRecord | User | DecodedIdToken,
   obj: IUser
 ) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise<IUser>(async (resolve, reject) => {
     try {
       const profileRef = doc(
         collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME)
@@ -51,15 +51,22 @@ export const createUserProfile = (
   });
 };
 
-export const updateUserProfile = (id: string, obj: IUser) => {
+export const updateUserProfile = (
+  id: string | null | undefined,
+  obj: IUser
+) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
-      const profileRef = doc(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME, id);
+      const profileRef = doc(
+        db,
+        DB_CONSTANTS.PROFILE.COLLECTION_NAME,
+        id || ""
+      );
 
       let profileSnap = await getDoc(profileRef);
       if (!profileSnap.exists) throw new Error(ERRORS.PROFILE.NOT_FOUND);
 
-      await updateDoc(profileRef, obj);
+      await updateDoc(profileRef, obj as any);
 
       profileSnap = await getDoc(profileRef);
 
@@ -119,7 +126,7 @@ export const getProfileFromUserId = (id: string) => {
 };
 
 export const getProfileFromUser = (
-  user: UserRecord | User | UserCredential
+  user: UserRecord | User | DecodedIdToken
 ) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
@@ -145,7 +152,7 @@ export const getProfileFromUser = (
 };
 
 export const getProfiles = (limit?: number, start?: number, end?: number) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise<IUser[]>(async (resolve, reject) => {
     try {
       const profilesRef = collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME);
       let q;
@@ -166,8 +173,9 @@ export const getProfiles = (limit?: number, start?: number, end?: number) => {
       const profileDocs = await getDocs(q);
 
       if (!profileDocs.empty) {
-        const profiles = profileDocs.forEach((profile) => {
-          return { id: profile.id, ...profile.data() };
+        let profiles: IUser[] = [];
+        profileDocs.forEach((profile) => {
+          profiles.push({ id: profile.id, ...profile.data() });
         });
         resolve(profiles);
       } else {

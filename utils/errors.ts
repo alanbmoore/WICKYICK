@@ -1,6 +1,7 @@
+import { FirebaseError } from "firebase-admin";
 import { ERRORS } from "../constants/errors";
 
-export const getErrorMessageAndStatusCode = (error) => {
+export const getErrorMessageAndStatusCode = (error: FirebaseError) => {
   return new Promise<{ code: number; message: string }>(async (resolve) => {
     console.log("error", error);
 

@@ -11,7 +11,7 @@ import { getProfileFromUserId } from "../../../../utils/profile";
 
 type Data = {
   user?: IUser | null;
-  messsage?: string;
+  message?: string;
   media?: any;
 };
 
@@ -22,7 +22,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     const { id } = req.query;
 
-    const profile = await getProfileFromUserId(id, true);
+    const profile = await getProfileFromUserId(id.toString());
 
     if (!profile.instagram_data) res.status(200).json({ user: profile });
 
@@ -39,7 +39,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     );
     const user_media = response.data.media;
     res.status(200).json({ media: user_media, user: profile });
-  } catch (error) {
+  } catch (error: any) {
     const { code, message } = await getErrorMessageAndStatusCode(error);
     res.status(code).json({ message });
   }

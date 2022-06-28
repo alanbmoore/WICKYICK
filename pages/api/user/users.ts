@@ -3,13 +3,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
 import { IUser } from "../../../interfaces/user";
 import middleware from "../../../middleware/middleware";
-import { fakeUsers } from "../../../utils/fake";
+
 import { getProfiles } from "../../../utils/profile";
 
 type Data = {
   count: number;
-  next: string | null; // next offset link
-  previous: string | null; // previous offset link
+  next: number | null; // next offset link
+  previous: number | null; // previous offset link
   results: Array<IUser>;
 };
 
@@ -22,22 +22,22 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const users = await getProfiles();
 
     res.status(200).json({
-      count: fakeUsers.length,
+      count: users.length,
       next: null,
       previous: null,
       results: users,
     });
   } else {
-    const start = parseInt(offset);
-    const limitNum = parseInt(limit);
+    const start = parseInt(offset.toString());
+    const limitNum = parseInt(limit.toString());
     const end = start + limitNum;
 
     const users = await getProfiles(limitNum, start, end);
     res.status(200).json({
-      count: fakeUsers.length,
+      count: users.length,
       next: start + end,
       previous: start,
-      results: fakeUsers.slice(start, end),
+      results: users.slice(start, end),
     });
   }
 });

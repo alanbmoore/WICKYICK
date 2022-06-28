@@ -173,7 +173,7 @@ const SignUpForm = () => {
       setTimeout(() => {
         dispatch(hideLoading());
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       let message;
       if (error.code) message = getErrorMessageFromFirebaseCode(error.code);
       else message = error?.message;

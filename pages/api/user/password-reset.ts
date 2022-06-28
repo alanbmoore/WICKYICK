@@ -5,32 +5,33 @@ import nextConnect from "next-connect";
 import { auth } from "../../../config/firebase-server";
 import { IUser } from "../../../interfaces/user";
 import middleware from "../../../middleware/middleware";
+import { NextApiRequestWithUser } from "../../../types/http";
 import { getErrorMessageAndStatusCode } from "../../../utils/errors";
 import { getUserFromUid } from "../../../utils/users";
 
 type Data = {
   user?: IUser | null;
-  messsage?: string;
+  message?: string;
 };
 
 const handler = nextConnect();
 handler.use(middleware);
 
-handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  try {
-    await auth.updateUser(req.user.uid, {
-      password: req.body.new_password,
-    });
+handler.post(
+  async (req: NextApiRequestWithUser, res: NextApiResponse<Data>) => {
+    try {
+      await auth.updateUser(req.user.uid, {
+        password: req.body.new_password,
+      });
 
-    res.status(200).json({ messsage: "Password updated successfully" });
-  } catch (error) {
-    const { code } = await getErrorMessageAndStatusCode(error);
-    res
-      .status(code)
-      .json({
+      res.status(200).json({ message: "Password updated successfully" });
+    } catch (error: any) {
+      const { code } = await getErrorMessageAndStatusCode(error);
+      res.status(code).json({
         message: "There was an error setting your password, please try again.",
       });
+    }
   }
-});
+);
 
 export default handler;

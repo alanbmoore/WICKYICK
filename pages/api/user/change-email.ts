@@ -5,32 +5,35 @@ import nextConnect from "next-connect";
 import { auth } from "../../../config/firebase-server";
 import { IUser } from "../../../interfaces/user";
 import middleware from "../../../middleware/middleware";
+import { NextApiRequestWithUser } from "../../../types/http";
 import { getErrorMessageAndStatusCode } from "../../../utils/errors";
 import { getProfileFromUser } from "../../../utils/profile";
 import { getUserFromUid } from "../../../utils/users";
 
 type Data = {
   user?: IUser | null;
-  messsage?: string;
+  message?: string;
 };
 
 const handler = nextConnect();
 handler.use(middleware);
 
-handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  try {
-    const user = await auth.updateUser(req.user.uid, {
-      email: req.body.email,
-    });
+handler.post(
+  async (req: NextApiRequestWithUser, res: NextApiResponse<Data>) => {
+    try {
+      const user = await auth.updateUser(req.user.uid, {
+        email: req.body.email,
+      });
 
-    const profile = await getProfileFromUser(user);
-    res
-      .status(200)
-      .json({ messsage: "Email updated successfully", user: profile });
-  } catch (error) {
-    const { code, message } = await getErrorMessageAndStatusCode(error);
-    res.status(code).json({ message });
+      const profile = await getProfileFromUser(user);
+      res
+        .status(200)
+        .json({ message: "Email updated successfully", user: profile });
+    } catch (error: any) {
+      const { code, message } = await getErrorMessageAndStatusCode(error);
+      res.status(code).json({ message });
+    }
   }
-});
+);
 
 export default handler;

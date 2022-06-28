@@ -10,16 +10,17 @@ import {
   updateUserProfile,
 } from "../../../../utils/profile";
 import { getErrorMessageAndStatusCode } from "../../../../utils/errors";
+import { NextApiRequestWithUser } from "../../../../types/http";
 
 type Data = {
   user?: IUser | null;
-  messsage?: string;
+  message?: string;
 };
 
 const handler = nextConnect();
 handler.use(middleware);
 
-handler.put(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.put(async (req: NextApiRequestWithUser, res: NextApiResponse<Data>) => {
   try {
     const { body, user } = req;
 
@@ -28,7 +29,7 @@ handler.put(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const profileRecord = await updateUserProfile(profile.id, body);
 
     res.status(200).json({ user: profileRecord });
-  } catch (error) {
+  } catch (error: any) {
     const { message, code } = await getErrorMessageAndStatusCode(error);
     res.status(code).json({ message });
   }

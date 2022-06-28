@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequestWithUser } from "../../../types/http";
 
 import { getErrorMessageAndStatusCode } from "../../../utils/errors";
 import { getProfileFromUser } from "../../../utils/profile";
@@ -11,7 +12,7 @@ type Data = {
 };
 
 export default async function handler(
-  req: NextApiRequest,
+  req: NextApiRequestWithUser,
   res: NextApiResponse<Data>
 ) {
   const { user } = req;
