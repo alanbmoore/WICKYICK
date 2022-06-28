@@ -1,37 +1,36 @@
 version: 0.2
+
 env:
-    variables:
-        NODE_ENV: test
-        PORT: "8081"       
+  variables:
+    NODE_ENV: "production"
+    PORT: "8081"   
 phases:
-    install:
-        runtime-versions:
-            nodejs: 12
-        commands:            
-            - "echo Entered the install phase..."
-            - "npm install -g npm@latest"
-            - "npm install --legacy-peer-deps"
-    pre_build:
-        commands:
-            - "echo Entered the prebuild phase..."
-    post_build:
-        commands:
-            - "echo Entered the postbuild phase..."
-            - "npm start"
+  install:
+    commands:
+      - echo Installing dependency...
+      - npm install -g next
+      - npm install -g typescript
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - npm run build
 artifacts:
-    files:
-        - package.json
-        - "build/**/*"
-        # - config/**
-        # - constants/**
-        # - interfaces/**
-        # - middleware/**
-        # - pages/**
-        # - public/**
-        # - services/**
-        # - store/**
-        # - styles/**
-        # - utils/**
-        # - Axios.ts
-        # - next.config.js
-        # - tsconfig.json
+  files:
+    - build/**/*
+    - package.json
+    - config/**
+    - constants/**
+    - interfaces/**
+    - middleware/**
+    - pages/**
+    - public/**
+    - services/**
+    - store/**
+    - styles/**
+    - utils/**
+    - Axios.ts
+    - next.config.js
+    - tsconfig.json
+    - tsconfig.server.json
