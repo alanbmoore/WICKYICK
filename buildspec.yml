@@ -22,5 +22,17 @@ phases:
 artifacts:
     files:
         - package.json
-        - "build/**/*"   
-        - next.config.js     
+        - "build/**/*"
+        - config/**
+        - constants/**
+        - interfaces/**
+        - middleware/**
+        - pages/**
+        - public/**
+        - services/**
+        - store/**
+        - styles/**
+        - utils/**
+        - Axios.ts
+        - next.config.js
+        - tsconfig.json
