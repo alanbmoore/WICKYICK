@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { UserService } from "../../services/user";
 // @ts-ignore
-import ModalImage from "react-modal-image";
+import ModalImage from "react-modal-image-responsive";
 import { toast } from "react-toastify";
 import { getUser, isLogin, USER_KEY } from "../../services/isLoggedIn";
 

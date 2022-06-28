@@ -3530,10 +3530,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-modal-image@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-modal-image/-/react-modal-image-2.5.0.tgz#c9f047ae2a1b8ca54c35dbdad3bbca846cf21632"
-  integrity sha512-QucQrgOLmF44CD4EFDLZ9ICrbHEZwztjALgx1GsNmMWZrAtmzDLarG+T1TK2OSE4w1eHfkXtmEhQibjbt0mT2g==
+react-modal-image-responsive@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-modal-image-responsive/-/react-modal-image-responsive-1.1.1.tgz#f75b08fe470a92dae1065ec078e21ba4005254ec"
+  integrity sha512-TXh/xne2i5Z9NHet/gNQu6rpuQxrnPAoeGn4QelYTLE5C9pLqWWbBUpv7vSO4YraB1vnDdC7Bt3gqt+jkJ8lSA==
 
 react-onclickoutside@^6.12.0:
   version "6.12.1"
