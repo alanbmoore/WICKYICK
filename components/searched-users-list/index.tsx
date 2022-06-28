@@ -281,7 +281,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                 }}
               />
             </div>
-            <MapContainer marker={marker} />
+            {/* <MapContainer marker={marker} /> */}
           </Col>
         </Row>
       </Container>
