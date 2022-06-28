@@ -22,4 +22,5 @@ phases:
 artifacts:
     files:
         - package.json
-        - "build/**/*"        
+        - "build/**/*"   
+        - next.config.js     
