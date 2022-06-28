@@ -20,10 +20,10 @@ phases:
   build:
     commands:
       - echo Compiling the Node.js code
+      - npm install --force
       - yarn build
   post_build:
-    commands:
-      - 'npm install --force'
+    commands:    
 artifacts:
   files:
     - 'package.json'
