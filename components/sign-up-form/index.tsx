@@ -150,8 +150,19 @@ const SignUpForm = () => {
   ) => {
     try {
       const result = await signInWithPopup(auth, authProvider);
+      let credential;
+      switch (providerName) {
+        case "facebook":
+          credential = FacebookAuthProvider.credentialFromResult(result);
+          break;
+        case "google":
+          credential = GoogleAuthProvider.credentialFromResult(result);
+        default:
+          credential = GoogleAuthProvider.credentialFromResult(result);
+      }
+
       let obj = {
-        token: result.user.accessToken,
+        token: credential?.accessToken,
       };
       const response = await AuthService.submitSocialLogin(
         obj,
