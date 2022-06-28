@@ -1,36 +1,21 @@
 version: 0.2
 
-env:
-  variables:
-    NODE_ENV: "production"
-    PORT: "8081"   
 phases:
   install:
     commands:
       - echo Installing dependency...
       - npm install -g next
-      - npm install -g typescript
-      - npm install
+      - yarn
+  pre_build:
+    commands:
+      - printenv > .env
   build:
     commands:
-      - echo Build started on `date`
       - echo Compiling the Node.js code
-      - npm run build
+      - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
 artifacts:
   files:
-    - build/**/*
-    - package.json
-    - config/**
-    - constants/**
-    - interfaces/**
-    - middleware/**
-    - pages/**
-    - public/**
-    - services/**
-    - store/**
-    - styles/**
-    - utils/**
-    - Axios.ts
-    - next.config.js
-    - tsconfig.json
-    - tsconfig.server.json
+    - '**/*'
