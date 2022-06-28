@@ -23,7 +23,7 @@ phases:
       - yarn build
   post_build:
     commands:
-      - echo Build completed on `date`
+      - 'npm install --force'
 artifacts:
   files:
     - 'package.json'
