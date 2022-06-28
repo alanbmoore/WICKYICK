@@ -9,7 +9,7 @@ phases:
             nodejs: 12
         commands:            
             - "echo Entered the install phase..."
-            - "npm install -g npm"
+            - "npm install -g npm@lastest"
             - "npm install --legacy-peer-deps"
             - "npm run build"
     pre_build:
