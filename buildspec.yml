@@ -4,7 +4,10 @@ phases:
   install:
     commands:
       - echo Installing dependency...
+      - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
       - npm install -g npm@latest
+      - nvm install 16
+      - nvm use 16
       - npm install -g yarn
       - npm install -g next
       - yarn
