@@ -15,7 +15,7 @@ phases:
       - npm install -g npm@8.13.1
       - npm install -g node@16.15.1 --force
       # - nvm install 16
-      - nvm use 16
+      # - nvm use 16
       - npm install -g next
       - npm install --production --force      
   build:
