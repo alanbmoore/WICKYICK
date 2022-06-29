@@ -11,14 +11,13 @@ phases:
     #   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
     #   - export NVM_DIR="$HOME/.nvm"
     #   - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
-      - npm install -g npm@8.13.1
-      - npm install -g node@16.15.1 --force
+      - npm install -g yarn
+      - yarn install -g npm@8.13.1
+      - yarn install -g node@16.15.1 --force
     #   - nvm install 16
     #   - nvm use 16
-      - npm install -g yarn
-      - npm install -g next
-      - yarn
-      - 'npm install --production --force'
+      - yarn install -g next
+      - yarn install --production --force      
   build:
     commands:
       - echo Compiling the Node.js code      
