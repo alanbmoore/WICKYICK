@@ -26,8 +26,8 @@ phases:
   post_build:
     commands:    
 artifacts:
-  files:
-    - '**/*'
+  type: zip
+  files:    
     - 'package.json'
     - 'build/**/*'
-    - .npmrc
+    
