@@ -2,7 +2,9 @@ version: 0.2
 env:
     variables:
         NODE_ENV: test
-        PORT: "8081"       
+        PORT: "8081"
+        npm_config_force: true
+
 phases:
   install:
     commands:
@@ -19,8 +21,7 @@ phases:
       - yarn
   build:
     commands:
-      - echo Compiling the Node.js code
-      - npm install --force
+      - echo Compiling the Node.js code      
       - yarn build
   post_build:
     commands:    

@@ -32,6 +32,7 @@ export const createNewUserAndProfile = (obj: any, password?: string) => {
         first_name: obj.firstName,
         last_name: obj.lastName,
         pk: user.uid,
+        role: "Basic",
       };
 
       userProfile.first_name = obj.first_name;

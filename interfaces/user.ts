@@ -15,7 +15,7 @@ export interface IUser {
   bio?: string | null | undefined;
   language?: string | null | undefined;
   job_title?: string | null | undefined;
-  instagram_data?: any;
+  instagram_data?: IInstagramData;
   instagram_connected?: boolean;
   address?: IAddress | undefined;
   tags?: string | null | undefined;
@@ -25,4 +25,10 @@ export interface IUser {
   agent_liked?: Array<any>;
   experience?: string | null | undefined;
   role?: string | null | undefined;
+}
+export interface IInstagramData {
+  instagram_access_token: string;
+  instagram_profile_url: string;
+  instagram_user_id: number;
+  instagram_user_name: string;
 }

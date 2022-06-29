@@ -27,8 +27,8 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     if (!profile.instagram_data) res.status(200).json({ user: profile });
 
     const data = profile.instagram_data;
-    const instagram_token = data.instagram_access_token;
-    const instagram_user_id = data.instagram_user_id;
+    const instagram_token = data?.instagram_access_token;
+    const instagram_user_id = data?.instagram_user_id;
     const params = {
       fields: "media.limit(100){id,caption,media_url,username}",
       access_token: instagram_token,
