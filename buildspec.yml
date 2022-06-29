@@ -12,11 +12,11 @@ phases:
     #   - export NVM_DIR="$HOME/.nvm"
     #   - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
       - npm install -g yarn
-      - yarn install -g npm@8.13.1
-      - yarn install -g node@16.15.1 --force
+      - yarn add -g npm@8.13.1
+      - yarn add -g node@16.15.1 --force
     #   - nvm install 16
     #   - nvm use 16
-      - yarn install -g next
+      - yarn add -g next
       - yarn install --production --force      
   build:
     commands:
