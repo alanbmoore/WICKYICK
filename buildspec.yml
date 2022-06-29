@@ -18,6 +18,7 @@ phases:
       - npm install -g yarn
       - npm install -g next
       - yarn
+      - 'npm install --production --force'
   build:
     commands:
       - echo Compiling the Node.js code      
@@ -26,6 +27,7 @@ phases:
     commands:    
 artifacts:
   files:
+    - '**/*'
     - 'package.json'
     - 'build/**/*'
     - .npmrc
