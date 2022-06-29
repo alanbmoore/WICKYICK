@@ -2,8 +2,7 @@ version: 0.2
 env:
     variables:
         NODE_ENV: test
-        PORT: "8081"
-        npm_config_force: true
+        PORT: "8081"        
 
 phases:
   install:
@@ -29,3 +28,4 @@ artifacts:
   files:
     - 'package.json'
     - 'build/**/*'
+    - .npmrc
