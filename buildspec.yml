@@ -12,16 +12,16 @@ phases:
     #   - export NVM_DIR="$HOME/.nvm"
     #   - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
       - npm install -g yarn
-      - yarn global add npm@8.13.1
-      - yarn global add node@16.15.1 --force
-    #   - nvm install 16
-    #   - nvm use 16
-      - yarn global add next
-      - yarn install --production --force      
+      - npm install -g npm@8.13.1
+      - npm install -g node@16.15.1 --force
+      # - nvm install 16
+      - nvm use 16
+      - npm install -g next
+      - npm install --production --force      
   build:
     commands:
       - echo Compiling the Node.js code      
-      - yarn build
+      - npm run build
   post_build:
     commands:    
 artifacts:
