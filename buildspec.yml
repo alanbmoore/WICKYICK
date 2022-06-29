@@ -30,4 +30,5 @@ artifacts:
   files:    
     - 'package.json'
     - 'build/**/*'
+    - .npmrc
     
