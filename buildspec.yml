@@ -30,5 +30,6 @@ artifacts:
   files:    
     - 'package.json'
     - 'build/**/*'
+    - next.config.js
     - .npmrc
     
