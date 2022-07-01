@@ -20,8 +20,8 @@ handler.use(middleware);
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const { id } = req.query;
-
+    // const { id } = req.query;
+    const id = req.query.id.length ? req.query.id[0] : req.query.id || "";
     const profile = await getProfileFromUserId(id.toString());
 
     if (!profile.instagram_data) res.status(200).json({ user: profile });
