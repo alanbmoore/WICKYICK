@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "../../../../styles/Profile.module.scss";
-import Person from "../../../../public/static/images/person.svg";
+import Person from "../../../../public/static-files/images/person.svg";
 import { useState } from "react";
 
 interface IProfileTopSection {

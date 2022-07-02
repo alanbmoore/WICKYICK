@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { USACities } from "../../../utils/usCities";
 import Select, { createFilter } from "react-select";
 import Image from "next/image";
-import Person from "../../../public/static/images/person.svg";
+import Person from "../../../public/static-files/images/person.svg";
 import { UserService } from "../../../services/user";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";

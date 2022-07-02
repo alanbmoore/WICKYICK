@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import Image from "next/image";
 import { ICard } from "../../interfaces/card";
 import styles from "../../styles/Client-Card.module.scss";
-import Agent from "../../public/static/images/userIcon.jpeg";
+import Agent from "../../public/static-files/images/userIcon.jpeg";
 import { FcApproval } from "react-icons/fc";
 
 const CustomCard = ({

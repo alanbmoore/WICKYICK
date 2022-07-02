@@ -10,9 +10,9 @@ import styles from "../../styles/Navbar.module.scss";
 import router, { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import logoImage from "../../public/static/images/logo.png";
+import logoImage from "../../public/static-files/images/logo.png";
 import { getUser, isLogin, logout } from "../../services/isLoggedIn";
-import UserIcon from "../../public/static/images/userIcon.jpeg";
+import UserIcon from "../../public/static-files/images/userIcon.jpeg";
 // @ts-ignore
 import Sidebar from "react-sidebar";
 import { useCallback, useEffect, useState } from "react";
@@ -24,7 +24,7 @@ import { MdHelp } from "react-icons/md";
 import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { UserService } from "../../services/user";
-import Agent from "../../public/static/images/userIcon.jpeg";
+import Agent from "../../public/static-files/images/userIcon.jpeg";
 // @ts-ignore
 import _ from "lodash";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
