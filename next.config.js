@@ -5,7 +5,6 @@ module.exports = {
     return config;
   },
   reactStrictMode: true,
-  distDir: "build",
   env: {
     REACT_APP_URL: process.env.REACT_APP_URL,
     REACT_APP_BASE_URL: process.env.REACT_APP_BASE_URL,
