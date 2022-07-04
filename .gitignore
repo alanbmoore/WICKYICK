@@ -39,3 +39,4 @@ yarn-error.log*
 wickyick.pem
 build/***
 wickyick-dev-firebase-adminsdk*.json
+.next/**

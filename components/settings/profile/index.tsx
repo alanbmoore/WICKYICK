@@ -12,8 +12,8 @@ import { hideLoading, showLoading } from "../../../store/loadingSlice";
 import { setUser } from "../../../store/userSlice";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 // @ts-ignore
-import TagsInput from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
+import TagsInput from "react-tagsinput-2";
+import "react-tagsinput-2/react-tagsinput.css";
 
 const themeStyle = (theme: any) => ({
   ...theme,

@@ -42,7 +42,7 @@
     "react-select": "^5.2.2",
     "react-sidebar": "^3.0.2",
     "react-social-login": "^3.4.15",
-    "react-tagsinput": "^3.19.0",
+    "react-tagsinput-2": "^3.19.8",
     "react-toastify": "^8.2.0",
     "redux": "^4.1.2",
     "sass": "^1.49.0"
