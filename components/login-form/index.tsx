@@ -83,7 +83,7 @@ const LoginForm = () => {
       dispatch(showLoading());
       AuthService.login({ email: email.value, password: password.value })
         .then((data: any) => {
-          console.log("AuthService.login: response", data);
+          // console.log("AuthService.login: response", data);
           onSuccess(data);
           setTimeout(() => {
             dispatch(hideLoading());

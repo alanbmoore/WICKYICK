@@ -256,7 +256,7 @@ const Profile = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
-          console.log("updateProfile: data", data);
+          // console.log("updateProfile: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

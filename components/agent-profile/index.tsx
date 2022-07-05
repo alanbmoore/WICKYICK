@@ -37,7 +37,7 @@ const AgentProfileBanner = () => {
       dispatch(showLoading());
       UserService.getInstagramData(id)
         .then((response: any) => {
-          console.log("getInstagramData: response", response);
+          // console.log("getInstagramData: response", response);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
@@ -60,7 +60,7 @@ const AgentProfileBanner = () => {
     };
     UserService.followAgent(obj)
       .then((response: any) => {
-        console.log("followAgent: response", response);
+        // console.log("followAgent: response", response);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);
@@ -81,7 +81,7 @@ const AgentProfileBanner = () => {
     };
     UserService.likeAgent(obj)
       .then((response: any) => {
-        console.log("likeAgent: response", response);
+        // console.log("likeAgent: response", response);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);

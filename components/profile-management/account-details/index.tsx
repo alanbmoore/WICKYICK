@@ -104,7 +104,7 @@ const AccountDetails = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       AuthService.changePassword(formData)
         .then((data: any) => {
-          console.log("AuthService.changePassword: response", data);
+          // console.log("AuthService.changePassword: response", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
@@ -131,7 +131,7 @@ const AccountDetails = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       AuthService.changeEmail(formData)
         .then((data: any) => {
-          console.log("AuthService.changeEmail: response", data);
+          // console.log("AuthService.changeEmail: response", data);
           dispatch(setUser(data.user));
           localStorage.setItem("user", JSON.stringify(data.user));
           setIsChangeEmail(false);

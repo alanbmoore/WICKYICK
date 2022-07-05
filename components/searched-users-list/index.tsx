@@ -34,7 +34,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const [language, setLanguage] = useState("");
   const [isVerified, setIsVerified] = useState("");
   const [experience, setExperience] = useState("");
-  const [marker, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState([]);
 
   const getUsers = useCallback(
     (text: any) => {
@@ -54,7 +54,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
   const getList = (params: any) => {
     UserService.getUserList(params)
       .then((response: any) => {
-        console.log("getUserList: response", response);
+        // console.log("getUserList: response", response);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);
@@ -71,10 +71,11 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
             });
           }
         });
-        if (arr.length === 0) {
-          arr.push(undefined);
+        console.log("arr", arr);
+        if (arr.length > 0) {
+          // arr.push(undefined);
+          setMarkers(arr);
         }
-        setMarkers(arr);
       })
       .catch((error: any) => {
         setTimeout(() => {
@@ -281,7 +282,7 @@ const SearchedUsersList = ({ keyword, viewAll }: any) => {
                 }}
               />
             </div>
-            {/* <MapContainer marker={marker} /> */}
+            <MapContainer markers={markers} />
           </Col>
         </Row>
       </Container>

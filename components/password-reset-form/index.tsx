@@ -43,7 +43,7 @@ const PasswordResetForm = () => {
       dispatch(showLoading());
       AuthService.resetPassword(obj)
         .then((data: any) => {
-          console.log("AuthService.resetPassword: response", data);
+          // console.log("AuthService.resetPassword: response", data);
           toast.success("Password reset e-mail has been sent.", {
             position: toast.POSITION.TOP_RIGHT,
           });

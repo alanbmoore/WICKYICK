@@ -78,7 +78,7 @@ const SetPasswordForm = ({ params }: any) => {
       dispatch(showLoading());
       AuthService.setPassword(obj)
         .then((data: any) => {
-          console.log("AuthService.setPassword: response", data);
+          // console.log("AuthService.setPassword: response", data);
           toast.success("Password reset successfully.", {
             position: toast.POSITION.TOP_RIGHT,
           });

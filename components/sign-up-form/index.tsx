@@ -120,7 +120,7 @@ const SignUpForm = () => {
       dispatch(showLoading());
       AuthService.signup(obj)
         .then((data: any) => {
-          console.log("AuthService.signup: response", data);
+          // console.log("AuthService.signup: response", data);
           if (data?.message) {
             toast.success(data?.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -168,7 +168,7 @@ const SignUpForm = () => {
         obj,
         `/api/user/social-login/${providerName}/`
       );
-      console.log("AuthService.submitSocialLogin: response", response);
+      // console.log("AuthService.submitSocialLogin: response", response);
       onSuccess(response);
       setTimeout(() => {
         dispatch(hideLoading());

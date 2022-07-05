@@ -42,7 +42,7 @@ const AppFooter = () => {
       dispatch(showLoading());
       AuthService.requestAccess(obj)
         .then((data: any) => {
-          console.log("AuthService.requestAccess: response", data);
+          // console.log("AuthService.requestAccess: response", data);
           toast.success(data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });

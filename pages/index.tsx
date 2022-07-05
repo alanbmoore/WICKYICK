@@ -91,7 +91,7 @@ const Home = () => {
       dispatch(showLoading());
       UserService.getUserList({ offset: 0, limit: 6 })
         .then((response: any) => {
-          console.log("getUserList: response", response);
+          // console.log("getUserList: response", response);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);

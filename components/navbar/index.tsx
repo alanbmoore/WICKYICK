@@ -57,7 +57,7 @@ const AppNavbar = () => {
         dispatch(showLoading());
         UserService.getUserList({ keyword: text })
           .then((response: any) => {
-            console.log("getUserList: response", response);
+            // console.log("getUserList: response", response);
             setUserList(response.results);
             dispatch(hideLoading());
           })

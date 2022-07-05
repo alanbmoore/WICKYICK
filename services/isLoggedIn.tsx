@@ -19,7 +19,11 @@ export const isLogin = () => {
 
 export const getUser = () => {
   if (typeof window !== "undefined") {
-    if (localStorage.getItem(USER_KEY)) {
+    if (
+      localStorage.getItem(USER_KEY) !== "null" &&
+      localStorage.getItem(USER_KEY) !== "undefined" &&
+      localStorage.getItem(USER_KEY)
+    ) {
       return JSON.parse(localStorage.getItem(USER_KEY) || "");
     } else {
       localStorage.removeItem(USER_KEY);
