@@ -31,7 +31,7 @@ function MapContainer({ markers }) {
             lat: 45.3573429,
           };
     setCenter(center);
-  }, [markers]);
+  }, []);
 
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_KEY}>
