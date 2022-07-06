@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoImage from "../../public/static-files/images/logo.png";
+import logoImage from "../../public/static/images/logo.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import router, { useRouter } from "next/router";
 import { useDispatch } from "react-redux";

@@ -1,10 +1,10 @@
 import Image from "next/image";
-import logoImage from "../../public/static-files/images/logo.png";
-import googleLogo from "../../public/static-files/images/google-logo.png";
-import linkedInLogo from "../../public/static-files/images/linkedin-logo.png";
+import logoImage from "../../public/static/images/logo.png";
+import googleLogo from "../../public/static/images/google-logo.png";
+import linkedInLogo from "../../public/static/images/linkedin-logo.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
-import facebookLogo from "../../public/static-files/images/facebook.png";
+import facebookLogo from "../../public/static/images/facebook.png";
 import styles from "../../styles/SignUp.module.scss";
 import router, { useRouter } from "next/router";
 import { useState } from "react";

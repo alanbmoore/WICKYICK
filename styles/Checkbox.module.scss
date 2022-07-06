@@ -1,4 +1,4 @@
-@import "../public/static-files/scss/variables";
+@import "../public/static/scss/variables";
 
 .checkbox{
   span{
@@ -14,7 +14,7 @@
     width: 24px;
     height: 24px;
     &:checked{
-      background-image: url(../public/static-files/images/check-icon.svg) !important;
+      background-image: url(../public/static/images/check-icon.svg) !important;
     }
     &:focus{
       box-shadow: none !important;
