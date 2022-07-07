@@ -8,7 +8,6 @@ import facebookLogo from "../../public/static/images/facebook.png";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import router, { useRouter } from "next/router";
-import SocialButton from "../sign-up-form/SocialButton";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { AuthService } from "../../services/auth";
 import { useDispatch } from "react-redux";
@@ -16,12 +15,15 @@ import { toast } from "react-toastify";
 import { setUser } from "../../store/userSlice";
 import { isValid } from "../../utils/helper";
 import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
+  AuthProvider,
 } from "firebase/auth";
-import { auth } from "../../config/firebase-client";
+import { getErrorMessageFromFirebaseCode } from "../../utils/errors";
+import { submitSocialLogin } from "../../utils/login";
+
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -41,9 +43,31 @@ const LoginForm = () => {
     setPassword({ isInvalid: false, value: e.currentTarget.value, err: "" });
   };
 
+  const signUpWithSocialLogin = async (
+    providerName: "google" | "facebook",
+    authProvider: AuthProvider
+  ) => {
+    try {
+      const response = await submitSocialLogin(providerName, authProvider);
+      onSuccess(response);
+      setTimeout(() => {
+        dispatch(hideLoading());
+      }, 1000);
+    } catch (error: any) {
+      let message;
+      if (error.code) message = getErrorMessageFromFirebaseCode(error.code);
+      else message = error?.message;
+
+      dispatch(hideLoading());
+      toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
   const onSuccess = (data: any) => {
     dispatch(setUser(data.user));
-    localStorage.setItem("id_token", data?.token?.key || data.key);
+    localStorage.setItem("id_token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
     toast.success(data.message, {
       position: toast.POSITION.TOP_RIGHT,
@@ -117,7 +141,9 @@ const LoginForm = () => {
           <div className="d-flex flex-column w-100">
             <Button
               className={styles["social-btn"] + " mb-2"}
-              onClick={async () => {}}
+              onClick={async () => {
+                await signUpWithSocialLogin("google", googleProvider);
+              }}
             >
               <Image
                 src={googleLogo}
@@ -141,7 +167,9 @@ const LoginForm = () => {
             </Button>
             <Button
               className={styles["social-btn"] + " mb-2"}
-              onClick={async () => {}}
+              onClick={async () => {
+                await signUpWithSocialLogin("facebook", facebookProvider);
+              }}
             >
               <Image
                 src={facebookLogo}

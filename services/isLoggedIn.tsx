@@ -5,6 +5,7 @@ export const USER_KEY = "user";
 
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
   router.push("/");
 };
 

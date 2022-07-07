@@ -1,5 +1,5 @@
-import { DecodedIdToken, getAuth, UserRecord } from "firebase-admin/auth";
-import { User, UserCredential } from "firebase/auth";
+import { DecodedIdToken, UserRecord } from "firebase-admin/auth";
+import { User } from "firebase/auth";
 import {
   collection,
   doc,
@@ -7,14 +7,12 @@ import {
   getDocs,
   query,
   where,
-  addDoc,
   setDoc,
   updateDoc,
   orderBy,
   limit as collectionLimit,
   startAt,
   endAt,
-  DocumentReference,
 } from "firebase/firestore";
 import { db } from "../config/firebase-client";
 import { auth } from "../config/firebase-server";
@@ -78,6 +76,22 @@ export const updateUserProfile = (
   });
 };
 
+export const isProfileCreatedForUser = (id: string) => {
+  return new Promise<boolean>(async (resolve, reject) => {
+    try {
+      const user = await auth.getUser(id);
+      const profileQuery = query(
+        collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME),
+        where("pk", "==", id)
+      );
+      const profileDocs = await getDocs(profileQuery);
+
+      resolve(!profileDocs.empty);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 export const getProfileFromUserId = (id: string) => {
   return new Promise<IUser>(async (resolve, reject) => {
     try {
@@ -117,7 +131,7 @@ export const getProfileFromUserId = (id: string) => {
           agent_liked,
         });
       } else {
-        throw new Error(ERRORS.PROFILE.EXISTS);
+        throw new Error(ERRORS.PROFILE.NOT_FOUND);
       }
     } catch (error) {
       reject(error);
@@ -142,7 +156,7 @@ export const getProfileFromUser = (
 
         resolve({ id: profile?.id, ...profile?.data(), email: user.email });
       } else {
-        throw new Error(ERRORS.PROFILE.EXISTS);
+        throw new Error(ERRORS.PROFILE.NOT_FOUND);
       }
     } catch (error) {
       console.log("error", error);

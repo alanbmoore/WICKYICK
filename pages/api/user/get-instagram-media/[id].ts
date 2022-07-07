@@ -2,7 +2,6 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 import nextConnect from "next-connect";
-import { auth } from "../../../../config/firebase-server";
 import { IUser } from "../../../../interfaces/user";
 
 import middleware from "../../../../middleware/middleware";

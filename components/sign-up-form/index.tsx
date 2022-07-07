@@ -6,24 +6,22 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import facebookLogo from "../../public/static/images/facebook.png";
 import styles from "../../styles/SignUp.module.scss";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { AuthService } from "../../services/auth";
 import { isValid } from "../../utils/helper";
 import { toast } from "react-toastify";
-import SocialButton from "./SocialButton";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../store/loadingSlice";
 import { setUser } from "../../store/userSlice";
 import { showModal } from "../../store/modalSlice";
 import {
-  signInWithPopup,
   FacebookAuthProvider,
   GoogleAuthProvider,
   AuthProvider,
 } from "firebase/auth";
-import { auth } from "../../config/firebase-client";
 import { getErrorMessageFromFirebaseCode } from "../../utils/errors";
+import { submitSocialLogin } from "../../utils/login";
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -143,32 +141,12 @@ const SignUpForm = () => {
         });
     }
   };
-
-  const submitSocialLogin = async (
+  const signUpWithSocialLogin = async (
     providerName: "google" | "facebook",
     authProvider: AuthProvider
   ) => {
     try {
-      const result = await signInWithPopup(auth, authProvider);
-      let credential;
-      switch (providerName) {
-        case "facebook":
-          credential = FacebookAuthProvider.credentialFromResult(result);
-          break;
-        case "google":
-          credential = GoogleAuthProvider.credentialFromResult(result);
-        default:
-          credential = GoogleAuthProvider.credentialFromResult(result);
-      }
-
-      let obj = {
-        token: credential?.accessToken,
-      };
-      const response = await AuthService.submitSocialLogin(
-        obj,
-        `/api/user/social-login/${providerName}/`
-      );
-      // console.log("AuthService.submitSocialLogin: response", response);
+      const response = await submitSocialLogin(providerName, authProvider);
       onSuccess(response);
       setTimeout(() => {
         dispatch(hideLoading());
@@ -184,6 +162,7 @@ const SignUpForm = () => {
       });
     }
   };
+
   const onSuccess = (data: any) => {
     dispatch(setUser(data.user));
     localStorage.setItem("id_token", data.token);
@@ -218,7 +197,7 @@ const SignUpForm = () => {
             <Button
               className={styles["social-btn"] + " mb-2"}
               onClick={async () => {
-                await submitSocialLogin("google", googleProvider);
+                await signUpWithSocialLogin("google", googleProvider);
               }}
             >
               <Image
@@ -241,7 +220,7 @@ const SignUpForm = () => {
             <Button
               className={styles["social-btn"] + " mb-2"}
               onClick={async () => {
-                await submitSocialLogin("facebook", facebookProvider);
+                await signUpWithSocialLogin("facebook", facebookProvider);
               }}
             >
               <Image

@@ -23,6 +23,7 @@ export const getErrorMessageAndStatusCode = (error: FirebaseError) => {
 };
 
 export const getErrorMessageFromFirebaseCode = (code: string) => {
+  console.log("code", code);
   let message = "Unknown Error.";
   switch (code) {
     case "auth/id-token-expired":
