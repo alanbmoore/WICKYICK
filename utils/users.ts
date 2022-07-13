@@ -31,6 +31,9 @@ export const createNewUserAndProfile = (obj: any, password?: string) => {
       let userProfile = <IUser>{
         first_name: obj.firstName,
         last_name: obj.lastName,
+        display_name: obj.displayName,
+        picture: obj.photoURL,
+        phone_number: obj.phoneNumber,
         pk: user.uid,
         role: "Basic",
       };

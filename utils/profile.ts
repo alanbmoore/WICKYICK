@@ -82,7 +82,7 @@ export const isProfileCreatedForUser = (id: string) => {
       const user = await auth.getUser(id);
       const profileQuery = query(
         collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME),
-        where("pk", "==", id)
+        where("pk", "==", user.uid)
       );
       const profileDocs = await getDocs(profileQuery);
 
@@ -165,36 +165,53 @@ export const getProfileFromUser = (
   });
 };
 
-export const getProfiles = (limit?: number, start?: number, end?: number) => {
+export const getProfiles = (
+  limit?: number,
+  start?: number,
+  end?: number,
+  keyword?: string
+) => {
   return new Promise<IUser[]>(async (resolve, reject) => {
     try {
       const profilesRef = collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME);
+
       let q;
       if (start || end) {
         q = query(
           profilesRef,
-          orderBy("last_name"),
+          orderBy("display_name"),
           startAt(start),
           endAt(end)
         );
-      } else {
+      } else if (keyword) {
+        console.log("keyword", keyword);
+        console.log(`${keyword.toLowerCase()}\uf8ff`);
         q = query(
           profilesRef,
-          orderBy("last_name"),
+          orderBy("display_name"),
+          startAt(keyword.toUpperCase()),
+          endAt(`${keyword.toLowerCase()}\uf8ff`),
+          collectionLimit(limit || DB_CONSTANTS.PROFILE.DEFAULT_LIMIT)
+        );
+      } else {
+        console.log("else");
+        q = query(
+          profilesRef,
+          orderBy("display_name"),
           collectionLimit(limit || DB_CONSTANTS.PROFILE.DEFAULT_LIMIT)
         );
       }
+
       const profileDocs = await getDocs(q);
+      let profiles: IUser[] = [];
 
       if (!profileDocs.empty) {
-        let profiles: IUser[] = [];
         profileDocs.forEach((profile) => {
           profiles.push({ id: profile.id, ...profile.data() });
         });
-        resolve(profiles);
-      } else {
-        throw new Error(ERRORS.PROFILE.NOT_FOUND);
+        console.log("profiles", profiles);
       }
+      resolve(profiles);
     } catch (error) {
       console.log("error", error);
       reject(error);

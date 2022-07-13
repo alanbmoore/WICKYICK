@@ -296,6 +296,7 @@ const ProfileDetails = ({ goToNextStep }: any) => {
 
     if (validate()) {
       selectedFile && formData.append("picture", selectedFile);
+      img && formData.append("picture64", img);
       formData.append("location", location.value);
       formData.append("first_name", firstName.value);
       formData.append("last_name", lastName.value);

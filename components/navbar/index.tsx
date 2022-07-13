@@ -38,9 +38,12 @@ const AppNavbar = () => {
   // const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const { user } = useSelector((state: any) => state.user);
   const [userData, setUserData] = useState<any>(null);
+  const [img, setImg] = useState(UserIcon);
 
   useEffect(() => {
     !userData && setUserData(getUser());
+
+    userData && setImg(userData.picture ? userData.picture : UserIcon);
   }, [userData, setUserData]);
 
   useEffect(() => {
@@ -214,11 +217,7 @@ const AppNavbar = () => {
                               className={styles["user-avatar"]}
                               width="40px"
                               height="40px"
-                              src={
-                                userData && userData.picture
-                                  ? userData.picture
-                                  : UserIcon
-                              }
+                              src={img}
                               alt=""
                             />
                           </span>

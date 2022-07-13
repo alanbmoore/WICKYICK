@@ -17,9 +17,15 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { offset, limit } = req.query;
+  const { offset, limit, keyword } = req.query;
+
   if (!offset || !limit) {
-    const users = await getProfiles();
+    const users = await getProfiles(
+      undefined,
+      undefined,
+      undefined,
+      keyword?.toString()
+    );
 
     res.status(200).json({
       count: users.length,
@@ -32,7 +38,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const limitNum = parseInt(limit.toString());
     const end = start + limitNum;
 
-    const users = await getProfiles(limitNum, start, end);
+    const users = await getProfiles(limitNum, start, end, keyword);
     res.status(200).json({
       count: users.length,
       next: start + end,

@@ -6,6 +6,7 @@ export interface IUser {
   email?: string | null | undefined;
   first_name?: string | null | undefined;
   last_name?: string | null | undefined;
+  display_name?: string | null | undefined;
   picture?: string | null | undefined;
   license_number?: string | null | undefined;
   company?: string | null | undefined;

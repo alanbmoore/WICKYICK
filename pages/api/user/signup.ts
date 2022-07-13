@@ -1,11 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import { auth } from "../../../config/firebase-server";
-import { IUser } from "../../../interfaces/user";
 import { getErrorMessageAndStatusCode } from "../../../utils/errors";
-import { sendMail } from "../../../utils/mail";
-import { createUserProfile } from "../../../utils/profile";
 import {
   createNewUserAndProfile,
   generateEmailVerificationEmail,

@@ -29,9 +29,11 @@ module.exports = {
     domains: [
       "localhost",
       "wickyick-profile-images.s3.amazonaws.com",
+      "wickyick-profile-images.s3.us-east-1.amazonaws.com",
       "scontent.cdninstagram.com",
       "video.cdninstagram.com",
       "scontent-lga3-2.cdninstagram.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };

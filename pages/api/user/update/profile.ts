@@ -11,6 +11,8 @@ import {
 } from "../../../../utils/profile";
 import { getErrorMessageAndStatusCode } from "../../../../utils/errors";
 import { NextApiRequestWithUser } from "../../../../types/http";
+import { getFileExtension, saveBase64StringToAWS } from "../../../../utils/s3";
+import dayjs from "dayjs";
 
 type Data = {
   user?: IUser | null;
@@ -22,11 +24,20 @@ handler.use(middleware);
 
 handler.put(async (req: NextApiRequestWithUser, res: NextApiResponse<Data>) => {
   try {
-    const { body, user } = req;
-
+    const { body, user, files } = req;
+    const saveBody = { ...body };
     const profile = await getProfileFromUser(user);
+    if (body.picture64) {
+      const result = await saveBase64StringToAWS(
+        body.picture64,
+        `${process.env.AWS_PROFILE_IMAGE_PATH}${profile.id}.${getFileExtension(
+          files[0].filename
+        )}` || dayjs().format()
+      );
+      saveBody.picture = result.url;
+    }
 
-    const profileRecord = await updateUserProfile(profile.id, body);
+    const profileRecord = await updateUserProfile(profile.id, saveBody);
 
     res.status(200).json({ user: profileRecord });
   } catch (error: any) {

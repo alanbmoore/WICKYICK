@@ -27,10 +27,15 @@ const AgentProfileBanner = () => {
   const { id } = router.query;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = getUser();
+  const [img, setImg] = useState(UserIcon);
 
   useEffect(() => {
     setIsLoggedIn(isLogin);
   }, []);
+
+  useEffect(() => {
+    setImg(userData.picture || user.picture || UserIcon);
+  }, [userData]);
 
   useEffect(() => {
     if (id) {
@@ -103,11 +108,7 @@ const AgentProfileBanner = () => {
               <div className="agent-card-main d-flex">
                 <div className="img-section">
                   <Image
-                    src={
-                      userData && userData?.picture
-                        ? userData.picture
-                        : UserIcon
-                    }
+                    src={img}
                     height={"150px"}
                     width={"150px"}
                     className="rounded-circle"

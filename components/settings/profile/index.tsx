@@ -245,6 +245,7 @@ const Profile = ({ goToNextStep }: any) => {
 
     if (validate()) {
       selectedFile && formData.append("picture", selectedFile);
+      img && formData.append("picture64", img);
       if (location.value) formData.append("location", location.value);
       if (company.value) formData.append("company", company.value);
       if (phone.value) formData.append("phone_number", phone.value);

@@ -25,15 +25,21 @@ export default async function handler(
     const { body, query } = req;
 
     const user = await auth.getUser(body.user.user.uid);
+    if (!user.emailVerified) throw new Error("Email not verified!");
     let profile;
 
     const isProfileCreated = await isProfileCreatedForUser(body.user.user.uid);
+
     if (!isProfileCreated && user) {
       const names = (user.displayName || "").split(" ");
       let userProfile = <IUser>{
         first_name: names.length > 0 ? names[0] : null,
         last_name: names.length > 1 ? names[1] : null,
+        display_name: user.displayName,
+        picture: user.photoURL,
+        phone_number: user.phoneNumber || "",
         pk: user.uid,
+        role: "Basic",
       };
 
       profile = await createUserProfile(user, userProfile);

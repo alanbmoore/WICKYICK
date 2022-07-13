@@ -4,6 +4,7 @@ import { NextApiRequest } from "next";
 
 export interface NextApiRequestWithUser extends NextApiRequest {
   user: DecodedIdToken;
+  files: any[];
 }
 
 export interface IncomingMessageWithUser extends IncomingMessage {
