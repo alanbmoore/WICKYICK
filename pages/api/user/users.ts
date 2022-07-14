@@ -38,7 +38,12 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const limitNum = parseInt(limit.toString());
     const end = start + limitNum;
 
-    const users = await getProfiles(limitNum, start, end, keyword);
+    const users = await getProfiles(
+      limitNum,
+      start,
+      end,
+      typeof keyword === "object" ? keyword[0] : keyword
+    );
     res.status(200).json({
       count: users.length,
       next: start + end,
