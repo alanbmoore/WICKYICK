@@ -87,24 +87,22 @@ const Home = () => {
   const [count, setCount] = useState([]);
 
   useEffect(() => {
-    if (userList.length === 0) {
-      dispatch(showLoading());
-      UserService.getUserList({ offset: 0, limit: 6 })
-        .then((response: any) => {
-          // console.log("getUserList: response", response);
-          setTimeout(() => {
-            dispatch(hideLoading());
-          }, 1000);
-          setUserList(response.results);
-          setCount(response.count);
-        })
-        .catch((error: any) => {
-          setTimeout(() => {
-            dispatch(hideLoading());
-          }, 1000);
-        });
-    }
-  }, [dispatch, userList]);
+    dispatch(showLoading());
+    UserService.getUserList({ offset: 0, limit: 6 })
+      .then((response: any) => {
+        // console.log("getUserList: response", response);
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+        setUserList(response.results);
+        setCount(response.count);
+      })
+      .catch((error: any) => {
+        setTimeout(() => {
+          dispatch(hideLoading());
+        }, 1000);
+      });
+  }, []);
 
   return (
     <>
