@@ -27,7 +27,7 @@ handler.put(async (req: NextApiRequestWithUser, res: NextApiResponse<Data>) => {
     const { body, user, files } = req;
     const saveBody = { ...body };
     const profile = await getProfileFromUser(user);
-    if (body.picture64) {
+    if (body.picture64 && files.length > 0) {
       const result = await saveBase64StringToAWS(
         body.picture64,
         `${process.env.AWS_PROFILE_IMAGE_PATH}${profile.id}.${getFileExtension(

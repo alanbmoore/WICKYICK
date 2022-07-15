@@ -10,7 +10,7 @@ type Data = {
   count: number;
   next: number | null; // next offset link
   previous: number | null; // previous offset link
-  results: Array<IUser>;
+  results: IUser[] | undefined;
 };
 
 const handler = nextConnect();
@@ -28,7 +28,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     );
 
     res.status(200).json({
-      count: users.length,
+      count: users ? users.length : 0,
       next: null,
       previous: null,
       results: users,
@@ -45,10 +45,10 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       typeof keyword === "object" ? keyword[0] : keyword
     );
     res.status(200).json({
-      count: users.length,
-      next: start + end,
-      previous: start,
-      results: users.slice(start, end),
+      count: users ? users.length : 0,
+      next: 0,
+      previous: 1,
+      results: users,
     });
   }
 });

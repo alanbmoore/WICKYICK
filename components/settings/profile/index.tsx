@@ -119,20 +119,26 @@ const Profile = ({ goToNextStep }: any) => {
 
   const setUserData = (user: any) => {
     setCompany({ isInvalid: false, value: user?.company, err: "" });
-    setLocation({
-      isInvalid: false,
-      value: user?.location,
-      label: user?.location,
-      err: "",
-    });
+    user?.location != "null" &&
+      user?.location != "undefined" &&
+      setLocation({
+        isInvalid: false,
+        value: user?.location,
+        label: user?.location,
+        err: "",
+      });
+
     setImg(user?.picture ? user.picture : Person);
     user?.tags && setTags(user.tags.split(","));
     setPhone({ isInvalid: false, value: user?.phone_number, err: "" });
     user?.job_title != "null" &&
+      user?.job_title != "undefined" &&
       setJobTitle({ isInvalid: false, value: user?.job_title, err: "" });
     user?.bio != "null" &&
+      user?.bio != "undefined" &&
       setBio({ isInvalid: false, value: user?.bio, err: "" });
     user?.site_username != "null" &&
+      user?.site_username != "undefined" &&
       setUsername({ isInvalid: false, value: user?.site_username, err: "" });
   };
 
@@ -245,7 +251,7 @@ const Profile = ({ goToNextStep }: any) => {
 
     if (validate()) {
       selectedFile && formData.append("picture", selectedFile);
-      img && formData.append("picture64", img);
+      selectedFile && img && formData.append("picture64", img);
       if (location.value) formData.append("location", location.value);
       if (company.value) formData.append("company", company.value);
       if (phone.value) formData.append("phone_number", phone.value);
@@ -257,11 +263,11 @@ const Profile = ({ goToNextStep }: any) => {
       dispatch(showLoading());
       UserService.updateProfile(formData)
         .then((data: any) => {
-          // console.log("updateProfile: data", data);
+          //console.log("updateProfile: data", data);
           setTimeout(() => {
             dispatch(hideLoading());
           }, 1000);
-          dispatch(setUser(data));
+          dispatch(setUser(data.user));
           localStorage.setItem("user", JSON.stringify(data.user));
           toast.success("Profile updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -277,6 +283,7 @@ const Profile = ({ goToNextStep }: any) => {
   };
 
   const locationChangeHandler = (opt: any) => {
+    console.log("opt", opt);
     setLocation({
       isInvalid: false,
       value: opt?.value.description,

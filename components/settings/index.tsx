@@ -75,11 +75,11 @@ const SettingForm = () => {
     dispatch(showLoading());
     UserService.updateProfile(formData)
       .then((data: any) => {
-        // console.log("updateProfile: data", data);
+        //console.log("updateProfile: data", data);
         setTimeout(() => {
           dispatch(hideLoading());
         }, 1000);
-        dispatch(setUser(data));
+        dispatch(setUser(data.user));
         localStorage.setItem("user", JSON.stringify(data.user));
         toast.success("Profile completed successfully", {
           position: toast.POSITION.TOP_RIGHT,

@@ -30,22 +30,22 @@ export const createProfileInSearchIndex = (snapshot: IProfileSnapshot) => {
   return new Promise(async (resolve, reject) => {
     try {
       const search = {
-        q: snapshot.uid,
+        q: snapshot.uid || "",
         query_by: "uid",
       };
-      const result = await client
+
+      // get profile for uid
+      let result = await client
         .collections("profiles")
         .documents()
         .search(search);
 
+      // create one if not found
       if (result.found === 0) {
         console.log("no results");
-        const result = await client
-          .collections("profiles")
-          .documents()
-          .create(snapshot);
+        await client.collections("profiles").documents().create(snapshot);
       }
-      resolve(result);
+      resolve({});
     } catch (error) {
       resolve(error);
     }
@@ -54,12 +54,27 @@ export const createProfileInSearchIndex = (snapshot: IProfileSnapshot) => {
 export const updateProfileInSearchIndex = (snapshot: IProfileSnapshot) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const document = result.hits[0].document;
-      await client
+      const search = {
+        q: snapshot.uid || "",
+        query_by: "uid",
+      };
+
+      // get profile for uid
+      let result = await client
         .collections("profiles")
-        .documents(document.id)
-        .update(snapshot);
-      resolve(result);
+        .documents()
+        .search(search);
+
+      if (result.found > 0) {
+        const hits = result.hits || [];
+
+        const hit = hits[0].document as IProfileSnapshot;
+        await client
+          .collections("profiles")
+          .documents(hit.id || "")
+          .update(snapshot);
+      }
+      resolve({});
     } catch (error) {
       resolve(error);
     }
@@ -89,14 +104,14 @@ export const createUserProfile = (
         // create new record in typesense
         console.log("create new record in typesense");
         const { first_name, last_name, company, site_username, pk, picture } =
-          profileSnap.data();
+          profileSnap.data() as IUser;
         const document: IProfileSnapshot = {
-          uid: pk,
-          first_name,
-          last_name,
-          company,
-          site_username,
-          picture,
+          uid: pk || "",
+          first_name: first_name || "",
+          last_name: last_name || "",
+          company: company || "",
+          site_username: site_username || "",
+          picture: picture || "",
         };
 
         // Index the document in profiles collection
@@ -131,15 +146,16 @@ export const updateUserProfile = (
 
       // update record in typesense
       const { first_name, last_name, company, site_username, pk, picture } =
-        profileSnap.data();
+        profileSnap.data() as IUser;
       const document: IProfileSnapshot = {
-        uid: pk,
-        first_name,
-        last_name,
-        company,
-        site_username,
-        picture,
+        uid: pk || "",
+        first_name: first_name || "",
+        last_name: last_name || "",
+        company: company || "",
+        site_username: site_username || "",
+        picture: picture || "",
       };
+
       // Index the document in profiles collection
       await updateProfileInSearchIndex(document);
 
@@ -259,9 +275,9 @@ export const getProfiles = (
   end?: number,
   keyword?: string
 ) => {
-  return new Promise<IUser[]>(async (resolve, reject) => {
+  return new Promise<IUser[] | undefined>(async (resolve, reject) => {
     try {
-      let searchResults: SearchResponse;
+      let searchResults;
       let search: SearchParams;
       if (keyword) {
         search = {
@@ -280,15 +296,16 @@ export const getProfiles = (
         .documents()
         .search(search);
 
-      const profiles: IUser[] = searchResults.hits?.map((h) => {
+      const profiles: IUser[] | undefined = searchResults.hits?.map((h) => {
+        const hit = h.document as IProfileSnapshot;
         return {
-          id: h.document.uid,
-          pk: h.document.uid,
-          first_name: h.document.first_name,
-          last_name: h.document.last_name,
-          company: h.document.company,
-          site_username: h.document.site_username,
-          picture: h.document.picture,
+          id: hit.uid,
+          pk: hit.uid,
+          first_name: hit.first_name,
+          last_name: hit.last_name,
+          company: hit.company,
+          site_username: hit.site_username,
+          picture: hit.picture,
         };
       });
 
@@ -299,56 +316,3 @@ export const getProfiles = (
     }
   });
 };
-// export const getProfiles = (
-//   limit?: number,
-//   start?: number,
-//   end?: number,
-//   keyword?: string
-// ) => {
-//   return new Promise<IUser[]>(async (resolve, reject) => {
-//     try {
-//       const profilesRef = collection(db, DB_CONSTANTS.PROFILE.COLLECTION_NAME);
-
-//       let q;
-//       if (start || end) {
-//         q = query(
-//           profilesRef,
-//           orderBy("display_name"),
-//           startAt(start),
-//           endAt(end)
-//         );
-//       } else if (keyword) {
-//         console.log("keyword", keyword);
-//         console.log(`${keyword.toLowerCase()}\uf8ff`);
-//         q = query(
-//           profilesRef,
-//           orderBy("display_name"),
-//           startAt(keyword.toUpperCase()),
-//           endAt(`${keyword.toLowerCase()}\uf8ff`),
-//           collectionLimit(limit || DB_CONSTANTS.PROFILE.DEFAULT_LIMIT)
-//         );
-//       } else {
-//         console.log("else");
-//         q = query(
-//           profilesRef,
-//           orderBy("display_name"),
-//           collectionLimit(limit || DB_CONSTANTS.PROFILE.DEFAULT_LIMIT)
-//         );
-//       }
-
-//       const profileDocs = await getDocs(q);
-//       let profiles: IUser[] = [];
-
-//       if (!profileDocs.empty) {
-//         profileDocs.forEach((profile) => {
-//           profiles.push({ id: profile.id, ...profile.data() });
-//         });
-//         console.log("profiles", profiles);
-//       }
-//       resolve(profiles);
-//     } catch (error) {
-//       console.log("error", error);
-//       reject(error);
-//     }
-//   });
-// };

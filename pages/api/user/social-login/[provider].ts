@@ -51,8 +51,7 @@ export default async function handler(
       await generateEmailVerificationEmail(profile);
     } else {
       profile = await getProfileFromUserId(body.user.user.uid);
-      // create new record in typesense
-      console.log("create new record in typesense");
+
       let search: SearchParams = {
         q: profile.id || "",
         query_by: "uid",
@@ -61,7 +60,6 @@ export default async function handler(
         .collections("profiles")
         .documents()
         .search(search);
-      console.log("searchResults", searchResults);
 
       if (searchResults.found === 0) {
         const { first_name, last_name, company, site_username, pk, picture } =
