@@ -20,6 +20,10 @@ export default async function handler(
 
   try {
     const profile = await createNewUserAndProfile(body, body.password1);
+    console.log(
+      "generateEmailVerificationEmail:profile, request-access",
+      profile
+    );
     await generateEmailVerificationEmail(profile);
     res.status(200).json({
       message:

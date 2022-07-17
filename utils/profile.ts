@@ -255,6 +255,7 @@ export const getProfileFromUser = (
           display_name: user.displayName,
           picture: user.photoURL,
           phone_number: user.phoneNumber || "",
+          is_on_boarding_completed: false,
           pk: user.uid,
           role: "Basic",
         };

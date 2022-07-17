@@ -34,6 +34,7 @@ export const createNewUserAndProfile = (obj: any, password?: string) => {
         display_name: obj.displayName,
         picture: obj.photoURL,
         phone_number: obj.phoneNumber,
+        is_on_boarding_completed: false,
         pk: user.uid,
         role: "Basic",
       };
@@ -63,8 +64,12 @@ export const getUserFromUid = (uid: string) => {
 export const generateEmailVerificationEmail = (profile: any) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log("profile.email", profile.email);
+      console.log(
+        "process.env.DEFAULT_INVITE_EMAIL",
+        process.env.DEFAULT_INVITE_EMAIL
+      );
       const link = await auth.generateEmailVerificationLink(profile.email);
-
       const emailBody = `User ${profile.email} has requested an access to ${process.env.DOMAIN_URL}. Please use this link to make user active ${link}`;
       const subject = `${profile.email} Access request - ${process.env.DOMAIN_URL}`;
       await sendMail(subject, emailBody, profile.email, [
